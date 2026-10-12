@@ -1,4 +1,27 @@
-# React + Vite
+# STROY UZ
+
+Маркетплейс строительных материалов. Стек: React 19, Vite 8, JavaScript/JSX, Tailwind CSS 4, Oxlint.
+
+## Локальный запуск
+
+Требуется Node.js 20.19+ или 22.12+ (для текущего Vite); используется npm и `package-lock.json`.
+
+```sh
+npm ci
+npm run dev
+```
+
+Адрес сервера Vite выводится в терминале.
+
+- `npm run lint` — проверка Oxlint.
+- `npm run build` — production-сборка в `dist/`.
+- `npm run preview` — локальный просмотр готовой сборки.
+
+Страницы находятся в `src/pages/`, компоненты — в `src/components/`. [Архитектура главной страницы](docs/homepage.md).
+
+Работайте в отдельной ветке и открывайте Pull Request. Не добавляйте зависимости и изменения общих конфигураций без согласования с командой.
+
+## Исходный шаблон React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
