@@ -56,7 +56,7 @@ function HomePage() {
       <a className="home-skip" href="#main">
         Перейти к содержимому
       </a>
-      <Navbar
+      {/* <Navbar
         query={query}
         onSearch={(value) => {
           setQuery(value);
@@ -67,7 +67,7 @@ function HomePage() {
         onCart={() => setDialog({ title: "Корзина", type: "cart" })}
         onFavorites={() => chooseGroup("favorites")}
         onInfo={info}
-      />
+      /> */}
       <main id="main">
         <Hero />
         <section
@@ -242,10 +242,10 @@ function HomePage() {
           </div>
         </section>
       </main>
-      <Footer onInfo={info} />
+      {/* <Footer onInfo={info} />
       <p className="home-sr-only" role="status">
         {announcement}
-      </p>
+      </p> */}
       <HomeDialog dialog={dialog} onClose={() => setDialog(null)}>
         {dialog?.type === "cart" ? (
           <>
