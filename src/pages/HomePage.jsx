@@ -24,7 +24,7 @@ function HomePage() {
     chooseGroup,
   } = useOutletContext();
   return (
-    <div className="home-content">
+    <div className="homepage home-content">
       <a className="home-skip" href="#main">
         Перейти к содержимому
       </a>
@@ -207,3 +207,4 @@ function HomePage() {
 }
 
 export default HomePage;
+

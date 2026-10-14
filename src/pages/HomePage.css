@@ -1100,3 +1100,9 @@
     transition: none !important;
   }
 }
+
+/* Product cards navigate to the matching product detail route. */
+.home-product-image>.home-product-link{display:block;width:100%;height:100%;}
+.home-product-image>.home-product-link img{height:100%;width:100%;object-fit:contain;}
+.home-product-card h3 a{text-decoration:none;color:inherit;}
+.home-product-card h3 a:hover{color:#b56c00;}
