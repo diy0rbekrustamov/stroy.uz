@@ -13,95 +13,130 @@ export default function Navbar({
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
-    <header id="top" className="home-header">
-      <div className="home-topbar">
-        <div className="home-container">
-          <span>
-            <Icon name="pin" />
+    <header
+      id="top"
+      className="bg-white text-[#19232e] font-[Arial] text-[14px] leading-[1.5]"
+    >
+      {/*.home-topbar */}
+      <div className="bg-[#f5f6f7] text-[12px]">
+        <div className="w-[min(100%-144px,1296px)] max-[1199px]:w-[calc(100%-64px)] max-[767px]:w-[calc(100%-32px)] mx-auto flex items-center justify-between min-h-[36px] gap-5">
+          <span className="flex items-center gap-3">
+            <span className="flex items-center gap-3 [&_.home-icon]:w-[14px] [&_.home-icon]:h-[14px]">
+              <Icon name="pin" />
+            </span>
             Бухара{" "}
-            <span className="home-delivery">Доставка по Узбекистану</span>
+            <span className="text-[#788694] max-[767px]:!hidden">
+              Доставка по Узбекистану
+            </span>
           </span>
-          <div>
-            <a href="#footer">О компании</a>
+          <div className="flex items-center gap-3 max-[767px]:!hidden">
+            <a href="#footer" className="text-[#788694]">
+              О компании
+            </a>
             <button
               type="button"
               onClick={() =>
                 onInfo(
                   "Помощь",
-                  "Для подбора материалов используйте категории и поиск. Корзина на этой странице демонстрационная; оформление заказа будет подключено командой.",
+                  "Для подбора материалов используйте категории и поиск.",
                 )
               }
+              className="text-[#788694] bg-transparent p-0 border-0 cursor-pointer font-inherit"
             >
               Помощь
             </button>
-            <a href="#business">Для бизнеса</a>
+            <a href="#business" className="text-[#788694]">
+              Для бизнеса
+            </a>
           </div>
-          <span>RU / UZ</span>
+          <span className="flex items-center gap-3">RU / UZ</span>
         </div>
       </div>
-      <div className="home-container home-header-main">
+
+      {/*.home-header-main */}
+      <div className="w-[min(100%-144px,1296px)] max-[1199px]:w-[calc(100%-64px)] max-[767px]:w-[calc(100%-32px)] mx-auto flex items-center gap-[42px] max-[1199px]:gap-6 min-h-[94px] max-[991px]:flex-wrap max-[991px]:py-5 max-[767px]:flex-wrap max-[767px]:gap-4 max-[767px]:py-5">
         <Brand />
         <form
-          className="home-search"
+          className="flex items-center gap-3 bg-[#f5f6f7] py-2 px-4 rounded-lg flex-1 min-w-0 max-[991px]:order-3 max-[991px]:basis-full max-[767px]:order-4 max-[767px]:basis-full"
           role="search"
-          onSubmit={(event) => {
-            event.preventDefault();
+          onSubmit={(e) => {
+            e.preventDefault();
             document
               .getElementById("products")
-              .scrollIntoView({ behavior: "smooth" });
+              ?.scrollIntoView({ behavior: "smooth" });
           }}
         >
-          <button type="submit" aria-label="Найти товары">
+          <button
+            type="submit"
+            aria-label="Найти товары"
+            className="bg-transparent p-[6px_0] flex border-0 cursor-pointer"
+          >
             <Icon name="search" />
           </button>
           <input
-            aria-label="Поиск материалов, инструментов или бренда"
+            aria-label="Поиск"
             placeholder="Найти материалы, инструмент или бренд"
             value={query}
-            onChange={(event) => onSearch(event.target.value)}
+            onChange={(e) => onSearch(e.target.value)}
+            className="border-0 bg-transparent w-full min-w-0 h-8 text-[14px] outline-none font-inherit"
           />
-          <span aria-hidden="true">⌕</span>
+          <span
+            aria-hidden="true"
+            className="text-[#788694] max-[767px]:!hidden"
+          >
+            ⌕
+          </span>
         </form>
-        <div className="home-header-actions">
-          <button type="button" onClick={onFavorites}>
+        <div className="flex items-center gap-[42px] max-[1199px]:gap-4 max-[991px]:ml-auto max-[767px]:ml-auto max-[767px]:gap-2">
+          <button
+            type="button"
+            onClick={onFavorites}
+            className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[30px] border-0 cursor-pointer font-inherit"
+          >
             <Icon name="heart" />
-            <span>Избранное{favoriteCount ? ` (${favoriteCount})` : ""}</span>
+            <span className="max-[767px]:text-[0px]">
+              Избранное{favoriteCount ? ` (${favoriteCount})` : ""}
+            </span>
           </button>
           <button
             type="button"
             onClick={() =>
-              onInfo(
-                "Личный кабинет",
-                "Страница входа разрабатывается командой. Здесь пока доступен просмотр товаров и демонстрационная корзина.",
-              )
+              onInfo("Личный кабинет", "Страница входа разрабатывается.")
             }
+            className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[30px] border-0 cursor-pointer font-inherit"
           >
             <Icon name="user" />
-            <span>Войти</span>
+            <span className="max-[767px]:text-[0px]">Войти</span>
           </button>
-          <button type="button" onClick={onCart}>
+          <button
+            type="button"
+            onClick={onCart}
+            className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[30px] border-0 cursor-pointer font-inherit"
+          >
             <Icon name="cart" />
-            <span>Корзина{cartCount ? ` (${cartCount})` : ""}</span>
+            <span className="max-[767px]:text-[0px]">
+              Корзина{cartCount ? ` (${cartCount})` : ""}
+            </span>
           </button>
         </div>
         <button
-          className="home-menu-toggle"
+          className="hidden max-[767px]:flex bg-transparent p-2 border-0 cursor-pointer"
           type="button"
           aria-label="Меню"
           aria-expanded={menuOpen}
-          aria-controls="home-navigation"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <Icon name="menu" />
         </button>
       </div>
+
+      {/*.home-navigation */}
       <nav
         id="home-navigation"
-        className={`home-container home-navigation ${menuOpen ? "is-open" : ""}`}
-        aria-label="Основная навигация"
+        className={`w-[min(100%-144px,1296px)] max-[1199px]:w-[calc(100%-64px)] max-[767px]:w-[calc(100%-32px)] mx-auto flex items-center gap-6 max-[1199px]:gap-4 max-[1199px]:text-[12px] max-[1199px]:flex-wrap max-[1199px]:py-3 min-h-[59px] pb-2 text-[14px] max-[767px]:${menuOpen ? "flex flex-col items-stretch gap-0 pb-5" : "hidden"}`}
       >
         <a
-          className="home-button home-button-dark"
+          className="inline-flex items-center justify-center gap-5 min-h-[52px] max-[767px]:min-h-[48px] py-[14px] px-6 rounded-[7px] bg-[#192b38] text-white font-semibold text-[14px] mr-2 whitespace-nowrap hover:bg-[#344456] hover:-translate-y-px transition-all"
           href="#categories"
           onClick={() => setMenuOpen(false)}
         >
@@ -115,8 +150,14 @@ export default function Navbar({
           ["Доставка и оплата", "#services"],
           ["Оптовым клиентам ↗", "#business"],
         ].map(([label, href]) => (
-          <a key={label} href={href} onClick={() => setMenuOpen(false)}>
-            {label}
+          <a
+            key={label}
+            href={href}
+            onClick={() => setMenuOpen(false)}
+            className="whitespace-nowrap max-[767px]:p-3 hover:text-[#192b38]"
+          >
+            {" "}
+            {label}{" "}
           </a>
         ))}
       </nav>
