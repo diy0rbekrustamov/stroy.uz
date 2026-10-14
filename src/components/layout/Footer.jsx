@@ -1,5 +1,5 @@
+import { Link } from "react-router";
 import Brand from "./Brand.jsx";
-
 const columns = [
   [
     "Каталог",
@@ -16,7 +16,7 @@ const columns = [
       ["Доставка и оплата", "#services"],
       ["Возврат товара", null],
       ["Частые вопросы", null],
-      ["Личный кабинет", null],
+      ["Личный кабинет", "/login"],
     ],
   ],
   [
@@ -29,7 +29,6 @@ const columns = [
     ],
   ],
 ];
-
 export default function Footer({ onInfo }) {
   const info = (title) =>
     onInfo(
@@ -37,56 +36,37 @@ export default function Footer({ onInfo }) {
       "STROY UZ — концепция маркетплейса строительных материалов. Этот раздел будет доступен после подключения соответствующей страницы командой.",
     );
   return (
-    <footer
-      className="bg-[#192b38] text-white py-[72px] max-[767px]:py-10"
-      id="footer"
-    >
-      <div className="w-[min(100%-144px,1296px)] max-[1199px]:w-[calc(100%-64px)] max-[767px]:w-[calc(100%-32px)] mx-auto">
-        {/*.home-footer-grid */}
-        <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-16 max-[1199px]:gap-7 max-[767px]:grid-cols-[1fr_1fr] max-[767px]:gap-x-5 max-[767px]:gap-y-8">
-          <div className="max-[767px]:col-span-full">
-            <Brand dark />
-
-            <p className="text-[#aab2bd] text-[16px] mt-7 max-[767px]:mt-4">
+    <footer className="home-footer" id="footer">
+      <div className="home-container">
+        <div className="home-footer-grid">
+          <div>
+            <Brand />
+            <p>
               Материалы для больших идей.
               <br />
               Строительство. Ремонт. Результат.
             </p>
-            <div className="flex gap-3 mt-5">
-              <button
-                type="button"
-                onClick={() => info("Telegram")}
-                className="text-inherit bg-transparent p-0 text-left border-0 cursor-pointer"
-              >
+            <div className="home-social">
+              <button type="button" onClick={() => info("Telegram")}>
                 Telegram ↗
               </button>
-              <button
-                type="button"
-                onClick={() => info("Instagram")}
-                className="text-inherit bg-transparent p-0 text-left border-0 cursor-pointer"
-              >
+              <button type="button" onClick={() => info("Instagram")}>
                 Instagram ↗
               </button>
             </div>
           </div>
           {columns.map(([title, links]) => (
             <div key={title}>
-              <h3 className="text-[16px] font-semibold mb-5 max-[767px]:text-[14px]">
-                {title}
-              </h3>
-              <ul className="list-none p-0 m-0 grid gap-4 text-[#aab2bd] max-[767px]:text-[12px]">
+              <h3>{title}</h3>
+              <ul>
                 {links.map(([label, href]) => (
                   <li key={label}>
                     {href ? (
-                      <a href={href} className="text-inherit no-underline">
+                      <Link to={href.startsWith("#") ? `/${href}` : href}>
                         {label}
-                      </a>
+                      </Link>
                     ) : (
-                      <button
-                        type="button"
-                        onClick={() => info(label)}
-                        className="text-inherit bg-transparent p-0 text-left border-0 cursor-pointer"
-                      >
+                      <button type="button" onClick={() => info(label)}>
                         {label}
                       </button>
                     )}
@@ -96,22 +76,13 @@ export default function Footer({ onInfo }) {
             </div>
           ))}
         </div>
-        {/*.home-footer-bottom */}
-        <div className="flex justify-between gap-6 border-t border-[#3a4450] mt-10 pt-[44px] text-[11px] text-[#aab2bd] max-[767px]:flex-col max-[767px]:pt-6">
+        <div className="home-footer-bottom">
           <span>© STROY UZ. Концепция интернет-магазина.</span>
-          <div className="flex gap-4">
-            <button
-              type="button"
-              onClick={() => info("Конфиденциальность")}
-              className="bg-transparent p-0 text-left border-0 cursor-pointer text-inherit"
-            >
+          <div>
+            <button type="button" onClick={() => info("Конфиденциальность")}>
               Конфиденциальность
             </button>
-            <button
-              type="button"
-              onClick={() => info("Условия использования")}
-              className="bg-transparent p-0 text-left border-0 cursor-pointer text-inherit"
-            >
+            <button type="button" onClick={() => info("Условия использования")}>
               Условия использования
             </button>
           </div>

@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { useState } from "react";
 import materialsImg from "../assets/home/hero.png";
 
@@ -44,9 +45,9 @@ export default function ResetPasswordPage() {
 
         {/* RIGHT */}
         <div className="bg-white rounded-[16px] p-10">
-          <a href="/" className="text-[13px] text-[#6b7280]">
+          <Link to="/" className="text-[13px] text-[#6b7280]">
             ← Главная
-          </a>
+          </Link>
           <h2 className="text-[32px] md:text-[36px] font-bold mt-6 text-[#111827]">
             Восстановление пароля
           </h2>
@@ -96,12 +97,12 @@ export default function ResetPasswordPage() {
               </p>
             </div>
 
-            <a
-              href="/login"
+            <Link
+              to="/login"
               className="inline-block text-[13px] font-medium text-[#111827] hover:underline"
             >
               ← Вернуться ко входу
-            </a>
+            </Link>
 
             <div className="text-[11px] text-[#9ca3af] leading-[1.4] pt-2">
               Ссылка действует 30 минут. Не сообщайте её другим людям. Повторная
