@@ -1,4 +1,5 @@
-import { Children } from "react";
+import { ShopProvider } from "./context/ShopContext.jsx";
+import ProductPage from "./pages/ProductPage.jsx";
 import Layout from "./components/layout/Layout.jsx";
 import LayoutSeller from "./components/seller/Layout.jsx";
 import HomePage from "./pages/HomePage.jsx";
@@ -18,6 +19,14 @@ function App() {
         {
           index: true,
           element: <HomePage />,
+        },
+        {
+          path: "product/:productId",
+          element: <ProductPage />,
+        },
+        {
+          path: "product",
+          element: <ProductPage />,
         },
         {
           path: "register",
@@ -57,7 +66,7 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return <ShopProvider><RouterProvider router={router} /></ShopProvider>;
 }
 
 export default App;

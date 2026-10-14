@@ -1,19 +1,20 @@
+import { useShop } from "../../context/ShopContext.jsx";
 import Brand from "./Brand.jsx";
 
 const columns = [
   [
     "Каталог",
     [
-      ["Стройматериалы", "#categories"],
-      ["Инструменты", "#products"],
-      ["Отделка", "#categories"],
-      ["Сантехника", "#categories"],
+      ["Стройматериалы", "/#categories"],
+      ["Инструменты", "/#products"],
+      ["Отделка", "/#categories"],
+      ["Сантехника", "/#categories"],
     ],
   ],
   [
     "Покупателям",
     [
-      ["Доставка и оплата", "#services"],
+      ["Доставка и оплата", "/#services"],
       ["Возврат товара", null],
       ["Частые вопросы", null],
       ["Личный кабинет", null],
@@ -22,17 +23,18 @@ const columns = [
   [
     "Для бизнеса",
     [
-      ["Оптовые поставки", "#business"],
-      ["Коммерческое предложение", "#business"],
-      ["Партнёрство", "#business"],
+      ["Оптовые поставки", "/#business"],
+      ["Коммерческое предложение", "/#business"],
+      ["Партнёрство", "/#business"],
       ["О компании", null],
     ],
   ],
 ];
 
 export default function Footer({ onInfo }) {
+  const { openInfo } = useShop();
   const info = (title) =>
-    onInfo(
+    (onInfo || openInfo)(
       title,
       "STROY UZ — концепция маркетплейса строительных материалов. Этот раздел будет доступен после подключения соответствующей страницы командой.",
     );
