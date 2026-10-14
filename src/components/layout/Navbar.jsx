@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { useState } from "react";
 import Brand from "./Brand.jsx";
 import Icon from "../home/Icon.jsx";
@@ -5,6 +6,7 @@ import Icon from "../home/Icon.jsx";
 export default function Navbar({
   query,
   onSearch,
+  onSearchSubmit,
   cartCount,
   favoriteCount,
   onCart,
@@ -22,7 +24,7 @@ export default function Navbar({
             <span className="home-delivery">Доставка по Узбекистану</span>
           </span>
           <div>
-            <a href="#footer">О компании</a>
+            <Link to="/#footer">О компании</Link>
             <button
               type="button"
               onClick={() =>
@@ -34,7 +36,7 @@ export default function Navbar({
             >
               Помощь
             </button>
-            <a href="#business">Для бизнеса</a>
+            <Link to="/#business">Для бизнеса</Link>
           </div>
           <span>RU / UZ</span>
         </div>
@@ -46,9 +48,7 @@ export default function Navbar({
           role="search"
           onSubmit={(event) => {
             event.preventDefault();
-            document
-              .getElementById("products")
-              .scrollIntoView({ behavior: "smooth" });
+            onSearchSubmit();
           }}
         >
           <button type="submit" aria-label="Найти товары">
@@ -67,18 +67,10 @@ export default function Navbar({
             <Icon name="heart" />
             <span>Избранное{favoriteCount ? ` (${favoriteCount})` : ""}</span>
           </button>
-          <button
-            type="button"
-            onClick={() =>
-              onInfo(
-                "Личный кабинет",
-                "Страница входа разрабатывается командой. Здесь пока доступен просмотр товаров и демонстрационная корзина.",
-              )
-            }
-          >
+          <Link to="/login">
             <Icon name="user" />
             <span>Войти</span>
-          </button>
+          </Link>
           <button type="button" onClick={onCart}>
             <Icon name="cart" />
             <span>Корзина{cartCount ? ` (${cartCount})` : ""}</span>
@@ -100,13 +92,13 @@ export default function Navbar({
         className={`home-container home-navigation ${menuOpen ? "is-open" : ""}`}
         aria-label="Основная навигация"
       >
-        <a
+        <Link
           className="home-button home-button-dark"
-          href="#categories"
+          to="/#categories"
           onClick={() => setMenuOpen(false)}
         >
           Каталог товаров <Icon name="arrow" />
-        </a>
+        </Link>
         {[
           ["Акции", "#products"],
           ["Стройматериалы", "#categories"],
@@ -115,9 +107,9 @@ export default function Navbar({
           ["Доставка и оплата", "#services"],
           ["Оптовым клиентам ↗", "#business"],
         ].map(([label, href]) => (
-          <a key={label} href={href} onClick={() => setMenuOpen(false)}>
+          <Link key={label} to={`/${href}`} onClick={() => setMenuOpen(false)}>
             {label}
-          </a>
+          </Link>
         ))}
       </nav>
     </header>

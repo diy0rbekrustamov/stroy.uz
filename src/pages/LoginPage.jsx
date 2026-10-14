@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { useState } from "react";
 import materialsImg from "../assets/home/hero.png";
 
@@ -36,9 +37,9 @@ export default function LoginPage() {
 
         {/* RIGHT */}
         <div className="bg-white rounded-[16px] p-10">
-          <a href="/" className="text-[13px] text-[#6b7280]">
+          <Link to="/" className="text-[13px] text-[#6b7280]">
             ← Главная
-          </a>
+          </Link>
           <h2 className="text-[38px] font-bold mt-6 text-[#111827]">Вход</h2>
           <p className="text-[#6b7280] text-[14px] mt-2">
             Вернитесь к своему проекту. Один аккаунт для покупок и продаж.
@@ -106,12 +107,12 @@ export default function LoginPage() {
               </label>
             </div>
 
-            <a
-              href="/reset-password"
+            <Link
+              to="/reset-password"
               className="block text-[13px] font-medium text-[#111827] hover:underline"
             >
               Забыли пароль?
-            </a>
+            </Link>
 
             <label className="flex gap-2 text-[12px] text-[#6b7280] cursor-pointer">
               <input type="checkbox" className="accent-[#111e2a] mt-0.5" />Я
@@ -124,12 +125,12 @@ export default function LoginPage() {
 
             <div className="text-[13px] pt-2">
               Нет аккаунта?{" "}
-              <a
-                href="/register"
+              <Link
+                to="/register"
                 className="font-medium text-[#111827] hover:underline"
               >
                 Зарегистрироваться →
-              </a>
+              </Link>
             </div>
 
             <div className="text-[11px] text-[#9ca3af] leading-[1.4] pt-4">

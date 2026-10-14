@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import Brand from "./Brand.jsx";
 const columns = [
   [
@@ -15,7 +16,7 @@ const columns = [
       ["Доставка и оплата", "#services"],
       ["Возврат товара", null],
       ["Частые вопросы", null],
-      ["Личный кабинет", null],
+      ["Личный кабинет", "/login"],
     ],
   ],
   [
@@ -61,7 +62,9 @@ export default function Footer({ onInfo }) {
                 {links.map(([label, href]) => (
                   <li key={label}>
                     {href ? (
-                      <a href={href}>{label}</a>
+                      <Link to={href.startsWith("#") ? `/${href}` : href}>
+                        {label}
+                      </Link>
                     ) : (
                       <button type="button" onClick={() => info(label)}>
                         {label}
