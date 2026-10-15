@@ -1,10 +1,14 @@
+import { Link } from "react-router";
 import { useState } from "react";
+import { useNavigate } from "react-router";
+import { useShop } from "../../context/ShopContext.jsx";
 import Brand from "./Brand.jsx";
 import Icon from "../home/Icon.jsx";
 
 export default function Navbar({
   query,
   onSearch,
+  onSearchSubmit,
   cartCount,
   favoriteCount,
   onCart,
@@ -12,6 +16,16 @@ export default function Navbar({
   onInfo,
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [internalQuery, setInternalQuery] = useState("");
+  const navigate = useNavigate();
+  const shop = useShop();
+  const handleSearch = onSearch || setInternalQuery;
+  const handleInfo = onInfo || shop.openInfo;
+  const handleFavorites = onFavorites || shop.openFavorites;
+  const handleCart = onCart || shop.openCart;
+  const effectiveQuery = query ?? internalQuery;
+  const effectiveCartCount = cartCount ?? shop.cartCount;
+  const effectiveFavoriteCount = favoriteCount ?? shop.favorites.length;
   return (
     <header
       id="top"
@@ -30,13 +44,13 @@ export default function Navbar({
             </span>
           </span>
           <div className="flex items-center gap-3 max-[767px]:!hidden">
-            <a href="#footer" className="text-[#788694]">
+            <Link to="/#footer" className="text-[#788694]">
               О компании
-            </a>
+            </Link>
             <button
               type="button"
               onClick={() =>
-                onInfo(
+                handleInfo(
                   "Помощь",
                   "Для подбора материалов используйте категории и поиск.",
                 )
@@ -45,9 +59,9 @@ export default function Navbar({
             >
               Помощь
             </button>
-            <a href="#business" className="text-[#788694]">
+            <Link to="/#business" className="text-[#788694]">
               Для бизнеса
-            </a>
+            </Link>
           </div>
           <span className="flex items-center gap-3">RU / UZ</span>
         </div>
@@ -61,9 +75,11 @@ export default function Navbar({
           role="search"
           onSubmit={(e) => {
             e.preventDefault();
-            document
-              .getElementById("products")
-              ?.scrollIntoView({ behavior: "smooth" });
+            if (onSearchSubmit) onSearchSubmit();
+            else navigate(`/?q=${encodeURIComponent(effectiveQuery.trim())}#products`);
+            if (window.location.pathname === "/") {
+              document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
+            }
           }}
         >
           <button
@@ -76,8 +92,8 @@ export default function Navbar({
           <input
             aria-label="Поиск"
             placeholder="Найти материалы, инструмент или бренд"
-            value={query}
-            onChange={(e) => onSearch(e.target.value)}
+            value={effectiveQuery}
+            onChange={(e) => handleSearch(e.target.value)}
             className="border-0 bg-transparent w-full min-w-0 h-8 text-[14px] outline-none font-inherit"
           />
           <span
@@ -90,18 +106,18 @@ export default function Navbar({
         <div className="flex items-center gap-[42px] max-[1199px]:gap-4 max-[991px]:ml-auto max-[767px]:ml-auto max-[767px]:gap-2">
           <button
             type="button"
-            onClick={onFavorites}
+            onClick={handleFavorites}
             className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[30px] border-0 cursor-pointer font-inherit"
           >
             <Icon name="heart" />
             <span className="max-[767px]:text-[0px]">
-              Избранное{favoriteCount ? ` (${favoriteCount})` : ""}
+              Избранное{effectiveFavoriteCount ? ` (${effectiveFavoriteCount})` : ""}
             </span>
           </button>
           <button
             type="button"
             onClick={() =>
-              onInfo("Личный кабинет", "Страница входа разрабатывается.")
+              navigate("/login")
             }
             className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[30px] border-0 cursor-pointer font-inherit"
           >
@@ -110,12 +126,12 @@ export default function Navbar({
           </button>
           <button
             type="button"
-            onClick={onCart}
+            onClick={handleCart}
             className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[30px] border-0 cursor-pointer font-inherit"
           >
             <Icon name="cart" />
             <span className="max-[767px]:text-[0px]">
-              Корзина{cartCount ? ` (${cartCount})` : ""}
+              Корзина{effectiveCartCount ? ` (${effectiveCartCount})` : ""}
             </span>
           </button>
         </div>
@@ -133,34 +149,35 @@ export default function Navbar({
       {/*.home-navigation */}
       <nav
         id="home-navigation"
-        className={`w-[min(100%-144px,1296px)] max-[1199px]:w-[calc(100%-64px)] max-[767px]:w-[calc(100%-32px)] mx-auto flex items-center gap-6 max-[1199px]:gap-4 max-[1199px]:text-[12px] max-[1199px]:flex-wrap max-[1199px]:py-3 min-h-[59px] pb-2 text-[14px] max-[767px]:${menuOpen ? "flex flex-col items-stretch gap-0 pb-5" : "hidden"}`}
+        className={`w-[min(100%-144px,1296px)] max-[1199px]:w-[calc(100%-64px)] max-[767px]:w-[calc(100%-32px)] mx-auto flex items-center gap-6 max-[1199px]:gap-4 max-[1199px]:text-[12px] max-[1199px]:flex-wrap max-[1199px]:py-3 min-h-[59px] pb-2 text-[14px] ${menuOpen ? "max-[767px]:flex max-[767px]:flex-col max-[767px]:items-stretch max-[767px]:gap-0 max-[767px]:pb-5" : "max-[767px]:hidden"}`}
       >
-        <a
+        <Link
           className="inline-flex items-center justify-center gap-5 min-h-[52px] max-[767px]:min-h-[48px] py-[14px] px-6 rounded-[7px] bg-[#192b38] text-white font-semibold text-[14px] mr-2 whitespace-nowrap hover:bg-[#344456] hover:-translate-y-px transition-all"
-          href="#categories"
+          to="/#categories"
           onClick={() => setMenuOpen(false)}
         >
           Каталог товаров <Icon name="arrow" />
-        </a>
+        </Link>
         {[
-          ["Акции", "#products"],
-          ["Стройматериалы", "#categories"],
-          ["Инструменты", "#products"],
-          ["Отделка", "#categories"],
-          ["Доставка и оплата", "#services"],
-          ["Оптовым клиентам ↗", "#business"],
+          ["Акции", "/#products"],
+          ["Стройматериалы", "/#categories"],
+          ["Инструменты", "/#products"],
+          ["Отделка", "/#categories"],
+          ["Доставка и оплата", "/#services"],
+          ["Оптовым клиентам ↗", "/#business"],
         ].map(([label, href]) => (
-          <a
+          <Link
             key={label}
-            href={href}
+            to={href}
             onClick={() => setMenuOpen(false)}
             className="whitespace-nowrap max-[767px]:p-3 hover:text-[#192b38]"
           >
             {" "}
             {label}{" "}
-          </a>
+          </Link>
         ))}
       </nav>
     </header>
   );
 }
+

@@ -1,4 +1,5 @@
-import { Children } from "react";
+import { ShopProvider } from "./context/ShopContext.jsx";
+import ProductPage from "./pages/ProductPage.jsx";
 import Layout from "./components/layout/Layout.jsx";
 import LayoutSeller from "./components/seller/Layout.jsx";
 import HomePage from "./pages/HomePage.jsx";
@@ -10,12 +11,13 @@ import AddProductPage from "./pages/Seller/product/AddProductPage.jsx";
 import ProductsPage from "./pages/Seller/product/ProductsPage.jsx";
 import ServicesPage from "./pages/Seller/service/ServicesPage.jsx";
 import OrdersPage from "./pages/Seller/order/OrdersPage.jsx";
-function App() {
-  const router = createBrowserRouter([
+const router = createBrowserRouter([
     {
       path: "/",
       element: <Layout />,
       children: [
+        { path: "product/:productId", element: <ProductPage /> },
+        { path: "product", element: <ProductPage /> },
         {
           index: true,
           element: <HomePage />,
@@ -58,7 +60,9 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+function App() {
+  return <ShopProvider><RouterProvider router={router} /></ShopProvider>;
 }
 
 export default App;
+
