@@ -1,10 +1,12 @@
+import { useLanguage } from "../i18n/useLanguage.js";
 import { Link } from "react-router";
 import { products, formatPrice } from "../components/home/homeData.js";
 import { useShop } from "../context/ShopContext.jsx";
 import { useState } from "react";
 
 export default function CartPage() {
-  const { cart, changeQuantity, closeDialog } = useShop();
+  const { t } = useLanguage();
+  const { cart, changeQuantity } = useShop();
   const [view, setView] = useState("list"); // list | grid
 
   const entries = products.filter((p) => cart[p.id]);
@@ -12,22 +14,21 @@ export default function CartPage() {
     (sum, p) => sum + p.price * (cart[p.id] || 0),
     0,
   );
-  const count = entries.length;
 
   const totalQty = Object.values(cart).reduce((a, b) => a + b, 0);
 
   if (entries.length === 0) {
     return (
       <div className="max-w-[1280px] mx-auto px-6 py-20 text-center">
-        <div className="text-[18px] font-bold">Savatcham bo'sh</div>
+        <div className="text-[18px] font-bold">{t("Корзина пуста")}</div>
         <p className="text-[14px] text-[#8A94A0] mt-2">
-          Siz tanlagan qurilish materiallari yo'q
+          {t("Вы ещё не выбрали строительные материалы")}
         </p>
         <Link
           to="/"
           className="inline-flex mt-6 h-11 px-6 bg-[#111] text-white rounded-full text-[14px] font-semibold items-center"
         >
-          Katalogga qaytish
+          {t("Вернуться в каталог")}
         </Link>
       </div>
     );
@@ -38,20 +39,21 @@ export default function CartPage() {
       {/* Breadcrumb */}
       <div className="flex items-center gap-1.5 text-[12px] text-[#8A94A0] mb-6">
         <Link to="/" className="hover:text-black">
-          Bosh sahifa
+          {t("Главная")}
         </Link>
         <span>›</span>
-        <span className="text-black">Savat</span>
+        <span className="text-black">{t("Корзина")}</span>
       </div>
 
       {/* Header + Toggle */}
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-8">
         <div>
           <h1 className="text-[30px] md:text-[32px] font-extrabold tracking-[-0.02em]">
-            Savatcham ({totalQty})
+            {t("Моя корзина (")}
+            {totalQty})
           </h1>
           <p className="text-[14px] text-[#8A94A0] mt-1">
-            Siz tanlagan qurilish materiallari
+            {t("Выбранные вами строительные материалы")}
           </p>
         </div>
 
@@ -60,13 +62,13 @@ export default function CartPage() {
             onClick={() => setView("list")}
             className={`h-9 px-4 rounded-full text-[13px] font-semibold flex items-center gap-2 transition ${view === "list" ? "bg-black text-white" : "text-[#8A94A0] hover:text-black"}`}
           >
-            ☰ Ro'yxat
+            {t("☰ Список")}
           </button>
           <button
             onClick={() => setView("grid")}
             className={`h-9 px-4 rounded-full text-[13px] font-semibold flex items-center gap-2 transition ${view === "grid" ? "bg-black text-white" : "text-[#8A94A0] hover:text-black"}`}
           >
-            ⊞ Karta
+            {t("⊞ Карточки")}
           </button>
         </div>
       </div>
@@ -93,10 +95,10 @@ export default function CartPage() {
                       to={`/product/${product.id}`}
                       className="font-bold text-[14px] leading-tight hover:underline line-clamp-2"
                     >
-                      {product.name}
+                      {t(product.name)}
                     </Link>
                     <div className="text-[11px] text-[#8A94A0] mt-1">
-                      {product.brand || "Samarqand Qurilish"}
+                      {t(product.brand || "Samarqand Qurilish")}
                     </div>
                     <div className="mt-3 inline-flex items-center border border-[#E9EAEC] rounded-full h-9 px-1">
                       <button
@@ -106,7 +108,7 @@ export default function CartPage() {
                         −
                       </button>
                       <span className="w-8 text-center text-[14px] font-semibold">
-                        {cart[product.id]}
+                        {t(cart[product.id])}
                       </span>
                       <button
                         onClick={() => changeQuantity(product.id, 1)}
@@ -126,11 +128,12 @@ export default function CartPage() {
                       🗑️
                     </button>
                     <div className="font-bold text-[14px] mt-auto">
-                      {formatPrice(product.price)} so'm
+                      {formatPrice(product.price)}
+                      {t("сум")}
                     </div>
                     <div className="text-[11px] text-[#8A94A0]">
-                      {formatPrice(product.price)} so'm /{" "}
-                      {product.unit || "dona"}
+                      {formatPrice(product.price)}
+                      {t(" сум /")} {t(product.unit || "шт.")}
                     </div>
                   </div>
                 </div>
@@ -147,21 +150,23 @@ export default function CartPage() {
                     <Link
                       to={`/product/${product.id}`}
                       className="home-product-link"
-                      aria-label={`Открыть товар: ${product.name}`}
+                      aria-label={t(`Открыть товар: ${product.name}`)}
                     >
                       <img
                         src={product.image}
-                        alt={product.name}
+                        alt={t(product.name)}
                         loading="lazy"
                         width="1254"
                         height="1254"
                       />
                     </Link>
-                    <span className="home-product-badge">{product.badge}</span>
+                    <span className="home-product-badge">
+                      {t(product.badge)}
+                    </span>
                     <button
                       className="home-favorite"
                       type="button"
-                      aria-label={`Убрать: ${product.name}`}
+                      aria-label={t(`Убрать: ${product.name}`)}
                       onClick={() =>
                         changeQuantity(product.id, -cart[product.id])
                       }
@@ -170,19 +175,22 @@ export default function CartPage() {
                     </button>
                   </div>
 
-                  <p className="home-muted">{product.category}</p>
+                  <p className="home-muted">{t(product.category)}</p>
 
                   <h3>
-                    <Link to={`/product/${product.id}`}>{product.name}</Link>
+                    <Link to={`/product/${product.id}`}>{t(product.name)}</Link>
                   </h3>
 
                   <p className="home-muted">
-                    {product.brand || product.details}
+                    {t(product.brand || product.details)}
                   </p>
 
                   <p className="home-product-price">
                     <strong>{formatPrice(product.price)}</strong>
-                    <span>сум / {product.unit}</span>
+                    <span>
+                      {t("сум / ")}
+                      {t(product.unit)}
+                    </span>
                   </p>
 
                   <div className="home-product-bottom">
@@ -190,20 +198,20 @@ export default function CartPage() {
                     <div className="shop-modal-qty cart-qty">
                       <button
                         onClick={() => changeQuantity(product.id, -1)}
-                        aria-label="Уменьшить"
+                        aria-label={t("Уменьшить")}
                       >
                         −
                       </button>
-                      <span>{cart[product.id]}</span>
+                      <span>{t(cart[product.id])}</span>
                       <button
                         onClick={() => changeQuantity(product.id, 1)}
-                        aria-label="Увеличить"
+                        aria-label={t("Увеличить")}
                       >
                         +
                       </button>
                     </div>
 
-                    {/* O'chirish - Savatga o'rniga */}
+                    {/* Удалить - Корзинаga o'rniga */}
                     <button
                       type="button"
                       className="home-button home-button--danger"
@@ -211,7 +219,7 @@ export default function CartPage() {
                         changeQuantity(product.id, -cart[product.id])
                       }
                     >
-                      O'chirish
+                      {t("Удалить")}
                     </button>
                   </div>
                 </div>
@@ -220,38 +228,47 @@ export default function CartPage() {
           )}
         </div>
 
-        {/* Buyurtma hisoboti - rasmga 1 ga 1 */}
+        {/* Состав заказа - rasmga 1 ga 1 */}
         <div className="bg-[#F9FAFB] rounded-[16px] p-6 border border-[#F0F0F0] sticky top-6">
-          <div className="font-bold text-[16px]">Buyurtma hisoboti</div>
+          <div className="font-bold text-[16px]">{t("Состав заказа")}</div>
           <div className="mt-5 space-y-3">
             <div className="flex justify-between text-[13px] text-[#8A94A0]">
-              <span>Mahsulotlar ({totalQty})</span>
+              <span>
+                {t("Товары (")}
+                {totalQty})
+              </span>
               <span className="font-semibold text-[#111]">
-                {formatPrice(total)} so'm
+                {formatPrice(total)}
+                {t("сум")}
               </span>
             </div>
             <div className="flex justify-between text-[13px] text-[#8A94A0]">
-              <span>Yetkazib berish</span>
-              <span className="text-[#111] font-medium">Kelishiladi</span>
+              <span>{t("Доставка")}</span>
+              <span className="text-[#111] font-medium">
+                {t("По согласованию")}
+              </span>
             </div>
           </div>
           <div className="mt-6 pt-4 border-t border-[#EDEEF0] flex justify-between items-center">
-            <span className="font-bold text-[14px]">Jami</span>
+            <span className="font-bold text-[14px]">{t("Итого")}</span>
             <span className="font-extrabold text-[20px] tracking-tight">
-              {formatPrice(total)} so'm
+              {formatPrice(total)}
+              {t("сум")}
             </span>
           </div>
           <Link
             to="/checkout"
             className="w-full mt-5 h-[48px] bg-[#FFC107] hover:bg-[#FFB300] rounded-[12px] font-bold text-[14px] flex items-center justify-center gap-2 text-black transition"
           >
-            Buyurtma berish <span>→</span>
+            {t("Оформить заказ")}
+            <span>→</span>
           </Link>
           <div className="mt-4 flex gap-2 text-[11px] text-[#8A94A0] leading-snug">
             <span className="mt-0.5">🛡️</span>
             <span>
-              Buyurtmani tasdiqlashdan oldin barcha ma'lumotlarni
-              tekshirishingiz mumkin.
+              {t(
+                "Перед подтверждением заказа вы сможете проверить все данные.",
+              )}
             </span>
           </div>
         </div>
