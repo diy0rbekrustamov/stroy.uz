@@ -4,7 +4,11 @@ import { useShop } from "../context/ShopContext.jsx";
 import { useState } from "react";
 
 export default function CartPage() {
+<<<<<<< HEAD
   const { cart, changeQuantity, closeDialog } = useShop();
+=======
+  const { cart, changeQuantity } = useShop();
+>>>>>>> feature/catalog-categories
   const [view, setView] = useState("list"); // list | grid
 
   const entries = products.filter((p) => cart[p.id]);
@@ -72,7 +76,11 @@ export default function CartPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6 items-start">
+<<<<<<< HEAD
         {/* Items - view toggle */}
+=======
+        {/* Items */}
+>>>>>>> feature/catalog-categories
         <div className="bg-white rounded-[16px] border border-[#F0F0F0] overflow-hidden">
           {view === "list" ? (
             <div className="divide-y divide-[#F0F0F0]">
@@ -123,7 +131,11 @@ export default function CartPage() {
                       }
                       className="text-[#D0D3D6] hover:text-black text-[16px]"
                     >
+<<<<<<< HEAD
                       🗑️
+=======
+                      🗑
+>>>>>>> feature/catalog-categories
                     </button>
                     <div className="font-bold text-[14px] mt-auto">
                       {formatPrice(product.price)} so'm
@@ -184,9 +196,13 @@ export default function CartPage() {
                     <strong>{formatPrice(product.price)}</strong>
                     <span>сум / {product.unit}</span>
                   </p>
+<<<<<<< HEAD
 
                   <div className="home-product-bottom">
                     {/* Counter - list dagi kabi */}
+=======
+                  <div className="home-product-bottom">
+>>>>>>> feature/catalog-categories
                     <div className="shop-modal-qty cart-qty">
                       <button
                         onClick={() => changeQuantity(product.id, -1)}
@@ -203,7 +219,10 @@ export default function CartPage() {
                       </button>
                     </div>
 
+<<<<<<< HEAD
                     {/* O'chirish - Savatga o'rniga */}
+=======
+>>>>>>> feature/catalog-categories
                     <button
                       type="button"
                       className="home-button home-button--danger"
@@ -220,7 +239,11 @@ export default function CartPage() {
           )}
         </div>
 
+<<<<<<< HEAD
         {/* Buyurtma hisoboti - rasmga 1 ga 1 */}
+=======
+        {/* Buyurtma hisoboti */}
+>>>>>>> feature/catalog-categories
         <div className="bg-[#F9FAFB] rounded-[16px] p-6 border border-[#F0F0F0] sticky top-6">
           <div className="font-bold text-[16px]">Buyurtma hisoboti</div>
           <div className="mt-5 space-y-3">
@@ -248,7 +271,11 @@ export default function CartPage() {
             Buyurtma berish <span>→</span>
           </Link>
           <div className="mt-4 flex gap-2 text-[11px] text-[#8A94A0] leading-snug">
+<<<<<<< HEAD
             <span className="mt-0.5">🛡️</span>
+=======
+            <span className="mt-0.5">🛡</span>
+>>>>>>> feature/catalog-categories
             <span>
               Buyurtmani tasdiqlashdan oldin barcha ma'lumotlarni
               tekshirishingiz mumkin.

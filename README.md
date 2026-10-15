@@ -39,3 +39,14 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the Oxlint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+
+## Каталог и категории STROY UZ
+
+- `/catalog` — каталог товаров: категории, поиск, сортировка, диапазон цен, бренд, корзина, избранное.
+- `/categories` — все шесть категорий; карточка ведёт в каталог с выбранным фильтром.
+- `/catalog?category=tools` — пример ссылки на конкретную категорию.
+- `/catalog?q=цемент` — пример поиска из шапки.
+- Кнопки «Каталог товаров», «Открыть каталог» и «В каталог» ведут в `/catalog`, «Все категории» — в `/categories`.
+- Дополнительные пять позиций каталога и цены демонстрационные: реальные товары следует заменить данными поставщика.
+
+Запуск после распаковки: `npm install`, затем `npm run dev`.

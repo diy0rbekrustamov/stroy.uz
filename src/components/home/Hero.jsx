@@ -1,5 +1,6 @@
 import hero from "../../assets/home/hero.png";
 import Icon from "./Icon.jsx";
+import { Link } from "react-router";
 
 export default function Hero() {
   return (
@@ -19,9 +20,9 @@ export default function Hero() {
             <br />и собирайте заказ в одном месте.
           </p>
           <div className="home-hero-actions">
-            <a className="home-button" href="#categories">
+            <Link className="home-button" to="/catalog">
               Открыть каталог <Icon name="arrow" />
-            </a>
+            </Link>
             <a className="home-button home-button-light" href="#business">
               Для бизнеса <Icon name="arrow" />
             </a>

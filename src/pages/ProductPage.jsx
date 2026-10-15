@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import Icon from "../components/home/Icon.jsx";
-import { products, formatPrice } from "../components/home/homeData.js";
+import { formatPrice } from "../components/home/homeData.js";
+import { catalogProducts as products, catalogCategoryPath } from "../data/catalogData.js";
 import { useShop } from "../context/ShopContext.jsx";
 import "./ProductPage.css";
 
@@ -117,8 +118,20 @@ export default function ProductPage() {
     products.find((item) => item.id === "drill");
 =======
   const product = products.find((item) => item.id === productId) || products.find((item) => item.id === "drill");
+<<<<<<< HEAD
 >>>>>>> 17a860a4b294322dcdb344b98c34d65bad6bd269
   const detail = productDetails[product.id];
+=======
+  const detail = productDetails[product.id] || {
+    title: product.name,
+    eyebrow: "МАТЕРИАЛЫ ДЛЯ СТРОИТЕЛЬСТВА И РЕМОНТА",
+    article: `SU-${product.id.toUpperCase()}`,
+    chips: [product.category, product.unit],
+    sectionTitle: product.name,
+    description: `${product.name}. ${product.details}. Перед покупкой уточните характеристики и условия доставки у поставщика.`,
+    specs: [["Тип товара", product.category], ["Наименование", product.name], ["Характеристики", product.details], ["Единица продажи", product.unit]],
+  };
+>>>>>>> feature/catalog-categories
   const { favorites, toggleFavorite, addToCart, openCart } = useShop();
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("specs");
@@ -178,7 +191,7 @@ export default function ProductPage() {
             >
 =======
           <Link to="/">Главная</Link><span>/</span>
-          <Link to="/#products">{product.group === "tools" ? "Инструменты" : product.group === "renovate" ? "Отделка" : "Стройматериалы"}</Link>
+          <Link to={catalogCategoryPath(product.categoryId)}> {product.category}</Link>
           <span>/</span><span>{product.id === "drill" ? "Дрели-шуруповёрты" : product.name}</span>
         </nav>
         <section className="product-main-grid" aria-label="Информация о товаре">
@@ -498,9 +511,9 @@ export default function ProductPage() {
               </div>
 =======
       <section className="product-related-section product-container" aria-labelledby="product-related-title">
-        <div className="product-related-heading"><div><p>ДЛЯ ВАШЕГО ПРОЕКТА</p><h2 id="product-related-title">Дополните заказ</h2></div><Link to="/#products">Все товары <Icon name="arrow" /></Link></div>
+        <div className="product-related-heading"><div><p>ДЛЯ ВАШЕГО ПРОЕКТА</p><h2 id="product-related-title">Дополните заказ</h2></div><Link to="/catalog">Все товары <Icon name="arrow" /></Link></div>
         <div className="product-related-grid">
-          {[...products.filter((item) => item.id !== "drill"), products.find((item) => item.id === "drill")].map((item) => (
+          {[...products.filter((item) => item.id !== product.id).slice(0, 3), product].map((item) => (
             <article className="product-related-card" key={item.id}>
               <div className="product-related-image">
                 <Link to={`/product/${item.id}`} aria-label={`Открыть товар: ${item.name}`}><img src={item.image} alt={item.name} loading="lazy" /></Link>

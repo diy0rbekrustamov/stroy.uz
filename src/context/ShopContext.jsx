@@ -38,7 +38,6 @@ export function ShopProvider({ children }) {
     cart, favorites, cartCount, addToCart, changeQuantity, toggleFavorite,
     dialog, closeDialog: () => setDialog(null),
     openCart: () => setDialog({ type: "cart", title: "Корзина" }),
-    openFavorites: () => setDialog({ type: "favorites", title: "Избранное" }),
     openInfo: (title, text = "Этот раздел пока готовится.") => setDialog({ type: "info", title, text }),
   }), [cart, favorites, cartCount, dialog]);
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
