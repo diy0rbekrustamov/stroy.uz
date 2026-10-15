@@ -1,4 +1,5 @@
 import { ShopProvider } from "./context/ShopContext.jsx";
+import LanguageProvider from "./i18n/LanguageProvider.jsx";
 import ProductPage from "./pages/ProductPage.jsx";
 import Layout from "./components/layout/Layout.jsx";
 import LayoutSeller from "./components/seller/Layout.jsx";
@@ -12,57 +13,62 @@ import ProductsPage from "./pages/Seller/product/ProductsPage.jsx";
 import ServicesPage from "./pages/Seller/service/ServicesPage.jsx";
 import OrdersPage from "./pages/Seller/order/OrdersPage.jsx";
 const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Layout />,
-      children: [
-        { path: "product/:productId", element: <ProductPage /> },
-        { path: "product", element: <ProductPage /> },
-        {
-          index: true,
-          element: <HomePage />,
-        },
-        {
-          path: "register",
-          element: <RegisterPage />,
-        },
-        {
-          path: "login",
-          element: <LoginPage />,
-        },
-        {
-          path: "reset-password",
-          element: <ResetPasswordPage />,
-        },
-        {
-          path: "seller",
-          element: <LayoutSeller />,
-          children: [
-            {
-              index: true,
-              element: <ProductsPage />,
-            },
-            {
-              path: "add-product",
-              element: <AddProductPage />,
-            },
-            {
-              path: "services",
-              element: <ServicesPage />,
-            },
-            {
-              path: "orders",
-              element: <OrdersPage />,
-            },
-          ],
-        },
-      ],
-    },
-  ]);
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      { path: "product/:productId", element: <ProductPage /> },
+      { path: "product", element: <ProductPage /> },
+      {
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: "register",
+        element: <RegisterPage />,
+      },
+      {
+        path: "login",
+        element: <LoginPage />,
+      },
+      {
+        path: "reset-password",
+        element: <ResetPasswordPage />,
+      },
+      {
+        path: "seller",
+        element: <LayoutSeller />,
+        children: [
+          {
+            index: true,
+            element: <ProductsPage />,
+          },
+          {
+            path: "add-product",
+            element: <AddProductPage />,
+          },
+          {
+            path: "services",
+            element: <ServicesPage />,
+          },
+          {
+            path: "orders",
+            element: <OrdersPage />,
+          },
+        ],
+      },
+    ],
+  },
+]);
 
 function App() {
-  return <ShopProvider><RouterProvider router={router} /></ShopProvider>;
+  return (
+    <LanguageProvider>
+      <ShopProvider>
+        <RouterProvider router={router} />
+      </ShopProvider>
+    </LanguageProvider>
+  );
 }
 
 export default App;
-

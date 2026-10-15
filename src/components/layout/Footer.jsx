@@ -1,3 +1,4 @@
+import { useLanguage } from "../../i18n/useLanguage.js";
 import { Link } from "react-router";
 import { useShop } from "../../context/ShopContext.jsx";
 import Brand from "./Brand.jsx";
@@ -33,6 +34,8 @@ const columns = [
 ];
 
 export default function Footer({ onInfo }) {
+  const { t } = useLanguage();
+
   const { openInfo } = useShop();
   const info = (title) =>
     (onInfo || openInfo)(
@@ -51,9 +54,9 @@ export default function Footer({ onInfo }) {
             <Brand dark />
 
             <p className="text-[#aab2bd] text-[16px] mt-7 max-[767px]:mt-4">
-              Материалы для больших идей.
+              {t("Материалы для больших идей.")}
               <br />
-              Строительство. Ремонт. Результат.
+              {t("Строительство. Ремонт. Результат.")}
             </p>
             <div className="flex gap-3 mt-5">
               <button
@@ -75,23 +78,25 @@ export default function Footer({ onInfo }) {
           {columns.map(([title, links]) => (
             <div key={title}>
               <h3 className="text-[16px] font-semibold mb-5 max-[767px]:text-[14px]">
-                {title}
+                {t(title)}
               </h3>
               <ul className="list-none p-0 m-0 grid gap-4 text-[#aab2bd] max-[767px]:text-[12px]">
                 {links.map(([label, href]) => (
                   <li key={label}>
-                    {href ? (
-                      <Link to={href} className="text-inherit no-underline">
-                        {label}
-                      </Link>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => info(label)}
-                        className="text-inherit bg-transparent p-0 text-left border-0 cursor-pointer"
-                      >
-                        {label}
-                      </button>
+                    {t(
+                      href ? (
+                        <Link to={href} className="text-inherit no-underline">
+                          {t(label)}
+                        </Link>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => info(label)}
+                          className="text-inherit bg-transparent p-0 text-left border-0 cursor-pointer"
+                        >
+                          {t(label)}
+                        </button>
+                      ),
                     )}
                   </li>
                 ))}
@@ -101,21 +106,21 @@ export default function Footer({ onInfo }) {
         </div>
         {/*.home-footer-bottom */}
         <div className="flex justify-between gap-6 border-t border-[#3a4450] mt-10 pt-[44px] text-[11px] text-[#aab2bd] max-[767px]:flex-col max-[767px]:pt-6">
-          <span>© STROY UZ. Концепция интернет-магазина.</span>
+          <span>{t("© STROY UZ. Концепция интернет-магазина.")}</span>
           <div className="flex gap-4">
             <button
               type="button"
               onClick={() => info("Конфиденциальность")}
               className="bg-transparent p-0 text-left border-0 cursor-pointer text-inherit"
             >
-              Конфиденциальность
+              {t("Конфиденциальность")}
             </button>
             <button
               type="button"
               onClick={() => info("Условия использования")}
               className="bg-transparent p-0 text-left border-0 cursor-pointer text-inherit"
             >
-              Условия использования
+              {t("Условия использования")}
             </button>
           </div>
         </div>
@@ -123,4 +128,3 @@ export default function Footer({ onInfo }) {
     </footer>
   );
 }
-

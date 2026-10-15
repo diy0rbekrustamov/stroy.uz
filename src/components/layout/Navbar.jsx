@@ -1,3 +1,4 @@
+import { useLanguage } from "../../i18n/useLanguage.js";
 import { Link } from "react-router";
 import { useState } from "react";
 import { useNavigate } from "react-router";
@@ -15,6 +16,8 @@ export default function Navbar({
   onFavorites,
   onInfo,
 }) {
+  const { t, language, setLanguage } = useLanguage();
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [internalQuery, setInternalQuery] = useState("");
   const navigate = useNavigate();
@@ -38,14 +41,15 @@ export default function Navbar({
             <span className="flex items-center gap-3 [&_.home-icon]:w-[14px] [&_.home-icon]:h-[14px]">
               <Icon name="pin" />
             </span>
-            Бухара{" "}
+            {t("Бухара")}
+            {t(" ")}
             <span className="text-[#788694] max-[767px]:!hidden">
-              Доставка по Узбекистану
+              {t("Доставка по Узбекистану")}
             </span>
           </span>
           <div className="flex items-center gap-3 max-[767px]:!hidden">
             <Link to="/#footer" className="text-[#788694]">
-              О компании
+              {t("О компании")}
             </Link>
             <button
               type="button"
@@ -57,13 +61,41 @@ export default function Navbar({
               }
               className="text-[#788694] bg-transparent p-0 border-0 cursor-pointer font-inherit"
             >
-              Помощь
+              {t("Помощь")}
             </button>
             <Link to="/#business" className="text-[#788694]">
-              Для бизнеса
+              {t("Для бизнеса")}
             </Link>
           </div>
-          <span className="flex items-center gap-3">RU / UZ</span>
+          <div
+            className="flex items-center gap-1"
+            role="group"
+            aria-label={
+              language === "ru" ? "Язык интерфейса" : "Interfeys tili"
+            }
+          >
+            <button
+              type="button"
+              lang="ru"
+              aria-label="Русский"
+              aria-pressed={language === "ru"}
+              onClick={() => setLanguage("ru")}
+              className={`cursor-pointer rounded px-2 py-1 focus-visible:outline-2 focus-visible:outline-amber-600 ${language === "ru" ? "font-bold text-[#192b38] bg-white" : "text-[#788694]"}`}
+            >
+              RU
+            </button>
+            <span aria-hidden="true">/</span>
+            <button
+              type="button"
+              lang="uz"
+              aria-label="O‘zbekcha"
+              aria-pressed={language === "uz"}
+              onClick={() => setLanguage("uz")}
+              className={`cursor-pointer rounded px-2 py-1 focus-visible:outline-2 focus-visible:outline-amber-600 ${language === "uz" ? "font-bold text-[#192b38] bg-white" : "text-[#788694]"}`}
+            >
+              UZ
+            </button>
+          </div>
         </div>
       </div>
 
@@ -76,22 +108,27 @@ export default function Navbar({
           onSubmit={(e) => {
             e.preventDefault();
             if (onSearchSubmit) onSearchSubmit();
-            else navigate(`/?q=${encodeURIComponent(effectiveQuery.trim())}#products`);
+            else
+              navigate(
+                `/?q=${encodeURIComponent(effectiveQuery.trim())}#products`,
+              );
             if (window.location.pathname === "/") {
-              document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
+              document
+                .getElementById("products")
+                ?.scrollIntoView({ behavior: "smooth" });
             }
           }}
         >
           <button
             type="submit"
-            aria-label="Найти товары"
+            aria-label={t("Найти товары")}
             className="bg-transparent p-[6px_0] flex border-0 cursor-pointer"
           >
             <Icon name="search" />
           </button>
           <input
-            aria-label="Поиск"
-            placeholder="Найти материалы, инструмент или бренд"
+            aria-label={t("Поиск")}
+            placeholder={t("Найти материалы, инструмент или бренд")}
             value={effectiveQuery}
             onChange={(e) => handleSearch(e.target.value)}
             className="border-0 bg-transparent w-full min-w-0 h-8 text-[14px] outline-none font-inherit"
@@ -111,18 +148,17 @@ export default function Navbar({
           >
             <Icon name="heart" />
             <span className="max-[767px]:text-[0px]">
-              Избранное{effectiveFavoriteCount ? ` (${effectiveFavoriteCount})` : ""}
+              {t("Избранное")}
+              {t(effectiveFavoriteCount ? ` (${effectiveFavoriteCount})` : "")}
             </span>
           </button>
           <button
             type="button"
-            onClick={() =>
-              navigate("/login")
-            }
+            onClick={() => navigate("/login")}
             className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[30px] border-0 cursor-pointer font-inherit"
           >
             <Icon name="user" />
-            <span className="max-[767px]:text-[0px]">Войти</span>
+            <span className="max-[767px]:text-[0px]">{t("Войти")}</span>
           </button>
           <button
             type="button"
@@ -131,14 +167,15 @@ export default function Navbar({
           >
             <Icon name="cart" />
             <span className="max-[767px]:text-[0px]">
-              Корзина{effectiveCartCount ? ` (${effectiveCartCount})` : ""}
+              {t("Корзина")}
+              {t(effectiveCartCount ? ` (${effectiveCartCount})` : "")}
             </span>
           </button>
         </div>
         <button
           className="hidden max-[767px]:flex bg-transparent p-2 border-0 cursor-pointer"
           type="button"
-          aria-label="Меню"
+          aria-label={t("Меню")}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen(!menuOpen)}
         >
@@ -156,7 +193,8 @@ export default function Navbar({
           to="/#categories"
           onClick={() => setMenuOpen(false)}
         >
-          Каталог товаров <Icon name="arrow" />
+          {t("Каталог товаров")}
+          <Icon name="arrow" />
         </Link>
         {[
           ["Акции", "/#products"],
@@ -172,12 +210,12 @@ export default function Navbar({
             onClick={() => setMenuOpen(false)}
             className="whitespace-nowrap max-[767px]:p-3 hover:text-[#192b38]"
           >
-            {" "}
-            {label}{" "}
+            {t(" ")}
+            {t(label)}
+            {t(" ")}
           </Link>
         ))}
       </nav>
     </header>
   );
 }
-

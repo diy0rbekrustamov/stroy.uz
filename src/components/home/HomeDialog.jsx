@@ -1,5 +1,8 @@
+import { useLanguage } from "../../i18n/useLanguage.js";
 import { useEffect, useRef } from "react";
 export default function HomeDialog({ dialog, onClose, children }) {
+  const { t } = useLanguage();
+
   const ref = useRef(null);
   useEffect(() => {
     if (dialog && !ref.current.open) ref.current.showModal();
@@ -26,8 +29,8 @@ export default function HomeDialog({ dialog, onClose, children }) {
       }}
     >
       <div className="home-dialog-heading">
-        <h2 id="home-dialog-title">{dialog?.title}</h2>
-        <button type="button" aria-label="Закрыть" onClick={onClose}>
+        <h2 id="home-dialog-title">{t(dialog?.title)}</h2>
+        <button type="button" aria-label={t("Закрыть")} onClick={onClose}>
           ×
         </button>
       </div>
