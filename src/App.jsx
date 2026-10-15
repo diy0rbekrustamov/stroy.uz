@@ -13,6 +13,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import AddProductPage from "./pages/Seller/product/AddProductPage.jsx";
 import ProductsPage from "./pages/Seller/product/ProductsPage.jsx";
 import ServicesPage from "./pages/Seller/service/ServicesPage.jsx";
+import CartPage from "./pages/CartPage.jsx";
 function App() {
   const router = createBrowserRouter([
     {
@@ -56,6 +57,10 @@ function App() {
           element: <ResetPasswordPage />,
         },
         {
+          path: "cart",
+          element: <CartPage />,
+        },
+        {
           path: "seller",
           element: <LayoutSeller />,
           children: [
@@ -81,7 +86,11 @@ function App() {
     },
   ]);
 
-  return <ShopProvider><RouterProvider router={router} /></ShopProvider>;
+  return (
+    <ShopProvider>
+      <RouterProvider router={router} />
+    </ShopProvider>
+  );
 }
 
 export default App;

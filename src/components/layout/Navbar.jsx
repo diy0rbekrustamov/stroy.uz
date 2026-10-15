@@ -20,7 +20,7 @@ export default function Navbar({
   const handleSearch = onSearch || setInternalQuery;
   const handleInfo = onInfo || shop.openInfo;
   const handleFavorites = onFavorites || (() => navigate("/favorites"));
-  const handleCart = onCart || shop.openCart;
+  const handleCart = onCart || (() => navigate("/cart"));
   const effectiveQuery = query ?? internalQuery;
   const effectiveCartCount = cartCount ?? shop.cartCount;
   const effectiveFavoriteCount = favoriteCount ?? shop.favorites.length;
@@ -73,7 +73,9 @@ export default function Navbar({
           role="search"
           onSubmit={(e) => {
             e.preventDefault();
-            navigate(`/catalog${effectiveQuery.trim() ? `?q=${encodeURIComponent(effectiveQuery.trim())}` : ""}`);
+            navigate(
+              `/catalog${effectiveQuery.trim() ? `?q=${encodeURIComponent(effectiveQuery.trim())}` : ""}`,
+            );
           }}
         >
           <button
@@ -115,9 +117,7 @@ export default function Navbar({
           </button>
           <button
             type="button"
-            onClick={() =>
-              navigate("/login")
-            }
+            onClick={() => navigate("/login")}
             className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[30px] border-0 cursor-pointer font-inherit"
           >
             <Icon name="user" />
