@@ -1,0 +1,15 @@
+.shop-modal-backdrop { position:fixed;inset:0;z-index:1000;background:rgba(14,29,40,.57);display:flex;align-items:center;justify-content:center;padding:20px;font-family:Arial,sans-serif;color:#192b38; }
+.shop-modal {background:#fff;width:min(100%,530px);border-radius:16px;padding:27px;max-height:min(85vh,750px);overflow:auto;box-shadow:0 22px 80px #0003;}
+.shop-modal-head {display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e5e9eb;padding-bottom:15px;margin-bottom:18px;}
+.shop-modal-head h2 {font-size:26px;font-weight:700;margin:0;}
+.shop-modal-head button {font-size:29px;width:38px;height:38px;display:grid;place-items:center;border:0;border-radius:8px;background:#f5f6f7;cursor:pointer;}
+.shop-modal-products {display:grid;gap:12px;}
+.shop-modal-item {display:flex;align-items:center;gap:15px;border-bottom:1px solid #e6e9ec;padding-bottom:12px;}
+.shop-modal-item img {width:94px;height:94px;object-fit:contain;background:#f5f6f7;border-radius:10px;}
+.shop-modal-item-content {display:flex;flex-direction:column;align-items:flex-start;gap:8px;flex:1;}
+.shop-modal-item-content>a {font-weight:700;text-decoration:none;color:inherit;}
+.shop-modal-qty {display:flex;align-items:center;gap:16px;border:1px solid #e1e5e9;border-radius:6px;}
+.shop-modal-qty button {border:0;background:none;padding:5px 12px;cursor:pointer;}
+.shop-modal-remove {border:0;background:none;padding:0;color:#768393;cursor:pointer;}
+.shop-modal-total {display:flex;justify-content:space-between;font-size:20px;padding-top:20px;}
+.shop-modal-info {font-size:15px;line-height:1.6;color:#657381;}

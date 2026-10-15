@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router";
+import { useShop } from "../context/ShopContext.jsx";
 import Navbar from "../components/layout/Navbar.jsx";
 import Footer from "../components/layout/Footer.jsx";
 import Hero from "../components/home/Hero.jsx";
@@ -16,10 +18,10 @@ import business from "../assets/home/business.png";
 import "./HomePage.css";
 
 function HomePage() {
-  const [query, setQuery] = useState("");
+  const location = useLocation();
+  const { cart, favorites, addToCart, toggleFavorite, changeQuantity } = useShop();
+  const [query, setQuery] = useState(() => typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("q") || "" : "");
   const [filter, setFilter] = useState("all");
-  const [favorites, setFavorites] = useState([]);
-  const [cart, setCart] = useState({});
   const [dialog, setDialog] = useState(null);
   const [announcement, setAnnouncement] = useState("");
   const cartCount = Object.values(cart).reduce((sum, count) => sum + count, 0);
@@ -29,28 +31,16 @@ function HomePage() {
     setQuery("");
     document.getElementById("products").scrollIntoView({ behavior: "smooth" });
   };
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    setQuery(params.get("q") || "");
+    if (params.has("favorites")) setFilter("favorites");
+  }, [location.search]);
   const add = (product) => {
-    setCart((current) => ({
-      ...current,
-      [product.id]: (current[product.id] || 0) + 1,
-    }));
+    addToCart(product);
     setAnnouncement(`${product.name} добавлен в корзину`);
   };
-  const favorite = (id) =>
-    setFavorites((current) =>
-      current.includes(id)
-        ? current.filter((item) => item !== id)
-        : [...current, id],
-    );
-  const changeQuantity = (id, delta) =>
-    setCart((current) => {
-      const next = {
-        ...current,
-        [id]: Math.max(0, (current[id] || 0) + delta),
-      };
-      if (!next[id]) delete next[id];
-      return next;
-    });
+  const favorite = toggleFavorite;
   return (
     <div className="homepage">
       <a className="home-skip" href="#main">
