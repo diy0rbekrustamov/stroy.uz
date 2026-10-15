@@ -11,13 +11,19 @@ import AddProductPage from "./pages/Seller/product/AddProductPage.jsx";
 import ProductsPage from "./pages/Seller/product/ProductsPage.jsx";
 import ServicesPage from "./pages/Seller/service/ServicesPage.jsx";
 import OrdersPage from "./pages/Seller/order/OrdersPage.jsx";
+<<<<<<< HEAD
 import CartPage from "./pages/CartPage.jsx";
 function App() {
   const router = createBrowserRouter([
+=======
+const router = createBrowserRouter([
+>>>>>>> 17a860a4b294322dcdb344b98c34d65bad6bd269
     {
       path: "/",
       element: <Layout />,
       children: [
+        { path: "product/:productId", element: <ProductPage /> },
+        { path: "product", element: <ProductPage /> },
         {
           index: true,
           element: <HomePage />,
@@ -72,11 +78,17 @@ function App() {
     },
   ]);
 
+<<<<<<< HEAD
   return (
     <ShopProvider>
       <RouterProvider router={router} />
     </ShopProvider>
   );
+=======
+function App() {
+  return <ShopProvider><RouterProvider router={router} /></ShopProvider>;
+>>>>>>> 17a860a4b294322dcdb344b98c34d65bad6bd269
 }
 
 export default App;
+

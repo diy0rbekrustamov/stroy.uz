@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import { Link } from "react-router";
+>>>>>>> 17a860a4b294322dcdb344b98c34d65bad6bd269
 import { useShop } from "../../context/ShopContext.jsx";
 import Brand from "./Brand.jsx";
 
@@ -17,7 +21,7 @@ const columns = [
       ["Доставка и оплата", "/#services"],
       ["Возврат товара", null],
       ["Частые вопросы", null],
-      ["Личный кабинет", null],
+      ["Личный кабинет", "/login"],
     ],
   ],
   [
@@ -80,9 +84,9 @@ export default function Footer({ onInfo }) {
                 {links.map(([label, href]) => (
                   <li key={label}>
                     {href ? (
-                      <a href={href} className="text-inherit no-underline">
+                      <Link to={href} className="text-inherit no-underline">
                         {label}
-                      </a>
+                      </Link>
                     ) : (
                       <button
                         type="button"
@@ -122,3 +126,4 @@ export default function Footer({ onInfo }) {
     </footer>
   );
 }
+

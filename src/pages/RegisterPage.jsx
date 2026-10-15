@@ -1,7 +1,6 @@
+import { Link } from "react-router";
 import { useState } from "react";
 import materialsImg from "../assets/home/hero.png"; // sen crop qilgan rasm
-import Navbar from "../components/layout/Navbar";
-import Footer from "../components/layout/Footer";
 
 export default function RegisterPage() {
   const [role, setRole] = useState("seller"); // buyer | seller
@@ -45,9 +44,9 @@ export default function RegisterPage() {
 
           {/* RIGHT FORM CARD */}
           <div className="bg-white rounded-[16px] p-8 md:p-10 shadow-[0_1px_0_rgba(0,0,0,0.02)]">
-            <a href="/" className="text-[13px] text-[#6b7280] hover:text-black">
+            <Link to="/" className="text-[13px] text-[#6b7280] hover:text-black">
               ← Главная
-            </a>
+            </Link>
 
             <h2 className="text-[42px] font-bold tracking-tight text-[#111827] mt-6">
               Регистрация
@@ -77,7 +76,10 @@ export default function RegisterPage() {
               заявки. Роль можно дополнить позже.
             </p>
 
-            <form className="mt-8 space-y-5">
+            <form
+              className="mt-8 space-y-5"
+              onSubmit={(event) => event.preventDefault()}
+            >
               {/* Name */}
               <div className="border border-[#e5e7eb] rounded-[12px] px-4 py-3 focus-within:ring-2 focus-within:ring-amber-400/30 focus-within:border-amber-400">
                 <label className="text-[12px] text-[#6b7280]">Ваше имя *</label>
@@ -177,9 +179,9 @@ export default function RegisterPage() {
 
               <div className="text-[14px] text-[#111827] pt-2">
                 Уже зарегистрированы?{" "}
-                <a href="/login" className="font-medium hover:underline">
+                <Link to="/login" className="font-medium hover:underline">
                   Войти →
-                </a>
+                </Link>
               </div>
             </form>
           </div>

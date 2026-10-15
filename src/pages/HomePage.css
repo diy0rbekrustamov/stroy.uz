@@ -14,33 +14,51 @@
 .home-dialog * {
   box-sizing: border-box;
 }
-.homepage h1,
-.homepage h2,
-.homepage h3,
-.homepage p {
+.homepage :where(.home-header, .home-footer, .home-content, .home-dialog) h1,
+.homepage :where(.home-header, .home-footer, .home-content, .home-dialog) h2,
+.homepage :where(.home-header, .home-footer, .home-content, .home-dialog) h3,
+.homepage :where(.home-header, .home-footer, .home-content, .home-dialog) p {
   margin: 0;
 }
-.homepage a {
+.homepage :where(.home-header, .home-footer, .home-content, .home-dialog) a {
   color: inherit;
   text-decoration: none;
 }
-.homepage button,
-.homepage input {
+.homepage
+  :where(.home-header, .home-footer, .home-content, .home-dialog)
+  button,
+.homepage
+  :where(.home-header, .home-footer, .home-content, .home-dialog)
+  input {
   font: inherit;
 }
-.homepage button {
+.homepage
+  :where(.home-header, .home-footer, .home-content, .home-dialog)
+  button {
   cursor: pointer;
 }
-.homepage button,
-.homepage input {
+.homepage
+  :where(.home-header, .home-footer, .home-content, .home-dialog)
+  button,
+.homepage
+  :where(.home-header, .home-footer, .home-content, .home-dialog)
+  input {
   color: inherit;
 }
-.homepage button {
+.homepage
+  :where(.home-header, .home-footer, .home-content, .home-dialog)
+  button {
   border: 0;
 }
-.homepage a:focus-visible,
-.homepage button:focus-visible,
-.homepage input:focus-visible {
+.homepage
+  :where(.home-header, .home-footer, .home-content, .home-dialog)
+  a:focus-visible,
+.homepage
+  :where(.home-header, .home-footer, .home-content, .home-dialog)
+  button:focus-visible,
+.homepage
+  :where(.home-header, .home-footer, .home-content, .home-dialog)
+  input:focus-visible {
   outline: 3px solid #b76b00;
   outline-offset: 4px;
 }
@@ -172,7 +190,7 @@
   align-items: center;
   gap: 42px;
 }
-.home-header-actions button {
+.home-header-actions :is(button, a) {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -315,7 +333,7 @@
   font-size: 11px;
   margin-bottom: 12px !important;
 }
-.homepage h2 {
+.homepage :where(.home-header, .home-footer, .home-content, .home-dialog) h2 {
   font-size: 32px;
   line-height: 1.2;
   letter-spacing: -0.6px;
@@ -833,13 +851,13 @@
     margin-left: auto;
     gap: 8px;
   }
-  .home-header-actions button {
+  .home-header-actions :is(button, a) {
     min-width: 30px;
   }
-  .home-header-actions button span {
+  .home-header-actions :is(button, a) span {
     font-size: 0;
   }
-  .home-header-actions button span::first-letter {
+  .home-header-actions :is(button, a) span::first-letter {
     font-size: 0;
   }
   .home-menu-toggle {
@@ -925,7 +943,7 @@
   .home-products {
     padding-block: 40px;
   }
-  .homepage h2 {
+  .homepage :where(.home-header, .home-footer, .home-content, .home-dialog) h2 {
     font-size: 26px;
   }
   .home-section-heading {

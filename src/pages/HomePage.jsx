@@ -1,23 +1,26 @@
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { useShop } from "../context/ShopContext.jsx";
 import Navbar from "../components/layout/Navbar.jsx";
 import Footer from "../components/layout/Footer.jsx";
+=======
+import { useOutletContext } from "react-router";
+>>>>>>> 17a860a4b294322dcdb344b98c34d65bad6bd269
 import Hero from "../components/home/Hero.jsx";
 import Product from "../components/home/Product.jsx";
 import Icon from "../components/home/Icon.jsx";
-import HomeDialog from "../components/home/HomeDialog.jsx";
 import {
   categories,
   products,
   projects,
   articles,
-  formatPrice,
 } from "../components/home/homeData.js";
 import business from "../assets/home/business.png";
 import "./HomePage.css";
 
 function HomePage() {
+<<<<<<< HEAD
   const location = useLocation();
   const { cart, favorites, addToCart, toggleFavorite, changeQuantity } = useShop();
   const [query, setQuery] = useState(() => typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("q") || "" : "");
@@ -41,24 +44,25 @@ function HomePage() {
     setAnnouncement(`${product.name} добавлен в корзину`);
   };
   const favorite = toggleFavorite;
+=======
+  const {
+    query,
+    filter,
+    setFilter,
+    setQuery,
+    favorites,
+    favorite,
+    add,
+    info,
+    chooseGroup,
+  } = useOutletContext();
+>>>>>>> 17a860a4b294322dcdb344b98c34d65bad6bd269
   return (
-    <div className="homepage">
+    <div className="homepage home-content">
       <a className="home-skip" href="#main">
         Перейти к содержимому
       </a>
-      {/* <Navbar
-        query={query}
-        onSearch={(value) => {
-          setQuery(value);
-          setFilter("all");
-        }}
-        cartCount={cartCount}
-        favoriteCount={favorites.length}
-        onCart={() => setDialog({ title: "Корзина", type: "cart" })}
-        onFavorites={() => chooseGroup("favorites")}
-        onInfo={info}
-      /> */}
-      <main id="main">
+      <div>
         <Hero />
         <section
           id="services"
@@ -231,75 +235,10 @@ function HomePage() {
             ))}
           </div>
         </section>
-      </main>
-      {/* <Footer onInfo={info} />
-      <p className="home-sr-only" role="status">
-        {announcement}
-      </p> */}
-      <HomeDialog dialog={dialog} onClose={() => setDialog(null)}>
-        {dialog?.type === "cart" ? (
-          <>
-            <p className="home-muted">
-              Демонстрационная корзина. Оформление заказа пока не подключено.
-            </p>
-            {cartCount ? (
-              <>
-                <ul className="home-cart-list">
-                  {products
-                    .filter((product) => cart[product.id])
-                    .map((product) => (
-                      <li key={product.id}>
-                        <img src={product.image} alt="" />
-                        <div>
-                          <h3>{product.name}</h3>
-                          <p>
-                            {formatPrice(product.price * cart[product.id])} сум
-                          </p>
-                          <div className="home-quantity">
-                            <button
-                              type="button"
-                              aria-label={`Уменьшить количество: ${product.name}`}
-                              onClick={() => changeQuantity(product.id, -1)}
-                            >
-                              −
-                            </button>
-                            <span>{cart[product.id]}</span>
-                            <button
-                              type="button"
-                              aria-label={`Увеличить количество: ${product.name}`}
-                              onClick={() => changeQuantity(product.id, 1)}
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                </ul>
-                <p className="home-cart-total">
-                  Итого:{" "}
-                  {formatPrice(
-                    products.reduce(
-                      (sum, product) =>
-                        sum + product.price * (cart[product.id] || 0),
-                      0,
-                    ),
-                  )}{" "}
-                  сум
-                </p>
-              </>
-            ) : (
-              <p className="home-empty">
-                Корзина пока пуста. Добавьте материалы для вашего проекта.
-              </p>
-            )}
-          </>
-        ) : (
-          <p>{dialog?.text}</p>
-        )}
-      </HomeDialog>
+      </div>
     </div>
   );
 }
 
 export default HomePage;
+
