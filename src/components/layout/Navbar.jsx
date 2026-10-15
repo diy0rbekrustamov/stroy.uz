@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useShop } from "../../context/ShopContext.jsx";
 import Brand from "./Brand.jsx";
 import Icon from "../home/Icon.jsx";
@@ -19,7 +19,7 @@ export default function Navbar({
   const shop = useShop();
   const handleSearch = onSearch || setInternalQuery;
   const handleInfo = onInfo || shop.openInfo;
-  const handleFavorites = onFavorites || shop.openFavorites;
+  const handleFavorites = onFavorites || (() => navigate("/favorites"));
   const handleCart = onCart || shop.openCart;
   const effectiveQuery = query ?? internalQuery;
   const effectiveCartCount = cartCount ?? shop.cartCount;
@@ -73,10 +73,7 @@ export default function Navbar({
           role="search"
           onSubmit={(e) => {
             e.preventDefault();
-            navigate(`/?q=${encodeURIComponent(effectiveQuery.trim())}#products`);
-            if (window.location.pathname === "/") {
-              document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
-            }
+            navigate(`/catalog${effectiveQuery.trim() ? `?q=${encodeURIComponent(effectiveQuery.trim())}` : ""}`);
           }}
         >
           <button
@@ -106,10 +103,15 @@ export default function Navbar({
             onClick={handleFavorites}
             className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[30px] border-0 cursor-pointer font-inherit"
           >
-            <Icon name="heart" />
-            <span className="max-[767px]:text-[0px]">
-              Избранное{effectiveFavoriteCount ? ` (${effectiveFavoriteCount})` : ""}
+            <span className="relative inline-flex items-center justify-center">
+              <Icon name="heart" />
+              {effectiveFavoriteCount > 0 && (
+                <span className="absolute -top-[8px] -right-[10px] min-w-[17px] h-[17px] rounded-full px-1 bg-[#ff9c00] text-[#192b38] text-[10px] leading-[17px] text-center font-bold">
+                  {effectiveFavoriteCount}
+                </span>
+              )}
             </span>
+            <span className="max-[767px]:text-[0px]">Избранное</span>
           </button>
           <button
             type="button"
@@ -148,18 +150,18 @@ export default function Navbar({
         id="home-navigation"
         className={`w-[min(100%-144px,1296px)] max-[1199px]:w-[calc(100%-64px)] max-[767px]:w-[calc(100%-32px)] mx-auto flex items-center gap-6 max-[1199px]:gap-4 max-[1199px]:text-[12px] max-[1199px]:flex-wrap max-[1199px]:py-3 min-h-[59px] pb-2 text-[14px] ${menuOpen ? "max-[767px]:flex max-[767px]:flex-col max-[767px]:items-stretch max-[767px]:gap-0 max-[767px]:pb-5" : "max-[767px]:hidden"}`}
       >
-        <a
+        <Link
           className="inline-flex items-center justify-center gap-5 min-h-[52px] max-[767px]:min-h-[48px] py-[14px] px-6 rounded-[7px] bg-[#192b38] text-white font-semibold text-[14px] mr-2 whitespace-nowrap hover:bg-[#344456] hover:-translate-y-px transition-all"
-          href="/#categories"
+          to="/catalog"
           onClick={() => setMenuOpen(false)}
         >
           Каталог товаров <Icon name="arrow" />
-        </a>
+        </Link>
         {[
-          ["Акции", "/#products"],
-          ["Стройматериалы", "/#categories"],
-          ["Инструменты", "/#products"],
-          ["Отделка", "/#categories"],
+          ["Акции", "/catalog"],
+          ["Стройматериалы", "/categories"],
+          ["Инструменты", "/catalog?category=tools"],
+          ["Отделка", "/catalog?category=finishing"],
           ["Доставка и оплата", "/#services"],
           ["Оптовым клиентам ↗", "/#business"],
         ].map(([label, href]) => (

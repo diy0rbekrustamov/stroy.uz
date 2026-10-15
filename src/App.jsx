@@ -1,5 +1,8 @@
 import { ShopProvider } from "./context/ShopContext.jsx";
 import ProductPage from "./pages/ProductPage.jsx";
+import FavoritesPage from "./pages/FavoritesPage.jsx";
+import CatalogPage from "./pages/CatalogPage.jsx";
+import CategoriesPage from "./pages/CategoriesPage.jsx";
 import Layout from "./components/layout/Layout.jsx";
 import LayoutSeller from "./components/seller/Layout.jsx";
 import HomePage from "./pages/HomePage.jsx";
@@ -19,6 +22,18 @@ function App() {
         {
           index: true,
           element: <HomePage />,
+        },
+        {
+          path: "catalog",
+          element: <CatalogPage />,
+        },
+        {
+          path: "categories",
+          element: <CategoriesPage />,
+        },
+        {
+          path: "favorites",
+          element: <FavoritesPage />,
         },
         {
           path: "product/:productId",

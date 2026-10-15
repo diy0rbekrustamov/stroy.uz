@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { Link } from "react-router";
-import { products, formatPrice } from "../home/homeData.js";
+import { formatPrice } from "../home/homeData.js";
+import { catalogProducts as products } from "../../data/catalogData.js";
 import { useShop } from "../../context/ShopContext.jsx";
 import "./ShopDialog.css";
 
 export default function ShopDialog() {
-  const { dialog, closeDialog, cart, favorites, changeQuantity, toggleFavorite } = useShop();
+  const { dialog, closeDialog, cart, changeQuantity } = useShop();
   useEffect(() => {
     if (!dialog) return;
     const onKeyDown = (event) => { if (event.key === "Escape") closeDialog(); };
@@ -13,7 +14,7 @@ export default function ShopDialog() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [dialog, closeDialog]);
   if (!dialog) return null;
-  const entries = products.filter((product) => dialog.type === "cart" ? cart[product.id] : favorites.includes(product.id));
+  const entries = products.filter((product) => Boolean(cart[product.id]));
   const total = products.reduce((sum, product) => sum + product.price * (cart[product.id] || 0), 0);
   return (
     <div className="shop-modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) closeDialog(); }}>
@@ -26,12 +27,12 @@ export default function ShopDialog() {
               <div className="shop-modal-item-content">
                 <Link to={`/product/${product.id}`} onClick={closeDialog}>{product.name}</Link>
                 <strong>{formatPrice(product.price)} сум</strong>
-                {dialog.type === "cart" ? <div className="shop-modal-qty"><button onClick={() => changeQuantity(product.id, -1)} aria-label="Уменьшить">−</button><span>{cart[product.id]}</span><button onClick={() => changeQuantity(product.id, 1)} aria-label="Увеличить">+</button></div> : <button className="shop-modal-remove" onClick={() => toggleFavorite(product.id)}>Убрать из избранного</button>}
+                {dialog.type === "cart" && <div className="shop-modal-qty"><button onClick={() => changeQuantity(product.id, -1)} aria-label="Уменьшить">−</button><span>{cart[product.id]}</span><button onClick={() => changeQuantity(product.id, 1)} aria-label="Увеличить">+</button></div>}
               </div>
             </div>)}</div>
             {dialog.type === "cart" && <div className="shop-modal-total"><span>Итого</span><strong>{formatPrice(total)} сум</strong></div>}
           </>
-        ) : <p className="shop-modal-info">{dialog.type === "cart" ? "Корзина пока пуста. Добавьте товары из каталога." : "В избранном пока нет товаров."}</p>}
+        ) : <p className="shop-modal-info">{dialog.type === "cart" ? "Корзина пока пуста. Добавьте товары из каталога." : ""}</p>}
       </section>
     </div>
   );

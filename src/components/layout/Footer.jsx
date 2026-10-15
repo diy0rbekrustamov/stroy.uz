@@ -5,10 +5,10 @@ const columns = [
   [
     "Каталог",
     [
-      ["Стройматериалы", "/#categories"],
-      ["Инструменты", "/#products"],
-      ["Отделка", "/#categories"],
-      ["Сантехника", "/#categories"],
+      ["Стройматериалы", "/categories"],
+      ["Инструменты", "/catalog?category=tools"],
+      ["Отделка", "/catalog?category=finishing"],
+      ["Сантехника", "/catalog?category=plumbing"],
     ],
   ],
   [

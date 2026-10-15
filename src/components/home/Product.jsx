@@ -1,5 +1,6 @@
 import ProductCard from "./ProductCard .jsx";
 import Icon from "./Icon.jsx";
+import { Link } from "react-router";
 const filters = [
   ["all", "Популярное"],
   ["build", "Для стройки"],
@@ -37,9 +38,9 @@ export default function Product({
             <p className="home-section-label">02 / ВЫБОР ДЛЯ ВАШЕГО ПРОЕКТА</p>
             <h2 id="products-title">Материалы, с которых строят</h2>
           </div>
-          <a href="#categories">
+          <Link to="/catalog">
             В каталог <Icon name="arrow" />
-          </a>
+          </Link>
         </div>
         <div className="home-filters" aria-label="Подбор товаров">
           {filters.map(([id, label]) => (

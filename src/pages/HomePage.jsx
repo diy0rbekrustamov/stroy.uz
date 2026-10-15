@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useShop } from "../context/ShopContext.jsx";
 import Navbar from "../components/layout/Navbar.jsx";
 import Footer from "../components/layout/Footer.jsx";
@@ -15,10 +15,12 @@ import {
   formatPrice,
 } from "../components/home/homeData.js";
 import business from "../assets/home/business.png";
+import { catalogCategories, catalogCategoryPath } from "../data/catalogData.js";
 import "./HomePage.css";
 
 function HomePage() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { cart, favorites, addToCart, toggleFavorite, changeQuantity } = useShop();
   const [query, setQuery] = useState(() => typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("q") || "" : "");
   const [filter, setFilter] = useState("all");
@@ -90,23 +92,17 @@ function HomePage() {
               <p className="home-section-label">01 / КАТАЛОГ</p>
               <h2 id="categories-title">Всё начинается с материалов</h2>
             </div>
-            <a
-              href="#products"
-              onClick={() => {
-                setFilter("all");
-                setQuery("");
-              }}
-            >
+            <Link to="/categories">
               Все категории <Icon name="arrow" />
-            </a>
+            </Link>
           </div>
           <div className="home-category-grid">
-            {categories.map(([title, text, group]) => (
+            {categories.map(([title, text], index) => (
               <button
                 type="button"
                 className="home-category"
                 key={title}
-                onClick={() => chooseGroup(group)}
+                onClick={() => navigate(catalogCategoryPath(catalogCategories[index].id))}
               >
                 <div>
                   <h3>{title}</h3>
@@ -135,9 +131,9 @@ function HomePage() {
               <p className="home-section-label">03 / ВАШ СЛЕДУЮЩИЙ ШАГ</p>
               <h2 id="projects-title">На каком этапе ваш проект?</h2>
             </div>
-            <a href="#categories">
+            <Link to="/categories">
               Подобрать материалы <Icon name="arrow" />
-            </a>
+            </Link>
           </div>
           <div className="home-project-grid">
             {projects.map((project, index) => (
