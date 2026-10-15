@@ -9,6 +9,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import AddProductPage from "./pages/Seller/product/AddProductPage.jsx";
 import ProductsPage from "./pages/Seller/product/ProductsPage.jsx";
 import ServicesPage from "./pages/Seller/service/ServicesPage.jsx";
+import OrdersPage from "./pages/Seller/order/OrdersPage.jsx";
 function App() {
   const router = createBrowserRouter([
     {
@@ -49,7 +50,7 @@ function App() {
             },
             {
               path: "orders",
-              element: <ServicesPage />,
+              element: <OrdersPage />,
             },
           ],
         },
