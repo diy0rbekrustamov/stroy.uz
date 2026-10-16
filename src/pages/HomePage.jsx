@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router";
-import { useShop } from "../context/ShopContext.jsx";
-import Navbar from "../components/layout/Navbar.jsx";
-import Footer from "../components/layout/Footer.jsx";
-=======
-import { useOutletContext } from "react-router";
->>>>>>> 17a860a4b294322dcdb344b98c34d65bad6bd269
+import { Link, useNavigate, useOutletContext } from "react-router";
 import Hero from "../components/home/Hero.jsx";
 import Product from "../components/home/Product.jsx";
 import Icon from "../components/home/Icon.jsx";
@@ -21,44 +13,17 @@ import { catalogCategories, catalogCategoryPath } from "../data/catalogData.js";
 import "./HomePage.css";
 
 function HomePage() {
-<<<<<<< HEAD
-  const location = useLocation();
   const navigate = useNavigate();
-  const { cart, favorites, addToCart, toggleFavorite, changeQuantity } = useShop();
-  const [query, setQuery] = useState(() => typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("q") || "" : "");
-  const [filter, setFilter] = useState("all");
-  const [dialog, setDialog] = useState(null);
-  const [announcement, setAnnouncement] = useState("");
-  const cartCount = Object.values(cart).reduce((sum, count) => sum + count, 0);
-  const info = (title, text) => setDialog({ title, text });
-  const chooseGroup = (group) => {
-    setFilter(group);
-    setQuery("");
-    document.getElementById("products").scrollIntoView({ behavior: "smooth" });
-  };
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    setQuery(params.get("q") || "");
-    if (params.has("favorites")) setFilter("favorites");
-  }, [location.search]);
-  const add = (product) => {
-    addToCart(product);
-    setAnnouncement(`${product.name} добавлен в корзину`);
-  };
-  const favorite = toggleFavorite;
-=======
   const {
     query,
     filter,
     setFilter,
-    setQuery,
     favorites,
     favorite,
     add,
     info,
     chooseGroup,
   } = useOutletContext();
->>>>>>> 17a860a4b294322dcdb344b98c34d65bad6bd269
   return (
     <div className="homepage home-content">
       <a className="home-skip" href="#main">

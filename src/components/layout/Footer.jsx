@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 import { Link } from "react-router";
->>>>>>> 17a860a4b294322dcdb344b98c34d65bad6bd269
 import { useShop } from "../../context/ShopContext.jsx";
 import Brand from "./Brand.jsx";
 

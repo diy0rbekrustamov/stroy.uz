@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useShop } from "../../context/ShopContext.jsx";
@@ -21,17 +20,8 @@ export default function Navbar({
   const shop = useShop();
   const handleSearch = onSearch || setInternalQuery;
   const handleInfo = onInfo || shop.openInfo;
-<<<<<<< HEAD
-  const handleFavorites = onFavorites || shop.openFavorites;
-<<<<<<< HEAD
-  const handleCart = onCart || (() => navigate("/cart"));
-=======
-  const handleCart = onCart || shop.openCart;
->>>>>>> 17a860a4b294322dcdb344b98c34d65bad6bd269
-=======
   const handleFavorites = onFavorites || (() => navigate("/favorites"));
   const handleCart = onCart || (() => navigate("/cart"));
->>>>>>> feature/catalog-categories
   const effectiveQuery = query ?? internalQuery;
   const effectiveCartCount = cartCount ?? shop.cartCount;
   const effectiveFavoriteCount = favoriteCount ?? shop.favorites.length;
@@ -68,11 +58,7 @@ export default function Navbar({
             >
               Помощь
             </button>
-<<<<<<< HEAD
-            <a href="/#business" className="text-[#788694]">
-=======
             <Link to="/#business" className="text-[#788694]">
->>>>>>> 17a860a4b294322dcdb344b98c34d65bad6bd269
               Для бизнеса
             </Link>
           </div>
@@ -88,27 +74,10 @@ export default function Navbar({
           role="search"
           onSubmit={(e) => {
             e.preventDefault();
-<<<<<<< HEAD
-<<<<<<< HEAD
-            navigate(
-              `/?q=${encodeURIComponent(effectiveQuery.trim())}#products`,
-            );
-            if (window.location.pathname === "/") {
-              document
-                .getElementById("products")
-                ?.scrollIntoView({ behavior: "smooth" });
-=======
             if (onSearchSubmit) onSearchSubmit();
-            else navigate(`/?q=${encodeURIComponent(effectiveQuery.trim())}#products`);
-            if (window.location.pathname === "/") {
-              document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
->>>>>>> 17a860a4b294322dcdb344b98c34d65bad6bd269
-            }
-=======
-            navigate(
+            else navigate(
               `/catalog${effectiveQuery.trim() ? `?q=${encodeURIComponent(effectiveQuery.trim())}` : ""}`,
             );
->>>>>>> feature/catalog-categories
           }}
         >
           <button
@@ -138,16 +107,6 @@ export default function Navbar({
             onClick={handleFavorites}
             className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[30px] border-0 cursor-pointer font-inherit"
           >
-<<<<<<< HEAD
-            <Icon name="heart" />
-            <span className="max-[767px]:text-[0px]">
-<<<<<<< HEAD
-              Избранное
-              {effectiveFavoriteCount ? ` (${effectiveFavoriteCount})` : ""}
-=======
-              Избранное{effectiveFavoriteCount ? ` (${effectiveFavoriteCount})` : ""}
->>>>>>> 17a860a4b294322dcdb344b98c34d65bad6bd269
-=======
             <span className="relative inline-flex items-center justify-center">
               <Icon name="heart" />
               {effectiveFavoriteCount > 0 && (
@@ -155,23 +114,12 @@ export default function Navbar({
                   {effectiveFavoriteCount}
                 </span>
               )}
->>>>>>> feature/catalog-categories
             </span>
             <span className="max-[767px]:text-[0px]">Избранное</span>
           </button>
           <button
             type="button"
-<<<<<<< HEAD
-<<<<<<< HEAD
             onClick={() => navigate("/login")}
-=======
-            onClick={() =>
-              navigate("/login")
-            }
->>>>>>> 17a860a4b294322dcdb344b98c34d65bad6bd269
-=======
-            onClick={() => navigate("/login")}
->>>>>>> feature/catalog-categories
             className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[30px] border-0 cursor-pointer font-inherit"
           >
             <Icon name="user" />
@@ -206,15 +154,7 @@ export default function Navbar({
       >
         <Link
           className="inline-flex items-center justify-center gap-5 min-h-[52px] max-[767px]:min-h-[48px] py-[14px] px-6 rounded-[7px] bg-[#192b38] text-white font-semibold text-[14px] mr-2 whitespace-nowrap hover:bg-[#344456] hover:-translate-y-px transition-all"
-<<<<<<< HEAD
-<<<<<<< HEAD
-          href="/#categories"
-=======
-          to="/#categories"
->>>>>>> 17a860a4b294322dcdb344b98c34d65bad6bd269
-=======
           to="/catalog"
->>>>>>> feature/catalog-categories
           onClick={() => setMenuOpen(false)}
         >
           Каталог товаров <Icon name="arrow" />
