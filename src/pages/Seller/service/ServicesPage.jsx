@@ -1,3 +1,4 @@
+import { useLanguage } from "../../../i18n/useLanguage.js";
 import { useState } from "react";
 
 const services = [
@@ -37,6 +38,8 @@ const services = [
 ];
 
 export default function MyServicesPage() {
+  const { t } = useLanguage();
+
   const [filter, setFilter] = useState("all");
 
   const filtered = services.filter((s) => {
@@ -51,18 +54,19 @@ export default function MyServicesPage() {
       {/* MAIN */}
       <main className="flex-1 min-w-0 w-full">
         <div className="text-[11px] text-gray-400 mb-2 hidden md:block">
-          ← Кабинет продавца
+          {t("← Кабинет продавца")}
         </div>
         <h1 className="text-[28px] md:text-[36px] font-bold text-[#111827] tracking-tight">
-          Мои услуги
+          {t("Мои услуги")}
         </h1>
         <p className="text-[14px] md:text-[14px] text-gray-500 mt-1 mb-4 leading-snug">
-          Ваши работы, доступные даты и входящие заявки.
+          {t("Ваши работы, доступные даты и входящие заявки.")}
         </p>
 
         <div className="bg-[#FFF7E0] md:bg-[#FEF3C7]/70 text-[11px] md:text-[11px] p-3 rounded-lg mb-5 text-[#7A5A20] md:text-[#92400E]">
-          ДЕМО • Данные, исполнители, цены и заказы вымышлены. Не подтверждённые
-          факты о бизнесе.
+          {t(
+            "ДЕМО • Данные, исполнители, цены и заказы вымышлены. Не подтверждённые факты о бизнесе.",
+          )}
         </div>
 
         {/* Stats */}
@@ -70,19 +74,19 @@ export default function MyServicesPage() {
           <div className="bg-white rounded-xl md:rounded-[14px] p-4 md:p-5 border border-gray-100 shadow-sm">
             <div className="text-[28px] font-bold leading-none">3</div>
             <div className="text-[13px] text-gray-500 mt-6 md:mt-10">
-              Услуги
+              {t("Услуги")}
             </div>
           </div>
           <div className="bg-white rounded-xl md:rounded-[14px] p-4 md:p-5 border border-gray-100 shadow-sm">
             <div className="text-[28px] font-bold leading-none">2</div>
             <div className="text-[13px] text-gray-500 mt-6 md:mt-10">
-              Опубликованы
+              {t("Опубликованы")}
             </div>
           </div>
           <div className="bg-white rounded-xl md:rounded-[14px] p-4 md:p-5 border border-gray-100 shadow-sm">
             <div className="text-[28px] font-bold leading-none">3</div>
             <div className="text-[13px] text-gray-500 mt-6 md:mt-10">
-              Новые заявки
+              {t("Новые заявки")}
             </div>
           </div>
         </div>
@@ -90,15 +94,16 @@ export default function MyServicesPage() {
         {/* Search + Button */}
         <div className="flex flex-col md:flex-row gap-3 mb-5">
           <div className="flex-1 bg-white rounded-xl border border-gray-100 shadow-sm p-4">
-            <div className="text-[11px] text-gray-400">Поиск</div>
+            <div className="text-[11px] text-gray-400">{t("Поиск")}</div>
             <input
-              placeholder="Название услуги"
+              placeholder={t("Название услуги")}
               className="w-full text-[14px] outline-none placeholder:text-gray-900 mt-1 font-medium"
               defaultValue="Название услуги"
             />
           </div>
           <button className="bg-[#F59E0B] hover:bg-[#E68A00] text-black text-[14px] font-semibold px-6 py-4 md:py-0 rounded-xl md:self-stretch flex items-center justify-center gap-2 w-full md:w-auto md:min-w-[200px]">
-            Добавить услугу <span className="text-[16px]">→</span>
+            {t("Добавить услугу")}
+            <span className="text-[16px]">→</span>
           </button>
         </div>
 
@@ -108,19 +113,19 @@ export default function MyServicesPage() {
             onClick={() => setFilter("all")}
             className={`text-[13px] px-4 py-2 rounded-full md:rounded-lg font-medium whitespace-nowrap transition ${filter === "all" ? "bg-[#1C2E42] text-white" : "bg-transparent text-gray-600"}`}
           >
-            Все · 3
+            {t("Все · 3")}
           </button>
           <button
             onClick={() => setFilter("pub")}
             className={`text-[13px] px-4 py-2 rounded-full md:rounded-lg font-medium whitespace-nowrap transition ${filter === "pub" ? "bg-[#1C2E42] text-white" : "bg-transparent text-gray-500"}`}
           >
-            Опубликованы · 2
+            {t("Опубликованы · 2")}
           </button>
           <button
             onClick={() => setFilter("draft")}
             className={`text-[13px] px-4 py-2 rounded-full md:rounded-lg font-medium whitespace-nowrap transition ${filter === "draft" ? "bg-[#1C2E42] text-white" : "bg-transparent text-gray-500"}`}
           >
-            Черновики · 1
+            {t("Черновики · 1")}
           </button>
         </div>
 
@@ -135,20 +140,22 @@ export default function MyServicesPage() {
               <div className="w-full md:w-[160px] h-[200px] md:h-[110px] rounded-lg md:rounded-[10px] overflow-hidden shrink-0">
                 <img
                   src={s.img}
-                  alt={s.title}
+                  alt={t(s.title)}
                   className="w-full h-full object-cover"
                 />
               </div>
 
               <div className="flex-1 min-w-0 px-1 md:px-0">
                 <h3 className="font-bold text-[18px] md:text-[18px] leading-tight text-[#111827]">
-                  {s.title}
+                  {t(s.title)}
                 </h3>
-                <div className="font-bold text-[14px] mt-2">{s.price}</div>
+                <div className="font-bold text-[14px] mt-2">{t(s.price)}</div>
                 <div className="text-[12px] text-gray-400 md:text-gray-500 mt-2 md:mt-3">
-                  {s.location}
+                  {t(s.location)}
                 </div>
-                <div className="text-[12px] text-gray-600 mt-2">{s.desc}</div>
+                <div className="text-[12px] text-gray-600 mt-2">
+                  {t(s.desc)}
+                </div>
               </div>
 
               {/* Right side */}
@@ -156,14 +163,17 @@ export default function MyServicesPage() {
                 <div
                   className={`text-[13px] font-medium ${s.status === "Опубликована" ? "text-[#2E7D6F]" : "text-gray-500"}`}
                 >
-                  {s.status}
+                  {t(s.status)}
                 </div>
-                <div className="text-[13px] text-gray-800 mb-1">{s.заявок}</div>
+                <div className="text-[13px] text-gray-800 mb-1">
+                  {t(s.заявок)}
+                </div>
                 <button className="w-full border border-gray-200 rounded-lg py-3 text-[13px] font-medium flex items-center justify-center gap-2 hover:bg-gray-50">
-                  Редактировать <span>→</span>
+                  {t("Редактировать")}
+                  <span>→</span>
                 </button>
                 <button className="text-[12px] text-gray-600 text-left px-1 hover:text-black">
-                  {s.action}
+                  {t(s.action)}
                 </button>
               </div>
             </div>
@@ -173,11 +183,12 @@ export default function MyServicesPage() {
         {/* Footer info */}
         <div className="bg-white rounded-xl border border-gray-100 p-5 mt-6">
           <div className="font-bold text-[18px] mb-3">
-            Цена — отправная точка
+            {t("Цена — отправная точка")}
           </div>
           <div className="text-[13px] text-gray-500 leading-relaxed">
-            Для каждого заказа согласуйте объём и итоговую стоимость. Обновляйте
-            доступность, чтобы покупатель мог выбрать подходящее время.
+            {t(
+              "Для каждого заказа согласуйте объём и итоговую стоимость. Обновляйте доступность, чтобы покупатель мог выбрать подходящее время.",
+            )}
           </div>
         </div>
       </main>

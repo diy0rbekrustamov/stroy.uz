@@ -1,41 +1,46 @@
+import { useLanguage } from "../../i18n/useLanguage.js";
 import hero from "../../assets/home/hero.png";
 import Icon from "./Icon.jsx";
-import { Link } from "react-router";
 
 export default function Hero() {
+  const { t } = useLanguage();
+
   return (
     <>
       <section className="home-hero" aria-labelledby="hero-title">
         <div className="home-hero-copy">
-          <p className="home-eyebrow">МАТЕРИАЛЫ ДЛЯ БОЛЬШИХ ИДЕЙ</p>
+          <p className="home-eyebrow">{t("МАТЕРИАЛЫ ДЛЯ БОЛЬШИХ ИДЕЙ")}</p>
           <h1 id="hero-title">
-            ОТ ОСНОВЫ.
+            {t("ОТ ОСНОВЫ.")}
             <br />
-            ДО ВЕРШИНЫ.
+            {t("ДО ВЕРШИНЫ.")}
           </h1>
           <p className="home-hero-description">
-            Всё для строительства и ремонта.
+            {t("Всё для строительства и ремонта.")}
             <br />
-            Выбирайте материалы, сравнивайте цены
-            <br />и собирайте заказ в одном месте.
+            {t("Выбирайте материалы, сравнивайте цены")}
+            <br />
+            {t("и собирайте заказ в одном месте.")}
           </p>
           <div className="home-hero-actions">
-            <Link className="home-button" to="/catalog">
-              Открыть каталог <Icon name="arrow" />
-            </Link>
+            <a className="home-button" href="#categories">
+              {t("Открыть каталог")}
+              <Icon name="arrow" />
+            </a>
             <a className="home-button home-button-light" href="#business">
-              Для бизнеса <Icon name="arrow" />
+              {t("Для бизнеса")}
+              <Icon name="arrow" />
             </a>
           </div>
           <p className="home-hero-note">
             <Icon name="layers" />
-            От фундамента до последнего штриха
+            {t("От фундамента до последнего штриха")}
           </p>
         </div>
         <div className="home-hero-art">
           <img
             src={hero}
-            alt="Композиция из бетона, кирпича, металла и дерева"
+            alt={t("Композиция из бетона, кирпича, металла и дерева")}
             fetchPriority="high"
             width="728"
             height="720"
@@ -43,8 +48,8 @@ export default function Hero() {
         </div>
       </section>
       <div className="home-ticker" aria-hidden="true">
-        <span>СТРОИМ ОСНОВАТЕЛЬНО</span>✦<span>ВЫБИРАЕМ ТОЧНО</span>✦
-        <span>СОЗДАЁМ НАДОЛГО</span>✦
+        <span>{t("СТРОИМ ОСНОВАТЕЛЬНО")}</span>✦
+        <span>{t("ВЫБИРАЕМ ТОЧНО")}</span>✦<span>{t("СОЗДАЁМ НАДОЛГО")}</span>✦
       </div>
     </>
   );

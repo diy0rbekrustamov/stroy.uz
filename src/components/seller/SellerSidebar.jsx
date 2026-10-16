@@ -1,6 +1,9 @@
+import { useLanguage } from "../../i18n/useLanguage.js";
 import { NavLink, Outlet, useLocation } from "react-router";
 
 export default function LayoutSeller() {
+  const { t } = useLanguage();
+
   const menu = [
     { label: "Товары", path: "/seller", end: true }, // index uchun end:true
     { label: "Услуги", path: "/seller/services" },
@@ -13,10 +16,10 @@ export default function LayoutSeller() {
       <aside className="w-full md:w- shrink-0 md:sticky md:top-6">
         <div className="bg-[#111D32] rounded-xl p-4">
           <div className="text-white font-bold text- mb-1">
-            Кабинет продавца
+            {t("Кабинет продавца")}
           </div>
           <div className="text-[#F59E0B] text- mb-4 md:mb-5">
-            ДЕМО / *Основное
+            {t("ДЕМО / *Основное")}
           </div>
 
           <div className="flex md:flex-col gap-2">
@@ -33,13 +36,13 @@ export default function LayoutSeller() {
                   }`
                 }
               >
-                {item.label}
+                {t(item.label)}
               </NavLink>
             ))}
           </div>
 
           <div className="text-gray-500 px-1 md:px-3 py-2 text- mt-3 md:mt-12 border-t border-white/10 pt-3 md:pt-4">
-            Профиль · Настройки · Выйти
+            {t("Профиль · Настройки · Выйти")}
           </div>
         </div>
       </aside>

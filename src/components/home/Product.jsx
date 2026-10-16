@@ -1,6 +1,7 @@
+import { useLanguage } from "../../i18n/useLanguage.js";
 import ProductCard from "./ProductCard .jsx";
 import Icon from "./Icon.jsx";
-import { Link } from "react-router";
+import { normalizeSearch, translate } from "../../i18n/translate.js";
 const filters = [
   ["all", "Популярное"],
   ["build", "Для стройки"],
@@ -17,14 +18,16 @@ export default function Product({
   onAdd,
   query,
 }) {
+  const { t } = useLanguage();
+
   const visible = products.filter(
     (product) =>
       (filter === "all" ||
         (filter === "favorites" && favorites.includes(product.id)) ||
         product.group === filter) &&
-      `${product.name} ${product.category} ${product.details} ${product.brand || ""}`
-        .toLowerCase()
-        .includes(query.toLowerCase().trim()),
+      normalizeSearch(
+        `${product.name} ${product.category} ${product.details} ${product.brand || ""} ${translate(`${product.name} ${product.category} ${product.details}`, "uz")}`,
+      ).includes(normalizeSearch(query)),
   );
   return (
     <section
@@ -35,14 +38,17 @@ export default function Product({
       <div className="home-container">
         <div className="home-section-heading">
           <div>
-            <p className="home-section-label">02 / ВЫБОР ДЛЯ ВАШЕГО ПРОЕКТА</p>
-            <h2 id="products-title">Материалы, с которых строят</h2>
+            <p className="home-section-label">
+              {t("02 / ВЫБОР ДЛЯ ВАШЕГО ПРОЕКТА")}
+            </p>
+            <h2 id="products-title">{t("Материалы, с которых строят")}</h2>
           </div>
-          <Link to="/catalog">
-            В каталог <Icon name="arrow" />
-          </Link>
+          <a href="#categories">
+            {t("В каталог")}
+            <Icon name="arrow" />
+          </a>
         </div>
-        <div className="home-filters" aria-label="Подбор товаров">
+        <div className="home-filters" aria-label={t("Подбор товаров")}>
           {filters.map(([id, label]) => (
             <button
               type="button"
@@ -50,23 +56,30 @@ export default function Product({
               aria-pressed={filter === id}
               onClick={() => onFilter(id)}
             >
-              {label}
+              {t(label)}
             </button>
           ))}
-          {filter === "favorites" && (
-            <button
-              type="button"
-              aria-pressed="true"
-              onClick={() => onFilter("favorites")}
-            >
-              Избранное
-            </button>
+          {t(
+            filter === "favorites" && (
+              <button
+                type="button"
+                aria-pressed="true"
+                onClick={() => onFilter("favorites")}
+              >
+                {t("Избранное")}
+              </button>
+            ),
           )}
         </div>
-        {query && (
-          <p className="home-search-result">
-            Поиск: «{query}» · Найдено: {visible.length}
-          </p>
+        {t(
+          query && (
+            <p className="home-search-result">
+              {t("Поиск: «")}
+              {query}
+              {t("» · Найдено: ")}
+              {t(visible.length)}
+            </p>
+          ),
         )}
         <div className="home-product-grid">
           {visible.map((product) => (
@@ -79,14 +92,17 @@ export default function Product({
             />
           ))}
         </div>
-        {!visible.length && (
-          <p className="home-empty">
-            Товаров пока нет. Выберите другую категорию или измените поисковый
-            запрос.
-          </p>
+        {t(
+          !visible.length && (
+            <p className="home-empty">
+              {t(
+                "Товаров пока нет. Выберите другую категорию или измените поисковый запрос.",
+              )}
+            </p>
+          ),
         )}
         <p className="home-demo-note">
-          Цены и ассортимент показаны для демонстрации макета.
+          {t("Цены и ассортимент показаны для демонстрации макета.")}
         </p>
       </div>
     </section>
