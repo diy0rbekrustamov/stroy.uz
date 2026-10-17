@@ -1,3 +1,4 @@
+import LanguageSwitcher from "./LanguageSwitcher.jsx";
 import { useLanguage } from "../../i18n/useLanguage.js";
 import { Link } from "react-router";
 import { useState } from "react";
@@ -16,7 +17,7 @@ export default function Navbar({
   onFavorites,
   onInfo,
 }) {
-  const { t, language, setLanguage } = useLanguage();
+  const { t } = useLanguage();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [internalQuery, setInternalQuery] = useState("");
@@ -67,35 +68,7 @@ export default function Navbar({
               {t("Для бизнеса")}
             </Link>
           </div>
-          <div
-            className="flex items-center gap-1"
-            role="group"
-            aria-label={
-              language === "ru" ? "Язык интерфейса" : "Interfeys tili"
-            }
-          >
-            <button
-              type="button"
-              lang="ru"
-              aria-label="Русский"
-              aria-pressed={language === "ru"}
-              onClick={() => setLanguage("ru")}
-              className={`cursor-pointer rounded px-2 py-1 focus-visible:outline-2 focus-visible:outline-amber-600 ${language === "ru" ? "font-bold text-[#192b38] bg-white" : "text-[#788694]"}`}
-            >
-              RU
-            </button>
-            <span aria-hidden="true">/</span>
-            <button
-              type="button"
-              lang="uz"
-              aria-label="O‘zbekcha"
-              aria-pressed={language === "uz"}
-              onClick={() => setLanguage("uz")}
-              className={`cursor-pointer rounded px-2 py-1 focus-visible:outline-2 focus-visible:outline-amber-600 ${language === "uz" ? "font-bold text-[#192b38] bg-white" : "text-[#788694]"}`}
-            >
-              UZ
-            </button>
-          </div>
+          <LanguageSwitcher />
         </div>
       </div>
 
@@ -110,7 +83,7 @@ export default function Navbar({
             if (onSearchSubmit) onSearchSubmit();
             else
               navigate(
-                `/?q=${encodeURIComponent(effectiveQuery.trim())}#products`,
+                `/catalog?q=${encodeURIComponent(effectiveQuery.trim())}`,
               );
             if (window.location.pathname === "/") {
               document
@@ -190,7 +163,7 @@ export default function Navbar({
       >
         <Link
           className="inline-flex items-center justify-center gap-5 min-h-[52px] max-[767px]:min-h-[48px] py-[14px] px-6 rounded-[7px] bg-[#192b38] text-white font-semibold text-[14px] mr-2 whitespace-nowrap hover:bg-[#344456] hover:-translate-y-px transition-all"
-          to="/#categories"
+          to="/catalog"
           onClick={() => setMenuOpen(false)}
         >
           {t("Каталог товаров")}
@@ -198,9 +171,9 @@ export default function Navbar({
         </Link>
         {[
           ["Акции", "/#products"],
-          ["Стройматериалы", "/#categories"],
-          ["Инструменты", "/#products"],
-          ["Отделка", "/#categories"],
+          ["Стройматериалы", "/categories"],
+          ["Инструменты", "/catalog?category=tools"],
+          ["Отделка", "/catalog?category=finishing"],
           ["Доставка и оплата", "/#services"],
           ["Оптовым клиентам ↗", "/#business"],
         ].map(([label, href]) => (

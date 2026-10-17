@@ -1,7 +1,7 @@
 import { useLanguage } from "../../i18n/useLanguage.js";
 import ProductCard from "./ProductCard .jsx";
 import Icon from "./Icon.jsx";
-import { normalizeSearch, translate } from "../../i18n/translate.js";
+import { matchesProduct } from "../../i18n/translate.js";
 const filters = [
   ["all", "Популярное"],
   ["build", "Для стройки"],
@@ -25,9 +25,7 @@ export default function Product({
       (filter === "all" ||
         (filter === "favorites" && favorites.includes(product.id)) ||
         product.group === filter) &&
-      normalizeSearch(
-        `${product.name} ${product.category} ${product.details} ${product.brand || ""} ${translate(`${product.name} ${product.category} ${product.details}`, "uz")}`,
-      ).includes(normalizeSearch(query)),
+      matchesProduct(product, query),
   );
   return (
     <section

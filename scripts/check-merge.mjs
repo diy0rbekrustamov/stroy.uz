@@ -49,7 +49,7 @@ test("Routes retain cart, products, auth and seller pages without duplicate path
     assert.ok(paths.includes(route), route);
 });
 
-test("Shared layout renders team pages with one shop context and RU/UZ", async () => {
+test("Shared layout renders team pages with one shop context and RU/UZ/EN", async () => {
   const server = await createServer({
     server: { middlewareMode: true },
     appType: "custom",
@@ -66,6 +66,9 @@ test("Shared layout renders team pages with one shop context and RU/UZ", async (
     const Layout = await load("components/layout/Layout.jsx");
     const pageNames = [
       "HomePage",
+      "CatalogPage",
+      "CategoriesPage",
+      "FavoritesPage",
       "CartPage",
       "ProductPage",
       "LoginPage",
@@ -111,6 +114,9 @@ test("Shared layout renders team pages with one shop context and RU/UZ", async (
                   }),
                   ...[
                     ["cart", "CartPage"],
+                    ["catalog", "CatalogPage"],
+                    ["categories", "CategoriesPage"],
+                    ["favorites", "FavoritesPage"],
                     ["product/:productId", "ProductPage"],
                     ["login", "LoginPage"],
                     ["register", "RegisterPage"],
@@ -137,25 +143,45 @@ test("Shared layout renders team pages with one shop context and RU/UZ", async (
         ),
       );
     }
-    for (const language of ["ru", "uz"]) {
+    for (const language of ["ru", "uz", "en"]) {
       const cart = render("/cart", language);
       assert.match(cart, /1\s*780\s*000/);
       assert.match(
         cart,
-        language === "ru" ? /Состав заказа/ : /Buyurtma hisoboti/,
+        language === "ru"
+          ? /Состав заказа/
+          : language === "uz"
+            ? /Buyurtma hisoboti/
+            : /Order summary/,
       );
       assert.match(
         cart,
-        language === "ru" ? /Дрель-шуруповёрт/ : /Drel-shurupburagich/,
+        language === "ru"
+          ? /Дрель-шуруповёрт/
+          : language === "uz"
+            ? /Drel-shurupburagich/
+            : /Drill|drill/,
       );
       assert.match(
         render("/cart", language, {}),
-        language === "ru" ? /Корзина пуста/ : /Savatcham bo‘sh/,
+        language === "ru"
+          ? /Корзина пуста/
+          : language === "uz"
+            ? /Savatcham bo‘sh/
+            : /cart is empty/,
       );
       for (const url of [
         "/",
         "/product/drill",
         "/product/cement",
+        "/product/rebar",
+        "/product/tile",
+        "/product/pipe",
+        "/product/plaster",
+        "/product/insulation",
+        "/catalog",
+        "/categories",
+        "/favorites",
         "/login",
         "/register",
         "/reset-password",
@@ -171,9 +197,23 @@ test("Shared layout renders team pages with one shop context and RU/UZ", async (
         // Existing seller screens own an inner main; preserve those team layouts here.
         if (!url.startsWith("/seller"))
           assert.equal((html.match(/<main\b/g) || []).length, 1, url);
-        assert.match(html, language === "ru" ? /Русский/ : /O‘zbekcha/);
+        assert.match(html, /English/);
+        if (language !== "ru")
+          assert.deepEqual(
+            [
+              ...new Set(
+                html
+                  .replaceAll("Русский", "")
+                  .match(/[^<>]*[А-Яа-яЁё][^<>]*/g) || [],
+              ),
+            ],
+            [],
+            url,
+          );
       }
     }
+    assert.match(render("/cart", "en", { rebar: 2 }), /77\s*000/);
+    assert.match(render("/catalog?q=insulation", "en"), /Insulation/);
     const results = render("/?q=g%27isht#products", "uz");
     assert.match(results, /Keramik g‘isht/);
     assert.doesNotMatch(results, /<article[^>]*>[\s\S]*Drel-shurupburagich/);

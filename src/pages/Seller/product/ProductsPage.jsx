@@ -95,7 +95,6 @@ export default function ProductsPage() {
             <input
               placeholder={t("Название услуги")}
               className="w-full text-[14px] outline-none placeholder:text-gray-900 mt-1 font-medium"
-              defaultValue="Название услуги"
             />
           </div>
           <button className="bg-[#F59E0B] hover:bg-[#E68A00] text-black text-[14px] font-semibold px-6 py-4 md:py-0 rounded-xl md:self-stretch flex items-center justify-center gap-2 w-full md:w-auto md:min-w-[200px]">

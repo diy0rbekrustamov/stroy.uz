@@ -1,8 +1,9 @@
+import { catalogProducts as products } from "../data/catalogData.js";
 import { useLanguage } from "../i18n/useLanguage.js";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import Icon from "../components/home/Icon.jsx";
-import { products, formatPrice } from "../components/home/homeData.js";
+import { formatPrice } from "../components/home/homeData.js";
 import { useShop } from "../context/ShopContext.jsx";
 import "./ProductPage.css";
 
@@ -91,7 +92,20 @@ export default function ProductPage() {
   const product =
     products.find((item) => item.id === productId) ||
     products.find((item) => item.id === "drill");
-  const detail = productDetails[product.id];
+  const detail = productDetails[product.id] || {
+    title: product.name,
+    eyebrow: product.category,
+    article: "SU-" + product.id.toUpperCase(),
+    chips: [product.details],
+    sectionTitle: "Характеристики товара",
+    description: product.details,
+    specs: [
+      ["Категория", product.category],
+      ["Характеристики", product.details],
+      ["Бренд", product.brand],
+      ["Единица продажи", product.unit],
+    ],
+  };
   const { favorites, toggleFavorite, addToCart, openCart } = useShop();
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("specs");
