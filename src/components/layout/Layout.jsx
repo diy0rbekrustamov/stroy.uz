@@ -43,12 +43,12 @@ export default function Layout() {
         }}
         onSearchSubmit={() => {
           setFilter("all");
-          navigate(`/?q=${encodeURIComponent(query.trim())}#products`);
+          navigate(`/catalog?q=${encodeURIComponent(query.trim())}`);
         }}
         cartCount={shop.cartCount}
         favoriteCount={shop.favorites.length}
         onCart={() => navigate("/cart")}
-        onFavorites={() => chooseGroup("favorites")}
+        onFavorites={() => navigate("/favorites")}
         onInfo={shop.openInfo}
       />
       <main id="main" className="flex-1">

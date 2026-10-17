@@ -1,7 +1,8 @@
+import { catalogProducts as products } from "../../data/catalogData.js";
 import { useLanguage } from "../../i18n/useLanguage.js";
 import { useEffect } from "react";
 import { Link } from "react-router";
-import { products, formatPrice } from "../home/homeData.js";
+import { formatPrice } from "../home/homeData.js";
 import { useShop } from "../../context/ShopContext.jsx";
 import "./ShopDialog.css";
 

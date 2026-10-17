@@ -54,14 +54,6 @@ const router = createBrowserRouter([
         element: <FavoritesPage />,
       },
       {
-        path: "product/:productId",
-        element: <ProductPage />,
-      },
-      {
-        path: "product",
-        element: <ProductPage />,
-      },
-      {
         path: "seller",
         element: <LayoutSeller />,
         children: [

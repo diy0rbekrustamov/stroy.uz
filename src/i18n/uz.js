@@ -446,6 +446,73 @@ JPG, PNG, WebP - до 10 МБ, до 8 фото|JPG, PNG, WebP — 10 MB gacha, 8
 от 45 000 сум / м²|45 000 so‘mdan / m²
 от 80 000 сум / м²|80 000 so‘mdan / m²
 от 25 000 сум / м²|25 000 so‘mdan / m²
+Цемент, штукатурка и смеси для строительства|Sement, suvoq va qurilish aralashmalari
+Кирпичи и блоки|G‘ishtlar va bloklar
+Всё для прочных стен и перегородок|Mustahkam devor va to‘siqlar uchun hammasi
+Арматура и металлический прокат|Armatura va metall prokat
+Электроинструменты для любой задачи|Har qanday vazifa uchun elektr asboblar
+Краски, покрытия и материалы для ремонта|Bo‘yoqlar, qoplamalar va ta’mirlash materiallari
+Инженерные системы и комплектующие|Muhandislik tizimlari va butlovchi qismlar
+БЕСТСЕЛЛЕР|ENG KO‘P SOTILGAN
+Арматура стальная · 12 мм|Po‘lat armatura · 12 mm
+Диаметр 12 мм · 6 м|Diametri 12 mm · 6 m
+ПОПУЛЯРНОЕ|OMMABOP
+Плитка керамическая|Keramik plitka
+Серая · 60 × 60 см|Kulrang · 60 × 60 sm
+Труба ПВХ · 50 мм|PVX quvur · 50 mm
+Для внутренней канализации|Ichki kanalizatsiya uchun
+Штукатурка гипсовая · 30 кг|Gipsli suvoq · 30 kg
+Для внутренних работ|Ichki ishlar uchun
+Утеплитель · 50 мм|Issiqlik izolyatsiyasi · 50 mm
+Теплоизоляционные плиты|Issiqlik izolyatsiya plitalari
+упак.|qadoq
+Сначала дешевле|Avval arzonlari
+Сначала дороже|Avval qimmatlari
+По названию|Nomi bo‘yicha
+Хлебные крошки|Sahifa yo‘li
+СТРОИТЕЛЬНЫЙ МАРКЕТПЛЕЙС|QURILISH MARKETPLEYSI
+Найдите всё необходимое для строительства и ремонта|Qurilish va ta’mirlash uchun barcha kerakli mahsulotlarni toping
+Фильтры каталога|Katalog filtrlari
+Категории|Toifalar
+От|Dan
+Цена от|Eng kam narx
+До|Gacha
+Цена до|Eng yuqori narx
+Бренд|Brend
+Выбрать бренд|Brendni tanlash
+Все бренды|Barcha brendlar
+Только в наличии|Faqat mavjudlari
+Сбросить фильтры|Filtrlarni tozalash
+Показать все категории|Barcha toifalarni ko‘rsatish
+Товары каталога|Katalog mahsulotlari
+Быстрый выбор категории|Toifani tez tanlash
+Сортировка|Saralash
+Результаты поиска по запросу «|Qidiruv natijalari: «
+Раздел:|Toifa:
+Показать всё ×|Hammasini ko‘rsatish ×
+Товары не найдены|Mahsulotlar topilmadi
+Попробуйте изменить категорию, поиск или фильтры.|Toifa, qidiruv yoki filtrlarni o‘zgartirib ko‘ring.
+Показать все товары|Barcha mahsulotlarni ko‘rsatish
+Цены и ассортимент представлены для демонстрации макета.|Narxlar va mahsulotlar maketni namoyish qilish uchun keltirilgan.
+Выберите нужный раздел — мы покажем все товары этой категории.|Kerakli bo‘limni tanlang — ushbu toifadagi barcha mahsulotlarni ko‘rsatamiz.
+Категории товаров|Mahsulot toifalari
+/ КАТЕГОРИЯ|/ TOIFA
+ЕЩЁ НЕ ОПРЕДЕЛИЛИСЬ С КАТЕГОРИЕЙ?|TOIFANI HALI TANLAMADINGIZMI?
+Смотрите весь ассортимент STROY UZ|STROY UZ assortimentini ko‘ring
+Сохранённые товары|Saqlangan mahsulotlar
+В избранном пока нет товаров|Sevimlilarda hali mahsulot yo‘q
+Нажмите на сердечко рядом с товаром, чтобы сохранить его здесь.|Mahsulotni saqlash uchun yonidagi yurakchani bosing.
+Перейти к товарам|Mahsulotlarga o‘tish
+Язык интерфейса|Interfeys tili
+Посмотреть товар:|Mahsulotni ko‘rish:
+Открыть товар:|Mahsulotni ochish:
+Характеристики товара|Mahsulot xususiyatlari
+Категория|Toifa
+Увеличить изображение:|Tasvirni kattalashtirish:
+Добавить|Qo‘shish
+Убрать|Olib tashlash
+в избранное|sevimlilarga
+из избранного|sevimlilardan
 `;
 
 export const uz = Object.fromEntries(

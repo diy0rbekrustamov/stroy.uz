@@ -1,12 +1,23 @@
 import { uz } from "./uz.js";
+import { en } from "./en.js";
+const dictionaries = { uz, en };
 
 const normalize = (value) => value.replace(/\s+/g, " ").trim();
-const phrases = Object.keys(uz).sort((a, b) => b.length - a.length);
-const pattern = new RegExp(
-  phrases
-    .map((phrase) => phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
-    .join("|"),
-  "g",
+const patterns = Object.fromEntries(
+  Object.entries(dictionaries).map(([language, dictionary]) => {
+    const phrases = Object.keys(dictionary).sort((a, b) => b.length - a.length);
+    return [
+      language,
+      new RegExp(
+        "(?<![\\p{L}])(?:" +
+          phrases
+            .map((phrase) => phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+            .join("|") +
+          ")(?![\\p{L}])",
+        "gu",
+      ),
+    ];
+  }),
 );
 
 export const normalizeSearch = (value) =>
@@ -17,10 +28,35 @@ export const normalizeSearch = (value) =>
 
 // Numbers, React nodes, form values, IDs and product data retain their original type.
 export function translate(value, language) {
-  if (language !== "uz" || typeof value !== "string") return value;
+  const dictionary = dictionaries[language];
+  if (!dictionary || typeof value !== "string") return value;
   const key = normalize(value);
-  if (Object.hasOwn(uz, key)) {
-    return value.match(/^\s*/)[0] + uz[key] + value.match(/\s*$/)[0];
+  if (Object.hasOwn(dictionary, key)) {
+    return value.match(/^\s*/)[0] + dictionary[key] + value.match(/\s*$/)[0];
   }
-  return value.replace(pattern, (phrase) => uz[phrase]);
+  return value.replace(patterns[language], (phrase) => dictionary[phrase]);
+}
+
+export function matchesProduct(product, query) {
+  const source = [
+    product.name,
+    product.category,
+    product.details,
+    product.brand || "",
+  ].join(" ");
+  return normalizeSearch(
+    [source, translate(source, "uz"), translate(source, "en")].join(" "),
+  ).includes(normalizeSearch(query));
+}
+export function productCount(count, language) {
+  if (language === "uz") return count + " ta mahsulot";
+  if (language === "en")
+    return count + (count === 1 ? " product" : " products");
+  return (
+    count +
+    " " +
+    { one: "товар", few: "товара", many: "товаров", other: "товара" }[
+      new Intl.PluralRules("ru").select(count)
+    ]
+  );
 }

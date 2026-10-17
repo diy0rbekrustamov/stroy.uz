@@ -23,6 +23,8 @@ npm run dev
 
 Работайте в отдельной ветке и открывайте Pull Request. Не добавляйте зависимости и изменения общих конфигураций без согласования с командой.
 
+Интерфейс поддерживает RU / UZ / EN. [Правила добавления переводов и проверки](docs/localization.md).
+
 ## Исходный шаблон React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
