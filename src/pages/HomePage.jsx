@@ -75,7 +75,7 @@ function HomePage() {
             </a>
           </div>
           <div className="home-category-grid">
-            {categories.map(([title, text, group]) => (
+            {categories.map(([title, text, group, categoryIcon]) => (
               <button
                 type="button"
                 className="home-category"
@@ -86,7 +86,7 @@ function HomePage() {
                   <h3>{t(title)}</h3>
                   <p>{t(text)}</p>
                 </div>
-                <Icon name="layers" />
+                <Icon name={categoryIcon} />
               </button>
             ))}
           </div>
