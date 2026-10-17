@@ -1,259 +1,579 @@
 import { useLanguage } from "../../../i18n/useLanguage.js";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
+
+// === SELECT OPTIONS ===
+const categoryOptions = [
+  { value: "tools", label: "Инструменты" },
+  { value: "materials", label: "Стройматериалы" },
+  { value: "electric", label: "Электрика" },
+];
+const typesByCategory = {
+  tools: [
+    "Перфоратор",
+    "Дрель",
+    "Шуруповерт",
+    "Болгарка (УШМ)",
+    "Лобзик",
+    "Сварочный аппарат",
+  ],
+  materials: ["Цемент", "Кирпич", "Арматура"],
+  electric: ["Кабель", "Розетка", "Автомат"],
+};
+const voltageOptions = ["12", "18", "20", "220", "380"];
+const komplektOptions = [
+  "Только инструмент",
+  "С кейсом",
+  "С аккумулятором и зарядкой",
+  "2 аккумулятора + кейс",
+  "Полный комплект",
+];
+const modesOptions = [
+  "Сверление",
+  "Сверление с ударом",
+  "Долбление",
+  "Сверление / Удар / Долбление",
+];
+const colorOptions = [
+  "Черный",
+  "Синий",
+  "Красный",
+  "Зеленый",
+  "Желтый",
+  "Оранжевый",
+];
 
 export default function AddProductPage() {
   const { t } = useLanguage();
-
-  const [photos, setPhotos] = useState([]);
   const [filter, setFilter] = useState("all");
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      productName: "",
+      category: "",
+      article: "",
+      description: "",
+      photos: [],
+      type: "",
+      voltage: "",
+      equipment: "",
+      modes: "",
+      color: "",
+      price: "",
+      unit: "",
+      stock: "",
+      minOrder: 1,
+      city: "",
+      deliveryUz: true,
+      pickup: true,
+      deliveryConditions: "",
+      confirm: false,
+      customCharacteristics: [],
+    },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "customCharacteristics",
+  });
+
+  const photos = watch("photos");
+  const productName = watch("productName");
+  const category = watch("category");
+  const availableTypes = category ? typesByCategory[category] || [] : [];
+
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem("productName"));
+      if (saved?.defaultName) setValue("productName", saved.defaultName);
+    } catch {}
+  }, [setValue]);
+
+  const onSubmit = (data) => {
+    console.log("VALID DATA:", data);
+    alert("Готово! Смотри console");
+  };
+
+  const handlePhotoChange = (e) => {
+    const files = Array.from(e.target.files).slice(0, 8);
+    setValue("photos", files, { shouldValidate: true });
+  };
 
   return (
     <>
-      {/* MAIN CONTENT */}
       <main className="flex-1 min-w-0 w-full">
-        <div className="text-[11px] text-gray-400 mb-1 hidden md:block">
+        <div className="text- text-gray-400 mb-1 hidden md:block">
           {t("← Мои товары")}
         </div>
-        <h1 className="text-[28px] md:text-[36px] font-bold text-[#111827] tracking-tight">
+        <h1 className="text- md:text- font-bold text-[#111827] tracking-tight">
           {t("Добавить товар")}
         </h1>
-        <p className="text-[13px] md:text-sm text-gray-500 mb-3 mt-1">
+        <p className="text- md:text-sm text-gray-500 mb-3 mt-1">
           {t("Создайте понятную карточку для покупателя.")}
         </p>
 
-        <div className="bg-[#FEF3C7] text-[11px] p-2.5 rounded-lg mb-4 text-[#92400E] leading-[1.4]">
+        <div className="bg-[#FEF3C7] text- p-2.5 rounded-lg mb-4 text-[#92400E] leading-[1.4]">
           {t(
             "ДЕМО • Товар и данные продавца приведены для макета. Поля * обязательны.",
           )}
         </div>
 
-        {/* Steps - Mobileda 2 qatorda */}
         <div className="flex gap-2 mb-5 overflow-x-auto scrollbar-hide pb-1">
           <button
             onClick={() => setFilter("all")}
-            className={`text-[13px] px-4 py-2 rounded-full md:rounded-lg font-medium whitespace-nowrap transition ${filter === "all" ? "bg-[#1C2E42] text-white" : "bg-transparent text-gray-600"}`}
+            className={`text- px-4 py-2 rounded-full md:rounded-lg font-medium whitespace-nowrap transition ${filter === "all" ? "bg-[#1C2E42] text-white" : "bg-transparent text-gray-600"}`}
           >
             {t("1 · Основное")}
           </button>
           <button
             onClick={() => setFilter("pub")}
-            className={`text-[13px] px-4 py-2 rounded-full md:rounded-lg font-medium whitespace-nowrap transition ${filter === "pub" ? "bg-[#1C2E42] text-white" : "bg-transparent text-gray-500"}`}
+            className={`text- px-4 py-2 rounded-full md:rounded-lg font-medium whitespace-nowrap transition ${filter === "pub" ? "bg-[#1C2E42] text-white" : "bg-transparent text-gray-500"}`}
           >
             {t("2 · Характеристики")}
           </button>
           <button
             onClick={() => setFilter("draft")}
-            className={`text-[13px] px-4 py-2 rounded-full md:rounded-lg font-medium whitespace-nowrap transition ${filter === "draft" ? "bg-[#1C2E42] text-white" : "bg-transparent text-gray-500"}`}
+            className={`text- px-4 py-2 rounded-full md:rounded-lg font-medium whitespace-nowrap transition ${filter === "draft" ? "bg-[#1C2E42] text-white" : "bg-transparent text-gray-500"}`}
           >
             {t("3 · Продажа")}
           </button>
         </div>
 
-        {/* 01 */}
-        <section className="bg-white rounded-xl p-4 md:p-5 shadow-sm mb-4 border border-gray-100">
-          <h2 className="font-bold text-[15px] mb-4">
-            {t("01 / Основная информация")}
-          </h2>
-          <div className="border border-gray-100 rounded-lg p-3 mb-3">
-            <label className="text-[11px] font-semibold">
-              {t("Название товара *")}
-            </label>
-            <input
-              placeholder={t("Введите название товара")}
-              className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
-            />
-            <p className="text-[10px] text-gray-400 mt-1">
-              {t("До 120 символов. Укажите тип и ключевую характеристику.")}
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
-            <div className="border border-gray-100 rounded-lg p-3">
-              <label className="text-[11px] font-semibold">
-                {t("Категория *")}
-              </label>
-              <div className="text-sm text-gray-400 mt-1">
-                {t("Выберите категорию ∨")}
-              </div>
-            </div>
-            <div className="border border-gray-100 rounded-lg p-3">
-              <label className="text-[11px]">{t("Артикул")}</label>
-              <input
-                placeholder={t("Введите артикул")}
-                className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
-              />
-            </div>
-          </div>
-          <label className="text-[11px] font-bold">{t("Фотографии *")}</label>
-          <div className="bg-[#F8FAFC] border border-dashed border-gray-200 rounded-lg p-6 mt-2 text-center">
-            <div className="text-xl mb-2">↑</div>
-            <p className="text-xs font-medium">
-              {t("Перетащите фото или выберите файлы")}
-            </p>
-            <p className="text-[10px] text-gray-400 mt-1">
-              {t("JPG, PNG, WebP - до 10 МБ, до 8 фото")}
-            </p>
-            <button className="mt-3 w-full bg-white border rounded-md py-2 text-xs">
-              {t("Выбрать фото →")}
-            </button>
-          </div>
-          <div className="border border-gray-100 rounded-lg p-3 mt-4">
-            <label className="text-[11px]">{t("Описание *")}</label>
-            <textarea
-              placeholder={t("Введите назначение товара...")}
-              className="w-full text-sm mt-1 outline-none resize-none placeholder:text-gray-400"
-              rows={3}
-            />
-          </div>
-        </section>
-
-        {/* 02 */}
-        <section className="bg-white rounded-xl p-5 shadow-sm mb-4 border border-gray-100">
-          <h2 className="font-bold text-[15px] mb-4">
-            {t("02 / Характеристики")}
-          </h2>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="border border-gray-100 rounded-lg p-3">
-              <label className="text-[11px] font-semibold">{t("Тип *")}</label>
-              <div className="text-sm text-gray-400 mt-1">
-                {t("Выберите тип ∨")}
-              </div>
-            </div>
-            <div className="border border-gray-100 rounded-lg p-3">
-              <label className="text-[11px]">{t("Напряжение, В *")}</label>
-              <input
-                placeholder={t("Введите напряжение")}
-                className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
-              />
-            </div>
-            <div className="border border-gray-100 rounded-lg p-3 col-span-2">
-              <label className="text-[11px] font-semibold">
-                {t("Комплектация *")}
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          {/* 01 */}
+          <section className="bg-white rounded-xl p-4 md:p-5 shadow-sm mb-4 border border-gray-100">
+            <h2 className="font-bold text- mb-4">
+              {t("01 / Основная информация")}
+            </h2>
+            <div className="border border-gray-100 rounded-lg p-3 mb-3">
+              <label className="text- font-semibold">
+                {t("Название товара *")}
               </label>
               <input
-                placeholder={t("Введите комплектацию")}
+                {...register("productName", {
+                  required: t("Введите название"),
+                  maxLength: { value: 120, message: t("До 120 символов") },
+                })}
+                placeholder={t("Введите название товара")}
                 className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
               />
-            </div>
-            <div className="border border-gray-100 rounded-lg p-3">
-              <label className="text-[11px]">{t("Режимы")}</label>
-              <input
-                placeholder={t("Введите режимы")}
-                className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
-              />
-            </div>
-            <div className="border border-gray-100 rounded-lg p-3">
-              <label className="text-[11px]">{t("Цвет корпуса")}</label>
-              <input
-                placeholder={t("Введите цвет")}
-                className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
-              />
-            </div>
-          </div>
-          <button className="w-full mt-3 border rounded-lg py-2.5 text-xs">
-            {t("Добавить характеристику →")}
-          </button>
-        </section>
-
-        {/* 03 */}
-        <section className="bg-white rounded-xl p-5 shadow-sm mb-4 border border-gray-100">
-          <h2 className="font-bold text-[15px] mb-4">
-            {t("03 / Цена и наличие")}
-          </h2>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="border border-gray-100 rounded-lg p-3">
-              <label className="text-[11px]">{t("Цена, сум *")}</label>
-              <input
-                placeholder={t("Введите цену")}
-                className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
-              />
-              <p className="text-[9px] text-gray-400">
-                {t("Часто больше нуля")}
+              {errors.productName && (
+                <p className="text- text-red-500 mt-1">
+                  {errors.productName.message}
+                </p>
+              )}
+              <p className="text- text-gray-400 mt-1">
+                {t("До 120 символов. Укажите тип и ключевую характеристику.")}{" "}
+                {productName?.length || 0}/120
               </p>
             </div>
-            <div className="border border-gray-100 rounded-lg p-3">
-              <label className="text-[11px]">{t("Единица продажи *")}</label>
-              <div className="text-sm text-gray-400 mt-1">
-                {t("Выберите единицу ∨")}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+              <div className="border border-gray-100 rounded-lg p-3">
+                <label className="text- font-semibold">
+                  {t("Категория *")}
+                </label>
+                <select
+                  {...register("category", {
+                    required: t("Выберите категорию"),
+                  })}
+                  className="w-full text-sm mt-1 outline-none bg-white text-gray-800"
+                >
+                  <option value="">{t("Выберите категорию ∨")}</option>
+                  {categoryOptions.map((o) => (
+                    <option key={o.value} value={o.value}>
+                      {o.label}
+                    </option>
+                  ))}
+                </select>
+                {errors.category && (
+                  <p className="text- text-red-500 mt-1">
+                    {errors.category.message}
+                  </p>
+                )}
+              </div>
+              <div className="border border-gray-100 rounded-lg p-3">
+                <label className="text-">{t("Артикул")}</label>
+                <input
+                  {...register("article")}
+                  placeholder={t("Введите артикул")}
+                  className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
+                />
               </div>
             </div>
-            <div className="border border-gray-100 rounded-lg p-3">
-              <label className="text-[11px]">{t("Остаток *")}</label>
+            <label className="text- font-bold">{t("Фотографии *")}</label>
+            <div className="bg-[#F8FAFC] border border-dashed border-gray-200 rounded-lg p-6 mt-2 text-center">
+              <div className="text-xl mb-2">↑</div>
+              <p className="text-xs font-medium">
+                {t("Перетащите фото или выберите файлы")}
+              </p>
+              <p className="text- text-gray-400 mt-1">
+                {t("JPG, PNG, WebP - до 10 МБ, до 8 фото")}
+              </p>
               <input
-                placeholder={t("Введите количество")}
-                className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={handlePhotoChange}
+                className="hidden"
+                id="photoInput"
               />
-            </div>
-            <div className="border border-gray-100 rounded-lg p-3">
-              <label className="text-[11px]">{t("Минимальный заказ")}</label>
-              <div className="text-sm mt-1">1</div>
-            </div>
-          </div>
-          <p className="text-[10px] text-gray-400 mt-3">
-            {t(
-              "При остатке 0 товар недоступен для заказа. Цена в сум за выбранную единицу, доставка не включена.",
-            )}
-          </p>
-        </section>
-
-        {/* 04 */}
-        <section className="bg-white rounded-xl p-5 shadow-sm mb-4 border border-gray-100">
-          <h2 className="font-bold text-[15px] mb-4">
-            {t("04 / Получение товара")}
-          </h2>
-          <div className="border border-gray-100 rounded-lg p-3 mb-3">
-            <label className="text-[11px] font-semibold">
-              {t("Город склада *")}
-            </label>
-            <div className="text-sm text-gray-400 mt-1">
-              {t("Выберите город ∨")}
-            </div>
-          </div>
-          <div className="flex flex-col gap-2 mb-3">
-            <label className="flex items-center gap-2 text-xs">
-              <input type="checkbox" defaultChecked />
-              {t("Доставка по Узбекистану")}
-            </label>
-            <label className="flex items-center gap-2 text-xs">
-              <input type="checkbox" defaultChecked />
-              {t("Самовывоз")}
-            </label>
-          </div>
-          <div className="border border-gray-100 rounded-lg p-3 h-[90px]">
-            <label className="text-[11px]">
-              {t("Условия доставки и самовывоза *")}
-            </label>
-            <textarea
-              placeholder={t(
-                "Введите сроки, зону доставки и условия самовывоза",
+              <label
+                htmlFor="photoInput"
+                className="mt-3 w-full bg-white border rounded-md py-2 text-xs inline-block cursor-pointer"
+              >
+                {t("Выбрать фото →")}{" "}
+                {photos?.length ? `(${photos.length})` : ""}
+              </label>
+              <input
+                type="hidden"
+                {...register("photos", {
+                  required: t("Добавьте хотя бы одно фото"),
+                  validate: (v) =>
+                    v.length > 0 || t("Добавьте хотя бы одно фото"),
+                })}
+              />
+              {errors.photos && (
+                <p className="text- text-red-500 mt-2">
+                  {errors.photos.message}
+                </p>
               )}
-              className="w-full text-sm mt-1 outline-none resize-none placeholder:text-gray-400"
-            />
-          </div>
-        </section>
+            </div>
+            <div className="border border-gray-100 rounded-lg p-3 mt-4">
+              <label className="text-">{t("Описание *")}</label>
+              <textarea
+                {...register("description", {
+                  required: t("Введите описание"),
+                  minLength: { value: 20, message: t("Минимум 20 символов") },
+                })}
+                placeholder={t("Введите назначение товара...")}
+                className="w-full text-sm mt-1 outline-none resize-none placeholder:text-gray-400"
+                rows={3}
+              />
+              {errors.description && (
+                <p className="text- text-red-500 mt-1">
+                  {errors.description.message}
+                </p>
+              )}
+            </div>
+          </section>
 
-        {/* Публикация */}
-        <section className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-          <h2 className="font-bold text-[15px] mb-3">{t("Публикация")}</h2>
-          <label className="flex items-start gap-2 text-[11px] text-gray-500 mb-4">
-            <input type="checkbox" className="mt-0.5" />
-            {t(
-              "Подтверждаю, что информация и права на фотографии проверены перед публикацией",
-            )}
-          </label>
-          <div className="grid grid-cols-2 gap-3">
-            <button className="bg-[#F59E0B] hover:bg-[#D97706] text-black text-xs font-semibold py-3 rounded-lg">
-              {t("Опубликовать товар →")}
+          {/* 02 */}
+          <section className="bg-white rounded-xl p-5 shadow-sm mb-4 border border-gray-100">
+            <h2 className="font-bold text- mb-4">{t("02 / Характеристики")}</h2>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="border border-gray-100 rounded-lg p-3">
+                <label className="text- font-semibold">{t("Тип *")}</label>
+                <select
+                  {...register("type", { required: t("Выберите тип") })}
+                  className="w-full text-sm mt-1 outline-none bg-white text-gray-800"
+                >
+                  <option value="">{t("Выберите тип ∨")}</option>
+                  {availableTypes.length === 0 ? (
+                    <option disabled>{t("Сначала выберите категорию")}</option>
+                  ) : (
+                    availableTypes.map((v) => (
+                      <option key={v} value={v}>
+                        {v}
+                      </option>
+                    ))
+                  )}
+                </select>
+                {errors.type && (
+                  <p className="text- text-red-500 mt-1">
+                    {errors.type.message}
+                  </p>
+                )}
+              </div>
+              <div className="border border-gray-100 rounded-lg p-3">
+                <label className="text-">{t("Напряжение, В *")}</label>
+                <input
+                  list="voltages"
+                  {...register("voltage", {
+                    required: t("Введите напряжение"),
+                  })}
+                  placeholder={t("Введите напряжение")}
+                  className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
+                />
+                <datalist id="voltages">
+                  {voltageOptions.map((v) => (
+                    <option key={v} value={v} />
+                  ))}
+                </datalist>
+                {errors.voltage && (
+                  <p className="text- text-red-500 mt-1">
+                    {errors.voltage.message}
+                  </p>
+                )}
+              </div>
+              <div className="border border-gray-100 rounded-lg p-3 col-span-2">
+                <label className="text- font-semibold">
+                  {t("Комплектация *")}
+                </label>
+                <select
+                  {...register("equipment", {
+                    required: t("Введите комплектацию"),
+                  })}
+                  className="w-full text-sm mt-1 outline-none bg-white text-gray-800"
+                >
+                  <option value="">{t("Выберите комплектацию ∨")}</option>
+                  {komplektOptions.map((v) => (
+                    <option key={v} value={v}>
+                      {v}
+                    </option>
+                  ))}
+                </select>
+                {errors.equipment && (
+                  <p className="text- text-red-500 mt-1">
+                    {errors.equipment.message}
+                  </p>
+                )}
+              </div>
+              <div className="border border-gray-100 rounded-lg p-3">
+                <label className="text-">{t("Режимы")}</label>
+                <select
+                  {...register("modes")}
+                  className="w-full text-sm mt-1 outline-none bg-white text-gray-800"
+                >
+                  <option value="">{t("Выберите режимы ∨")}</option>
+                  {modesOptions.map((v) => (
+                    <option key={v} value={v}>
+                      {v}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="border border-gray-100 rounded-lg p-3">
+                <label className="text-">{t("Цвет корпуса")}</label>
+                <select
+                  {...register("color")}
+                  className="w-full text-sm mt-1 outline-none bg-white text-gray-800"
+                >
+                  <option value="">{t("Выберите цвет ∨")}</option>
+                  {colorOptions.map((v) => (
+                    <option key={v} value={v}>
+                      {v}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {fields.map((field, index) => (
+              <div
+                key={field.id}
+                className="grid grid-cols-[1fr_1fr_32px] gap-3 mt-3"
+              >
+                <div className="border border-gray-100 rounded-lg p-3">
+                  <input
+                    {...register(`customCharacteristics.${index}.key`, {
+                      required: true,
+                    })}
+                    placeholder={t("Название, напр. Вес")}
+                    className="w-full text-sm outline-none"
+                  />
+                </div>
+                <div className="border border-gray-100 rounded-lg p-3">
+                  <input
+                    {...register(`customCharacteristics.${index}.value`, {
+                      required: true,
+                    })}
+                    placeholder={t("Значение, напр. 2.5 кг")}
+                    className="w-full text-sm outline-none"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => remove(index)}
+                  className="bg-red-50 text-red-500 rounded-lg h-"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+
+            <button
+              type="button"
+              onClick={() => append({ key: "", value: "" })}
+              className="w-full mt-3 border rounded-lg py-2.5 text-xs hover:bg-gray-50"
+            >
+              {t("Добавить характеристику →")}
             </button>
-            <button className="bg-white border text-xs py-3 rounded-lg">
-              {t("Сохранить черновик →")}
-            </button>
-          </div>
-          <p className="text-[10px] text-gray-400 mt-3">
-            {t(
-              "Черновик не виден покупателям. Для публикации заполните обязательные поля и добавьте фото.",
+          </section>
+
+          {/* 03 */}
+          <section className="bg-white rounded-xl p-5 shadow-sm mb-4 border border-gray-100">
+            <h2 className="font-bold text- mb-4">{t("03 / Цена и наличие")}</h2>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="border border-gray-100 rounded-lg p-3">
+                <label className="text-">{t("Цена, сум *")}</label>
+                <input
+                  type="number"
+                  {...register("price", {
+                    required: t("Введите цену"),
+                    min: { value: 1, message: t("Часто больше нуля") },
+                  })}
+                  placeholder={t("Введите цену")}
+                  className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
+                />
+                {errors.price && (
+                  <p className="text- text-red-500 mt-1">
+                    {errors.price.message}
+                  </p>
+                )}
+                {!errors.price && (
+                  <p className="text- text-gray-400">
+                    {t("Часто больше нуля")}
+                  </p>
+                )}
+              </div>
+              <div className="border border-gray-100 rounded-lg p-3">
+                <label className="text-">{t("Единица продажи *")}</label>
+                <select
+                  {...register("unit", { required: t("Выберите единицу") })}
+                  className="w-full text-sm mt-1 outline-none bg-white text-gray-800"
+                >
+                  <option value="">{t("Выберите единицу ∨")}</option>
+                  <option value="sht">шт</option>
+                  <option value="komplekt">комплект</option>
+                </select>
+                {errors.unit && (
+                  <p className="text- text-red-500 mt-1">
+                    {errors.unit.message}
+                  </p>
+                )}
+              </div>
+              <div className="border border-gray-100 rounded-lg p-3">
+                <label className="text-">{t("Остаток *")}</label>
+                <input
+                  type="number"
+                  {...register("stock", { required: t("Введите количество") })}
+                  placeholder={t("Введите количество")}
+                  className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
+                />
+                {errors.stock && (
+                  <p className="text- text-red-500 mt-1">
+                    {errors.stock.message}
+                  </p>
+                )}
+              </div>
+              <div className="border border-gray-100 rounded-lg p-3">
+                <label className="text-">{t("Минимальный заказ")}</label>
+                <input
+                  type="number"
+                  {...register("minOrder")}
+                  className="w-full text-sm mt-1 outline-none text-"
+                  defaultValue={1}
+                />
+              </div>
+            </div>
+            <p className="text- text-gray-400 mt-3">
+              {t(
+                "При остатке 0 товар недоступен для заказа. Цена в сум за выбранную единицу, доставка не включена.",
+              )}
+            </p>
+          </section>
+
+          {/* 04 */}
+          <section className="bg-white rounded-xl p-5 shadow-sm mb-4 border border-gray-100">
+            <h2 className="font-bold text- mb-4">
+              {t("04 / Получение товара")}
+            </h2>
+            <div className="border border-gray-100 rounded-lg p-3 mb-3">
+              <label className="text- font-semibold">
+                {t("Город склада *")}
+              </label>
+              <select
+                {...register("city", { required: t("Выберите город") })}
+                className="w-full text-sm mt-1 outline-none bg-white text-gray-800"
+              >
+                <option value="">{t("Выберите город ∨")}</option>
+                <option value="Tashkent">Tashkent</option>
+                <option value="Samarkand">Samarkand</option>
+              </select>
+              {errors.city && (
+                <p className="text- text-red-500 mt-1">{errors.city.message}</p>
+              )}
+            </div>
+            <div className="flex flex-col gap-2 mb-3">
+              <label className="flex items-center gap-2 text-xs">
+                <input type="checkbox" {...register("deliveryUz")} />
+                {t("Доставка по Узбекистану")}
+              </label>
+              <label className="flex items-center gap-2 text-xs">
+                <input type="checkbox" {...register("pickup")} />
+                {t("Самовывоз")}
+              </label>
+            </div>
+            <div className="border border-gray-100 rounded-lg p-3 h-">
+              <label className="text-">
+                {t("Условия доставки и самовывоза *")}
+              </label>
+              <textarea
+                {...register("deliveryConditions", {
+                  required: t("Введите условия"),
+                })}
+                placeholder={t(
+                  "Введите сроки, зону доставки и условия самовывоза",
+                )}
+                className="w-full text-sm mt-1 outline-none resize-none placeholder:text-gray-400"
+              />
+              {errors.deliveryConditions && (
+                <p className="text- text-red-500 mt-1">
+                  {errors.deliveryConditions.message}
+                </p>
+              )}
+            </div>
+          </section>
+
+          {/* Публикация */}
+          <section className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+            <h2 className="font-bold text- mb-3">{t("Публикация")}</h2>
+            <label className="flex items-start gap-2 text- text-gray-500 mb-4">
+              <input
+                type="checkbox"
+                {...register("confirm", {
+                  required: t("Подтвердите проверку данных"),
+                })}
+                className="mt-0.5"
+              />
+              {t(
+                "Подтверждаю, что информация и права на фотографии проверены перед публикацией",
+              )}
+            </label>
+            {errors.confirm && (
+              <p className="text- text-red-500 mb-3">
+                {errors.confirm.message}
+              </p>
             )}
-          </p>
-        </section>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="submit"
+                className="bg-[#F59E0B] hover:bg-[#D97706] text-black text-xs font-semibold py-3 rounded-lg"
+              >
+                {t("Опубликовать товар →")}
+              </button>
+              <button
+                type="button"
+                onClick={() => handleSubmit(onSubmit)()}
+                className="bg-white border text-xs py-3 rounded-lg"
+              >
+                {t("Сохранить черновик →")}
+              </button>
+            </div>
+            <p className="text- text-gray-400 mt-3">
+              {t(
+                "Черновик не виден покупателям. Для публикации заполните обязательные поля и добавьте фото.",
+              )}
+            </p>
+          </section>
+        </form>
       </main>
     </>
   );

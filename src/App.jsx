@@ -17,6 +17,7 @@ import FavoritesPage from "./pages/FavoritesPage.jsx";
 
 import CatalogPage from "./pages/CatalogPage.jsx";
 import CategoriesPage from "./pages/CategoriesPage.jsx";
+import AddServicePage from "./pages/Seller/service/AddServicePage.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
           {
             path: "services",
             element: <ServicesPage />,
+          },
+          {
+            path: "add-service",
+            element: <AddServicePage />,
           },
           {
             path: "orders",

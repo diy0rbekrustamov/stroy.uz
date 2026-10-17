@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import { useLanguage } from "../../../i18n/useLanguage.js";
 import { useState } from "react";
 
@@ -39,7 +40,8 @@ const services = [
 
 export default function MyServicesPage() {
   const { t } = useLanguage();
-
+  const [serviceName, setServiceName] = useState("");
+  const navigate = useNavigate();
   const [filter, setFilter] = useState("all");
 
   const filtered = services.filter((s) => {
@@ -48,6 +50,15 @@ export default function MyServicesPage() {
     if (filter === "draft") return s.status === "Черновик";
     return true;
   });
+
+  const navigateToAddService = () => {
+    localStorage.setItem(
+      "serviceName",
+      JSON.stringify({ defaultName: serviceName }),
+    );
+    navigate("/seller/add-service");
+    // Navigate to the add service page
+  };
 
   return (
     <>
@@ -96,11 +107,16 @@ export default function MyServicesPage() {
           <div className="flex-1 bg-white rounded-xl border border-gray-100 shadow-sm p-4">
             <div className="text-[11px] text-gray-400">{t("Поиск")}</div>
             <input
+              value={serviceName}
+              onChange={(e) => setServiceName(e.target.value)}
               placeholder={t("Название услуги")}
               className="w-full text-[14px] outline-none placeholder:text-gray-900 mt-1 font-medium"
             />
           </div>
-          <button className="bg-[#F59E0B] hover:bg-[#E68A00] text-black text-[14px] font-semibold px-6 py-4 md:py-0 rounded-xl md:self-stretch flex items-center justify-center gap-2 w-full md:w-auto md:min-w-[200px]">
+          <button
+            onClick={navigateToAddService}
+            className="bg-[#F59E0B] hover:bg-[#E68A00] text-black text-[14px] font-semibold px-6 py-4 md:py-0 rounded-xl md:self-stretch flex items-center justify-center gap-2 w-full md:w-auto md:min-w-[200px]"
+          >
             {t("Добавить услугу")}
             <span className="text-[16px]">→</span>
           </button>

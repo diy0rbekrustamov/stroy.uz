@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import { useLanguage } from "../../../i18n/useLanguage.js";
 import { useState } from "react";
 
@@ -42,8 +43,17 @@ const products = [
 
 export default function ProductsPage() {
   const { t } = useLanguage();
-
   const [filter, setFilter] = useState("all");
+  const [product, setProduct] = useState("");
+  const navigate = useNavigate();
+  const navigateToAddProduct = () => {
+    localStorage.setItem(
+      "productName",
+      JSON.stringify({ defaultName: product }),
+    );
+
+    navigate("add-product");
+  };
 
   return (
     <>
@@ -93,11 +103,16 @@ export default function ProductsPage() {
           <div className="flex-1 bg-white rounded-xl border border-gray-100 shadow-sm p-4">
             <div className="text-[11px] text-gray-400">{t("Поиск")}</div>
             <input
+              value={product}
+              onChange={(e) => setProduct(e.target.value)}
               placeholder={t("Название услуги")}
               className="w-full text-[14px] outline-none placeholder:text-gray-900 mt-1 font-medium"
             />
           </div>
-          <button className="bg-[#F59E0B] hover:bg-[#E68A00] text-black text-[14px] font-semibold px-6 py-4 md:py-0 rounded-xl md:self-stretch flex items-center justify-center gap-2 w-full md:w-auto md:min-w-[200px]">
+          <button
+            onClick={navigateToAddProduct}
+            className="bg-[#F59E0B] hover:bg-[#E68A00] text-black text-[14px] font-semibold px-6 py-4 md:py-0 rounded-xl md:self-stretch flex items-center justify-center gap-2 w-full md:w-auto md:min-w-[200px]"
+          >
             {t("Добавить услугу")}
             <span className="text-[16px]">→</span>
           </button>
