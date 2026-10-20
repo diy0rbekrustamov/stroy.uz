@@ -25,6 +25,8 @@ npm run dev
 
 Интерфейс поддерживает RU / UZ / EN. [Правила добавления переводов и проверки](docs/localization.md).
 
+[Общие кнопки, карточки товаров и адаптивность](docs/components.md).
+
 ## Исходный шаблон React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.

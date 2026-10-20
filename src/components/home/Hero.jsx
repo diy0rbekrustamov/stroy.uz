@@ -1,5 +1,5 @@
 import { useLanguage } from "../../i18n/useLanguage.js";
-import { Link } from "react-router";
+import Button from "../ui/Button.jsx";
 import hero from "../../assets/home/hero.png";
 import Icon from "./Icon.jsx";
 
@@ -24,14 +24,14 @@ export default function Hero() {
             {t("и собирайте заказ в одном месте.")}
           </p>
           <div className="home-hero-actions">
-            <Link className="home-button" to="/catalog">
+            <Button className="home-button" to="/catalog">
               {t("Открыть каталог")}
               <Icon name="arrow" />
-            </Link>
-            <a className="home-button home-button-light" href="#business">
+            </Button>
+            <Button variant="outline" className="home-button home-button-light" to="/#business">
               {t("Для бизнеса")}
               <Icon name="arrow" />
-            </a>
+            </Button>
           </div>
           <p className="home-hero-note">
             <Icon name="layers" />

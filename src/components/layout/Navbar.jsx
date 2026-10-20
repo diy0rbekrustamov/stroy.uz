@@ -73,7 +73,7 @@ export default function Navbar({
       </div>
 
       {/*.home-header-main */}
-      <div className="w-[min(100%-144px,1296px)] max-[1199px]:w-[calc(100%-64px)] max-[767px]:w-[calc(100%-32px)] mx-auto flex items-center gap-[42px] max-[1199px]:gap-6 min-h-[94px] max-[991px]:flex-wrap max-[991px]:py-5 max-[767px]:flex-wrap max-[767px]:gap-4 max-[767px]:py-5">
+      <div className="storefront-header-main w-[min(100%-144px,1296px)] max-[1199px]:w-[calc(100%-64px)] max-[767px]:w-[calc(100%-32px)] mx-auto flex items-center gap-[42px] max-[1199px]:gap-6 min-h-[94px] max-[991px]:flex-wrap max-[991px]:py-5 max-[767px]:flex-wrap max-[767px]:gap-4 max-[767px]:py-5">
         <Brand />
         <form
           className="flex items-center gap-3 bg-[#f5f6f7] py-2 px-4 rounded-lg flex-1 min-w-0 max-[991px]:order-3 max-[991px]:basis-full max-[767px]:order-4 max-[767px]:basis-full"

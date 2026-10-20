@@ -1,3 +1,5 @@
+import ProductCard from "../components/ui/ProductCard.jsx";
+import Button from "../components/ui/Button.jsx";
 import {
   readCatalogFilters,
   filterCatalogProducts,
@@ -8,7 +10,6 @@ import { useLanguage } from "../i18n/useLanguage.js";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import Icon from "../components/home/Icon.jsx";
-import { formatPrice } from "../components/home/homeData.js";
 import { catalogCategories, catalogProducts } from "../data/catalogData.js";
 import { useShop } from "../context/ShopContext.jsx";
 import "./CatalogPage.css";
@@ -32,93 +33,18 @@ export function CatalogBreadcrumbs({ last }) {
   );
 }
 
-function CatalogProductCard({ product, isFavorite, onFavorite, onCart }) {
-  const { t } = useLanguage();
-
-  return (
-    <article className="market-product-card">
-      <div className="market-card-topline">
-        <span>{t(product.badge)}</span>
-        <button
-          type="button"
-          className={`market-heart ${isFavorite ? "is-favorite" : ""}`}
-          aria-label={t(
-            `${isFavorite ? "Убрать из избранного" : "Добавить в избранное"}: ${product.name}`,
-          )}
-          aria-pressed={isFavorite}
-          onClick={() => onFavorite(product.id)}
-        >
-          <Icon name="heart" />
-        </button>
-      </div>
-      <Link
-        className="market-card-image"
-        to={`/product/${product.id}`}
-        aria-label={t(`Открыть товар: ${product.name}`)}
-      >
-        <img src={product.image} alt={t(product.name)} loading="lazy" />
-      </Link>
-      <div className="market-card-copy">
-        <p className="market-card-category">{t(product.category)}</p>
-        <h2>
-          <Link to={`/product/${product.id}`}>{t(product.name)}</Link>
-        </h2>
-        <p className="market-card-spec">{t(product.details)}</p>
-        <div className="market-card-pricing">
-          {t(
-            product.oldPrice ? (
-              <span className="market-old-price">
-                {t(formatPrice(product.oldPrice))}
-                {t(" сум / ")}
-                {t(product.unit)}
-              </span>
-            ) : (
-              <span
-                className="market-old-price market-price-spacer"
-                aria-hidden="true"
-              >
-                 
-              </span>
-            ),
-          )}
-          <div className="market-current-price">
-            <strong>
-              {t(formatPrice(product.price))}
-              {t(" сум")}
-            </strong>
-            <span>/ {t(product.unit)}</span>
-          </div>
-        </div>
-        <div className="market-card-bottom">
-          <span className="market-stock">
-            <i />
-            {t("В наличии")}
-          </span>
-          <button
-            type="button"
-            className="market-cart-button"
-            onClick={() => onCart(product)}
-          >
-            {t("В корзину")}
-            <Icon name="arrow" />
-          </button>
-        </div>
-      </div>
-    </article>
-  );
-}
-
 const priceCeiling =
   Math.ceil(Math.max(...catalogProducts.map((item) => item.price)) / 100000) *
   100000;
 
-function CatalogFilters({ filters, onApply, onReset }) {
+function CatalogFilters({ filters, onApply, onReset, expanded }) {
   const { t } = useLanguage();
   const [minPrice, setMinPrice] = useState(filters.min ?? "");
   const [maxPrice, setMaxPrice] = useState(filters.max ?? "");
   return (
     <form
-      className="market-filters"
+      id="catalog-filters"
+      className={`market-filters ${expanded ? "is-expanded" : ""}`}
       aria-label={t("Фильтры каталога")}
       onSubmit={(event) => {
         event.preventDefault();
@@ -250,6 +176,7 @@ export default function CatalogPage() {
   const { favorites, toggleFavorite, addToCart } = useShop();
   const [notice, setNotice] = useState("");
   const [helpOpen, setHelpOpen] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const update = (changes) => {
     const next = new URLSearchParams(params);
     next.delete("page");
@@ -302,12 +229,28 @@ export default function CatalogPage() {
       </div>
       <div className="market-catalog-surface">
         <div className="market-container market-catalog-layout">
-          <CatalogFilters
-            key={params.toString()}
-            filters={filters}
-            onApply={update}
-            onReset={reset}
-          />
+          <div className="market-filter-wrap">
+            <Button
+              variant="secondary"
+              className="market-filter-toggle"
+              aria-controls="catalog-filters"
+              aria-expanded={filtersOpen}
+              onClick={() => setFiltersOpen(!filtersOpen)}
+            >
+              {t("Фильтры")}
+              <Icon name="layers" />
+            </Button>
+            <CatalogFilters
+              key={params.toString()}
+              filters={filters}
+              expanded={filtersOpen}
+              onApply={(changes) => {
+                update(changes);
+                setFiltersOpen(false);
+              }}
+              onReset={reset}
+            />
+          </div>
           <section
             className="market-catalog-main"
             aria-label={t("Товары каталога")}
@@ -339,12 +282,13 @@ export default function CatalogPage() {
               <>
                 <div className="market-products-grid">
                   {pagination.products.map((product) => (
-                    <CatalogProductCard
+                    <ProductCard
+                      headingLevel={2}
                       key={product.id}
                       product={product}
-                      isFavorite={favorites.includes(product.id)}
+                      favorite={favorites.includes(product.id)}
                       onFavorite={toggleFavorite}
-                      onCart={(item) => {
+                      onAdd={(item) => {
                         addToCart(item);
                         setNotice(item.name + " добавлен в корзину");
                       }}

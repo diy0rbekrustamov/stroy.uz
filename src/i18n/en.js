@@ -547,6 +547,17 @@ JPG, PNG, WebP - до 10 МБ, до 8 фото|JPG, PNG, WebP — up to 10 MB, u
 Укажите имя и напишите отзыв минимум из 10 символов.|Enter your name and a review of at least 10 characters.
 Спасибо! Ваш отзыв добавлен.|Thank you! Your review has been added.
 Отзыв добавлен, но браузер не разрешил сохранить его после перезагрузки.|Your review was added, but browser storage is unavailable. It will not survive a reload.
+Тип аккаунта|Account type
+Введите корректный email|Enter a valid email address
+Подтвердите согласие перед продолжением.|Confirm your consent before continuing.
+Скрыть пароль|Hide password
+Показать пароль|Show password
+Скрыть|Hide
+Показать|Show
+Вход пока недоступен: сервис авторизации ещё не подключён.|Sign-in is not available yet: the authentication service has not been connected.
+Восстановление пока недоступно: сервис отправки писем ещё не подключён.|Password recovery is not available yet: the email service has not been connected.
+При восстановлении ответ не должен раскрывать, существует ли аккаунт с указанным email.|Recovery responses must not reveal whether an account exists for the email address.
+Сервис восстановления ещё не запущен. Письма пока не отправляются.|The recovery service is not live yet. Emails are not being sent.
 `;
 
 export const en = Object.fromEntries(

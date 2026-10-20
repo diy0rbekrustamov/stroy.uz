@@ -1,3 +1,4 @@
+import "../ui/storefront.css";
 import { useLanguage } from "../../i18n/useLanguage.js";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router";
@@ -34,7 +35,7 @@ export default function Layout() {
   }, [location.pathname, location.hash, location.key]);
 
   return (
-    <div className="min-h-screen bg-[#f5f6f7] flex flex-col">
+    <div className="shop-shell min-h-screen bg-[#f5f6f7] flex flex-col">
       <Navbar
         query={query}
         onSearch={(value) => {

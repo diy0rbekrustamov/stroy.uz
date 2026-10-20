@@ -1,3 +1,4 @@
+import ProductCard from "../components/ui/ProductCard.jsx";
 import { catalogProducts as products } from "../data/catalogData.js";
 import { useLanguage } from "../i18n/useLanguage.js";
 import { useEffect, useRef, useState } from "react";
@@ -515,59 +516,13 @@ function ProductDetail({ product }) {
             )
             .slice(0, 4)
             .map((item) => (
-              <article className="product-related-card" key={item.id}>
-                <div className="product-related-image">
-                  <Link
-                    to={`/product/${item.id}`}
-                    aria-label={t(`Открыть товар: ${item.name}`)}
-                  >
-                    <img src={item.image} alt={t(item.name)} loading="lazy" />
-                  </Link>
-                  <span>{t(item.badge)}</span>
-                  <button
-                    type="button"
-                    className="product-related-favorite"
-                    aria-label={t(
-                      favorites.includes(item.id)
-                        ? `Убрать ${item.name} из избранного`
-                        : `Добавить ${item.name} в избранное`,
-                    )}
-                    aria-pressed={favorites.includes(item.id)}
-                    onClick={() => toggleFavorite(item.id)}
-                  >
-                    <Icon
-                      name="heart"
-                      className={
-                        favorites.includes(item.id)
-                          ? "product-heart-active"
-                          : ""
-                      }
-                    />
-                  </button>
-                </div>
-                <p className="product-related-category">{t(item.category)}</p>
-                <h3>
-                  <Link to={`/product/${item.id}`}>{t(item.name)}</Link>
-                </h3>
-                <p className="product-related-details">{t(item.details)}</p>
-                <div className="product-related-price">
-                  <strong>{t(formatPrice(item.price))}</strong>
-                  <span>
-                    {t("сум / ")}
-                    {t(item.unit)}
-                  </span>
-                </div>
-                <div className="product-related-bottom">
-                  <span className="product-stock">
-                    <span className="product-stock-dot" />
-                    {t("В наличии")}
-                  </span>
-                  <button type="button" onClick={() => showAdded(item)}>
-                    {t("В корзину ")}
-                    <Icon name="arrow" />
-                  </button>
-                </div>
-              </article>
+              <ProductCard
+                key={item.id}
+                product={item}
+                favorite={favorites.includes(item.id)}
+                onFavorite={toggleFavorite}
+                onAdd={showAdded}
+              />
             ))}
         </div>
       </section>

@@ -1,124 +1,118 @@
 import { useLanguage } from "../i18n/useLanguage.js";
 import { Link } from "react-router";
 import { useState } from "react";
-import materialsImg from "../assets/home/hero.png";
+import AuthLayout from "../components/auth/AuthLayout.jsx";
+import Button from "../components/ui/Button.jsx";
+import Icon from "../components/home/Icon.jsx";
+import { validateAuthForm } from "../data/authValidation.js";
 
 export default function ResetPasswordPage() {
   const { t } = useLanguage();
-
-  const [email, setEmail] = useState("");
-  const [agree, setAgree] = useState(false);
-  const [sent, setSent] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!email || !agree) return;
-    setSent(true);
-    // API chaqiruv joyi: /auth/reset
-    setTimeout(() => setSent(false), 60000);
+  const [form, setForm] = useState({ email: "", consent: false });
+  const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState("");
+  const change = (key, value) => {
+    setForm((current) => ({ ...current, [key]: value }));
+    setErrors((current) => ({ ...current, [key]: undefined }));
+    setMessage("");
   };
-
   return (
-    <div className="min-h-screen bg-[#f5f6f7] p-4 md:p-8 flex items-center justify-center">
-      <div className="w-full max-w-[1360px] grid grid-cols-1 lg:grid-cols-[1.05fr_1.25fr] gap-6">
-        {/* LEFT */}
-        <div className="bg-[#1e2f3c] rounded-[16px] p-10 flex flex-col justify-between min-h-[680px]">
-          <div>
-            <div className="text-[#e9a227] text-[11px] tracking-widest uppercase">
-              {t("STROY UZ / ВАШ ПРОЕКТ")}
-            </div>
-            <h1 className="text-white text-[40px] font-bold leading-[1.05] mt-10">
-              {t("Одна основа.")}
-              <br />
-              {t("Много возможностей.")}
-            </h1>
-            <p className="text-[#a8b3be] text-[15px] mt-6 max-w-[360px]">
-              {t(
-                "Покупайте материалы, находите услуги и управляйте своим делом.",
-              )}
-            </p>
-          </div>
-          <img
-            src={materialsImg}
-            alt="ref"
-            className="w-full object-contain my-8"
+    <AuthLayout
+      title="Восстановление пароля"
+      description="Укажите email, который использовали при регистрации."
+    >
+      <form
+        className="auth-form"
+        aria-label={t("Восстановление пароля")}
+        noValidate
+        onSubmit={(event) => {
+          event.preventDefault();
+          const next = validateAuthForm(form, "reset");
+          setErrors(next);
+          setMessage("");
+          const first = Object.keys(next)[0];
+          if (first) {
+            event.currentTarget.elements.namedItem(first)?.focus();
+            return;
+          }
+          setMessage(
+            "Восстановление пока недоступно: сервис отправки писем ещё не подключён.",
+          );
+        }}
+      >
+        <div className="auth-field">
+          <label htmlFor="reset-email">Email *</label>
+          <input
+            id="reset-email"
+            name="email"
+            type="email"
+            required
+            autoComplete="email"
+            inputMode="email"
+            maxLength={254}
+            placeholder={t("Введите email")}
+            value={form.email}
+            onChange={(event) => change("email", event.target.value)}
+            aria-invalid={!!errors.email}
+            aria-describedby={
+              errors.email ? "reset-email-error" : "reset-email-hint"
+            }
           />
-          <div className="text-[#7b8a96] text-[11px]">
-            {t("Визуальный референс материалов, не 3D-модель.")}
-          </div>
+          {errors.email ? (
+            <p id="reset-email-error" className="auth-error">
+              {t(errors.email)}
+            </p>
+          ) : (
+            <small id="reset-email-hint">
+              {t("Проверьте адрес перед отправкой")}
+            </small>
+          )}
         </div>
-
-        {/* RIGHT */}
-        <div className="bg-white rounded-[16px] p-10">
-          <Link to="/" className="text-[13px] text-[#6b7280]">
-            {t("← Главная")}
-          </Link>
-          <h2 className="text-[32px] md:text-[36px] font-bold mt-6 text-[#111827]">
-            {t("Восстановление пароля")}
-          </h2>
-          <p className="text-[#6b7280] text-[14px] mt-2">
-            {t("Укажите email, который использовали при регистрации.")}
+        <div>
+          <label className="auth-checkbox">
+            <input
+              name="consent"
+              type="checkbox"
+              required
+              checked={form.consent}
+              onChange={(event) => change("consent", event.target.checked)}
+              aria-invalid={!!errors.consent}
+              aria-describedby={
+                errors.consent ? "reset-consent-error" : undefined
+              }
+            />
+            {t("Согласен на обработку email для восстановления доступа")}
+          </label>
+          {errors.consent && (
+            <p id="reset-consent-error" className="auth-error">
+              {t(errors.consent)}
+            </p>
+          )}
+        </div>
+        <Button type="submit">
+          {t("Отправить ссылку")}
+          <Icon name="arrow" />
+        </Button>
+        <p className="auth-status" role="status">
+          {t(message)}
+        </p>
+        <div className="auth-info">
+          <strong>{t("Без раскрытия данных аккаунта")}</strong>
+          <p>
+            {t(
+              "При восстановлении ответ не должен раскрывать, существует ли аккаунт с указанным email.",
+            )}
           </p>
-
-          <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-            <div className="border border-[#e5e7eb] rounded-[12px] px-4 py-3.5 focus-within:ring-2 focus-within:ring-amber-400/30 focus-within:border-amber-400">
-              <label className="text-[12px] text-[#6b7280]">Email *</label>
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder={t("Введите email")}
-                type="email"
-                className="w-full outline-none text-[14px] mt-1"
-              />
-              <div className="text-[11px] text-[#9ca3af] mt-2">
-                {t("Проверьте адрес перед отправкой")}
-              </div>
-            </div>
-
-            <label className="flex items-start gap-2 text-[12px] text-[#6b7280] cursor-pointer">
-              <input
-                type="checkbox"
-                checked={agree}
-                onChange={(e) => setAgree(e.target.checked)}
-                className="mt-0.5 accent-[#111e2a]"
-              />
-              {t("Согласен на обработку email для восстановления доступа")}
-            </label>
-
-            <button
-              disabled={!agree || !email || sent}
-              className="w-full bg-[#f59e0b] disabled:bg-[#fcd58a] text-[#111827] font-medium rounded-[12px] py-4 text-[14px] flex justify-center items-center gap-2 transition"
-            >
-              {t(sent ? "Ссылка отправлена" : "Отправить ссылку")}{" "}
-              <span>→</span>
-            </button>
-
-            <div className="bg-[#f8f9fa] rounded-[12px] p-4">
-              <div className="text-[13px] font-semibold text-[#111827]">
-                {t("Без раскрытия данных аккаунта")}
-              </div>
-              <p className="text-[12px] text-[#6b7280] mt-1.5 leading-[1.4]">
-                {t(
-                  "Если аккаунт с этим email существует, мы отправим ссылку. Ответ одинаков для любого адреса.",
-                )}
-              </p>
-            </div>
-
-            <Link
-              to="/login"
-              className="inline-block text-[13px] font-medium text-[#111827] hover:underline"
-            >
-              {t("← Вернуться ко входу")}
-            </Link>
-
-            <div className="text-[11px] text-[#9ca3af] leading-[1.4] pt-2">
-              {t(
-                "Ссылка действует 30 минут. Не сообщайте её другим людям. Повторная отправка станет доступна через 60 секунд.",
-              )}
-            </div>
-          </form>
         </div>
-      </div>
-    </div>
+        <Link className="auth-link" to="/login">
+          {t("← Вернуться ко входу")}
+        </Link>
+        <p className="auth-note">
+          {t(
+            "Сервис восстановления ещё не запущен. Письма пока не отправляются.",
+          )}
+        </p>
+      </form>
+    </AuthLayout>
   );
 }

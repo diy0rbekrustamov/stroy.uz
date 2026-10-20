@@ -109,6 +109,9 @@
     filter: blur(0);
   }
 }
+::view-transition {
+  pointer-events: none;
+}
 ::view-transition-old(root) {
   animation: locale-out 0.65s ease both;
 }

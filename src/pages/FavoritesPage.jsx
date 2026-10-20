@@ -1,8 +1,8 @@
+import ProductCard from "../components/ui/ProductCard.jsx";
 import { useLanguage } from "../i18n/useLanguage.js";
 import { useEffect } from "react";
 import { Link } from "react-router";
 import Icon from "../components/home/Icon.jsx";
-import { formatPrice } from "../components/home/homeData.js";
 import { catalogProducts } from "../data/catalogData.js";
 import { useShop } from "../context/ShopContext.jsx";
 import "./FavoritesPage.css";
@@ -40,68 +40,14 @@ export default function FavoritesPage() {
               aria-label={t("Сохранённые товары")}
             >
               {savedProducts.map((product) => (
-                <article className="favorites-card" key={product.id}>
-                  <div className="favorites-card-media">
-                    <span className="favorites-card-badge">
-                      {t(product.badge)}
-                    </span>
-                    <button
-                      type="button"
-                      className="favorites-card-heart"
-                      aria-label={t(`Убрать из избранного: ${product.name}`)}
-                      aria-pressed="true"
-                      onClick={() => toggleFavorite(product.id)}
-                    >
-                      <Icon name="heart" />
-                    </button>
-                    <Link
-                      className="favorites-card-image"
-                      to={`/product/${product.id}`}
-                      aria-label={t(`Посмотреть товар: ${product.name}`)}
-                    >
-                      <img
-                        src={product.image}
-                        alt={t(product.name)}
-                        loading="lazy"
-                      />
-                    </Link>
-                  </div>
-                  <p className="favorites-card-category">
-                    {t(product.category)}
-                  </p>
-                  <h2 className="favorites-card-name">
-                    <Link to={`/product/${product.id}`}>{t(product.name)}</Link>
-                  </h2>
-                  <div className="favorites-card-pricing">
-                    {product.id === "cement" && (
-                      <span className="favorites-card-old-price">
-                        {t("68 000 сум · мешок")}
-                      </span>
-                    )}
-                    <div className="favorites-card-current-price">
-                      <strong>
-                        {t(formatPrice(product.price))}
-                        {t(" сум")}
-                      </strong>
-                      <span>/ {t(product.unit)}</span>
-                    </div>
-                  </div>
-                  <div className="favorites-card-bottom">
-                    <span className="favorites-card-in-stock">
-                      <span aria-hidden="true" />
-                      {t("В наличии")}
-                    </span>
-                    <button
-                      type="button"
-                      className="favorites-card-cart"
-                      onClick={() => addToCart(product)}
-                      aria-label={t(`Добавить в корзину: ${product.name}`)}
-                    >
-                      {t("В корзину")}
-                      <Icon name="arrow" />
-                    </button>
-                  </div>
-                </article>
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  headingLevel={2}
+                  favorite={true}
+                  onFavorite={toggleFavorite}
+                  onAdd={addToCart}
+                />
               ))}
             </div>
           ) : (

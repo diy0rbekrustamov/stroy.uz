@@ -547,6 +547,17 @@ JPG, PNG, WebP - до 10 МБ, до 8 фото|JPG, PNG, WebP — 10 MB gacha, 8
 Укажите имя и напишите отзыв минимум из 10 символов.|Ismingizni va kamida 10 belgidan iborat fikrni yozing.
 Спасибо! Ваш отзыв добавлен.|Rahmat! Fikringiz qo‘shildi.
 Отзыв добавлен, но браузер не разрешил сохранить его после перезагрузки.|Fikr qo‘shildi, lekin brauzer uni saqlashga ruxsat bermadi. Sahifa yangilanganda u yo‘qoladi.
+Тип аккаунта|Hisob turi
+Введите корректный email|To‘g‘ri email manzilini kiriting
+Подтвердите согласие перед продолжением.|Davom etishdan oldin roziligingizni tasdiqlang.
+Скрыть пароль|Parolni yashirish
+Показать пароль|Parolni ko‘rsatish
+Скрыть|Yashirish
+Показать|Ko‘rsatish
+Вход пока недоступен: сервис авторизации ещё не подключён.|Kirish hozircha mavjud emas: avtorizatsiya xizmati hali ulanmagan.
+Восстановление пока недоступно: сервис отправки писем ещё не подключён.|Parolni tiklash hozircha mavjud emas: xat yuborish xizmati hali ulanmagan.
+При восстановлении ответ не должен раскрывать, существует ли аккаунт с указанным email.|Tiklash javobi ushbu email bilan hisob mavjudligini oshkor qilmasligi kerak.
+Сервис восстановления ещё не запущен. Письма пока не отправляются.|Tiklash xizmati hali ishga tushmagan. Xatlar hozircha yuborilmaydi.
 `;
 
 export const uz = Object.fromEntries(

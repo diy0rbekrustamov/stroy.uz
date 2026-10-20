@@ -1,161 +1,190 @@
 import { useLanguage } from "../i18n/useLanguage.js";
 import { Link } from "react-router";
 import { useState } from "react";
-import materialsImg from "../assets/home/hero.png";
+import AuthLayout from "../components/auth/AuthLayout.jsx";
+import Button from "../components/ui/Button.jsx";
+import Icon from "../components/home/Icon.jsx";
+import { validateAuthForm } from "../data/authValidation.js";
 
 export default function LoginPage() {
   const { t } = useLanguage();
-
   const [role, setRole] = useState("buyer");
   const [showPass, setShowPass] = useState(false);
-  const [form, setForm] = useState({ email: "", password: "" });
-
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    consent: false,
+    remember: false,
+  });
+  const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState("");
+  const change = (key, value) => {
+    setForm((current) => ({ ...current, [key]: value }));
+    setErrors((current) => ({ ...current, [key]: undefined }));
+    setMessage("");
+  };
   return (
-    <div className="min-h-screen bg-[#f5f6f7] p-4 md:p-8 ">
-      <div className="mx-auto w-full max-w-[1360px] grid grid-cols-1 lg:grid-cols-[1.05fr_1.25fr] gap-6">
-        {/* LEFT - bir xil register bilan */}
-        <div className="bg-[#1e2f3c] rounded-[16px] p-10 flex flex-col justify-between min-h-[700px]">
-          <div>
-            <div className="text-[#e9a227] text-[11px] tracking-widest uppercase font-medium">
-              {t("STROY UZ / ВАШ ПРОЕКТ")}
-            </div>
-            <h1 className="text-white text-[40px] leading-[1.05] font-bold mt-10">
-              {t("Одна основа.")}
-              <br />
-              {t("Много возможностей.")}
-            </h1>
-            <p className="text-[#a8b3be] text-[15px] mt-6 max-w-[360px] leading-[1.5]">
-              {t(
-                "Покупайте материалы, находите услуги и управляйте своим делом.",
-              )}
-            </p>
-          </div>
-          <img
-            src={materialsImg}
-            alt="ref"
-            className="w-full object-contain my-8"
-          />
-          <div className="text-[#7b8a96] text-[11px]">
-            {t("Визуальный референс материалов, не 3D-модель.")}
-          </div>
-        </div>
-
-        {/* RIGHT */}
-        <div className="bg-white rounded-[16px] p-10">
-          <Link to="/" className="text-[13px] text-[#6b7280]">
-            {t("← Главная")}
-          </Link>
-          <h2 className="text-[38px] font-bold mt-6 text-[#111827]">
-            {t("Вход")}
-          </h2>
-          <p className="text-[#6b7280] text-[14px] mt-2">
-            {t(
-              "Вернитесь к своему проекту. Один аккаунт для покупок и продаж.",
-            )}
-          </p>
-
-          <div className="flex gap-2 mt-8">
-            <button
-              onClick={() => setRole("buyer")}
-              className={`px-4 py-2 rounded-[10px] text-[13px] font-medium ${role === "buyer" ? "bg-[#111e2a] text-white" : "bg-[#f2f3f5] text-[#111827]"}`}
-            >
-              {t("Покупатель")}
-            </button>
-            <button
-              onClick={() => setRole("seller")}
-              className={`px-4 py-2 rounded-[10px] text-[13px] font-medium ${role === "seller" ? "bg-[#111e2a] text-white" : "bg-[#f2f3f5] text-[#111827]"}`}
-            >
-              {t("Продавец")}
-            </button>
-          </div>
-
-          <form className="mt-8 space-y-4" onSubmit={(e) => e.preventDefault()}>
-            <div className="border border-[#e5e7eb] rounded-[12px] px-4 py-3.5">
-              <label className="text-[12px] text-[#6b7280]">Email *</label>
-              <input
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                placeholder={t("Введите email")}
-                className="w-full outline-none text-[14px] mt-1"
-              />
-              <div className="text-[11px] text-[#9ca3af] mt-2">
-                {t("Например, name@example.com")}
-              </div>
-            </div>
-
-            <div className="border border-[#e5e7eb] rounded-[12px] px-4 py-3.5">
-              <label className="text-[12px] text-[#6b7280]">
-                {t("Пароль *")}
-              </label>
-              <div className="flex items-center gap-2">
-                <input
-                  type={showPass ? "text" : "password"}
-                  value={form.password}
-                  onChange={(e) =>
-                    setForm({ ...form, password: e.target.value })
-                  }
-                  placeholder={t("Введите пароль")}
-                  className="w-full outline-none text-[14px] mt-1"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPass(!showPass)}
-                  className="text-[12px] text-[#6b7280]"
-                >
-                  {t("· показать")}
-                </button>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 pt-2">
-              <input
-                type="checkbox"
-                className="accent-[#111e2a]"
-                id="remember"
-              />
-              <label htmlFor="remember" className="text-[12px] text-[#6b7280]">
-                {t("Запомнить меня на этом устройстве")}
-              </label>
-            </div>
-
-            <Link
-              to="/reset-password"
-              className="block text-[13px] font-medium text-[#111827] hover:underline"
-            >
-              {t("Забыли пароль?")}
-            </Link>
-
-            <label className="flex gap-2 text-[12px] text-[#6b7280] cursor-pointer">
-              <input type="checkbox" className="accent-[#111e2a] mt-0.5" />
-              {t(
-                "Я согласен с условиями использования и политикой конфиденциальности",
-              )}
-            </label>
-
-            <button className="w-full bg-[#f59e0b] hover:bg-[#e89a0c] text-[#111827] font-medium rounded-[12px] py-4 text-[14px] flex justify-center items-center gap-2 mt-2">
-              {t("Войти")}
-              <span>→</span>
-            </button>
-
-            <div className="text-[13px] pt-2">
-              {t("Нет аккаунта?")}
-              {t(" ")}
-              <Link
-                to="/register"
-                className="font-medium text-[#111827] hover:underline"
-              >
-                {t("Зарегистрироваться →")}
-              </Link>
-            </div>
-
-            <div className="text-[11px] text-[#9ca3af] leading-[1.4] pt-4">
-              {t(
-                "Обязательные поля отмечены *. Ошибки показываем рядом с полем, данные сохраним при повторе.",
-              )}
-            </div>
-          </form>
-        </div>
+    <AuthLayout
+      title="Вход"
+      description="Вернитесь к своему проекту. Один аккаунт для покупок и продаж."
+    >
+      <div className="auth-roles" role="group" aria-label={t("Тип аккаунта")}>
+        <button
+          type="button"
+          aria-pressed={role === "buyer"}
+          onClick={() => {
+            setRole("buyer");
+            setMessage("");
+          }}
+        >
+          {t("Покупатель")}
+        </button>
+        <button
+          type="button"
+          aria-pressed={role === "seller"}
+          onClick={() => {
+            setRole("seller");
+            setMessage("");
+          }}
+        >
+          {t("Продавец")}
+        </button>
       </div>
-    </div>
+      <form
+        className="auth-form"
+        aria-label={t("Вход")}
+        noValidate
+        onSubmit={(event) => {
+          event.preventDefault();
+          const next = validateAuthForm(form);
+          setErrors(next);
+          setMessage("");
+          const first = Object.keys(next)[0];
+          if (first) {
+            event.currentTarget.elements.namedItem(first)?.focus();
+            return;
+          }
+          setMessage(
+            "Вход пока недоступен: сервис авторизации ещё не подключён.",
+          );
+        }}
+      >
+        <div className="auth-field">
+          <label htmlFor="login-email">Email *</label>
+          <input
+            id="login-email"
+            name="email"
+            type="email"
+            required
+            autoComplete="username"
+            inputMode="email"
+            maxLength={254}
+            placeholder={t("Введите email")}
+            value={form.email}
+            onChange={(event) => change("email", event.target.value)}
+            aria-invalid={!!errors.email}
+            aria-describedby={
+              errors.email ? "login-email-error" : "login-email-hint"
+            }
+          />
+          {errors.email ? (
+            <p className="auth-error" id="login-email-error">
+              {t(errors.email)}
+            </p>
+          ) : (
+            <small id="login-email-hint">
+              {t("Например, name@example.com")}
+            </small>
+          )}
+        </div>
+        <div className="auth-field">
+          <label htmlFor="login-password">{t("Пароль *")}</label>
+          <div className="auth-password">
+            <input
+              id="login-password"
+              name="password"
+              type={showPass ? "text" : "password"}
+              required
+              autoComplete="current-password"
+              placeholder={t("Введите пароль")}
+              value={form.password}
+              onChange={(event) => change("password", event.target.value)}
+              aria-invalid={!!errors.password}
+              aria-describedby={
+                errors.password ? "login-password-error" : undefined
+              }
+            />
+            <button
+              type="button"
+              aria-label={t(showPass ? "Скрыть пароль" : "Показать пароль")}
+              aria-pressed={showPass}
+              onClick={() => setShowPass(!showPass)}
+            >
+              {t(showPass ? "Скрыть" : "Показать")}
+            </button>
+          </div>
+          {errors.password && (
+            <p className="auth-error" id="login-password-error">
+              {t(errors.password)}
+            </p>
+          )}
+        </div>
+        <div className="auth-options">
+          <label className="auth-checkbox">
+            <input
+              name="remember"
+              type="checkbox"
+              checked={form.remember}
+              onChange={(event) => change("remember", event.target.checked)}
+            />
+            {t("Запомнить меня на этом устройстве")}
+          </label>
+          <Link className="auth-link" to="/reset-password">
+            {t("Забыли пароль?")}
+          </Link>
+        </div>
+        <div>
+          <label className="auth-checkbox">
+            <input
+              name="consent"
+              type="checkbox"
+              required
+              checked={form.consent}
+              onChange={(event) => change("consent", event.target.checked)}
+              aria-invalid={!!errors.consent}
+              aria-describedby={
+                errors.consent ? "login-consent-error" : undefined
+              }
+            />
+            {t(
+              "Я согласен с условиями использования и политикой конфиденциальности",
+            )}
+          </label>
+          {errors.consent && (
+            <p className="auth-error" id="login-consent-error">
+              {t(errors.consent)}
+            </p>
+          )}
+        </div>
+        <Button type="submit">
+          {t("Войти")}
+          <Icon name="arrow" />
+        </Button>
+        <p className="auth-status" role="status">
+          {t(message)}
+        </p>
+        <p className="auth-register">
+          {t("Нет аккаунта?")}{" "}
+          <Link className="auth-link" to="/register">
+            {t("Зарегистрироваться →")}
+          </Link>
+        </p>
+        <p className="auth-note">
+          {t(
+            "Обязательные поля отмечены *. Ошибки показываем рядом с полем, данные сохраним при повторе.",
+          )}
+        </p>
+      </form>
+    </AuthLayout>
   );
 }
