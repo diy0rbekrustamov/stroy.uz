@@ -1,6 +1,6 @@
 import { catalogProducts as products } from "../data/catalogData.js";
 import { useLanguage } from "../i18n/useLanguage.js";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router";
 import Icon from "../components/home/Icon.jsx";
 import { formatPrice } from "../components/home/homeData.js";
@@ -86,12 +86,24 @@ const tabItems = [
 ];
 
 export default function ProductPage() {
-  const { t } = useLanguage();
-
   const { productId = "drill" } = useParams();
-  const product =
-    products.find((item) => item.id === productId) ||
-    products.find((item) => item.id === "drill");
+  const { t } = useLanguage();
+  const product = products.find((item) => item.id === productId);
+  if (!product)
+    return (
+      <section className="product-not-found product-container">
+        <h1>{t("Товар не найден")}</h1>
+        <p>{t("Проверьте ссылку или выберите товар в каталоге.")}</p>
+        <Link className="home-button" to="/catalog">
+          {t("Открыть каталог")}
+        </Link>
+      </section>
+    );
+  return <ProductDetail key={product.id} product={product} />;
+}
+
+function ProductDetail({ product }) {
+  const { t } = useLanguage();
   const detail = productDetails[product.id] || {
     title: product.name,
     eyebrow: product.category,
@@ -112,19 +124,33 @@ export default function ProductPage() {
   const [imageOpen, setImageOpen] = useState(false);
   const [compared, setCompared] = useState(false);
   const [toast, setToast] = useState("");
+  const [comparisonId, setComparisonId] = useState(
+    () => products.find((item) => item.id !== product.id).id,
+  );
+  const comparison = products.find((item) => item.id === comparisonId);
+  const zoomPanel = useRef(null);
   useEffect(() => {
-    setQuantity(1);
-    setActiveTab("specs");
-    setCompared(false);
     window.scrollTo(0, 0);
-  }, [product.id]);
+  }, []);
   useEffect(() => {
     if (!imageOpen) return;
+    const previous = document.activeElement;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    zoomPanel.current?.querySelector("button")?.focus();
     const closeOnEscape = (event) => {
       if (event.key === "Escape") setImageOpen(false);
+      if (event.key === "Tab") {
+        event.preventDefault();
+        zoomPanel.current?.querySelector("button")?.focus();
+      }
     };
     document.addEventListener("keydown", closeOnEscape);
-    return () => document.removeEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("keydown", closeOnEscape);
+      document.body.style.overflow = overflow;
+      previous?.focus();
+    };
   }, [imageOpen]);
   const favorite = favorites.includes(product.id);
   const showAdded = (item, count = 1) => {
@@ -141,7 +167,7 @@ export default function ProductPage() {
         >
           <Link to="/">{t("Главная")}</Link>
           <span>/</span>
-          <Link to="/#products">
+          <Link to={"/catalog?category=" + product.categoryId}>
             {t(
               product.group === "tools"
                 ? "Инструменты"
@@ -213,7 +239,7 @@ export default function ProductPage() {
               </div>
               <span className="product-stock">
                 <span className="product-stock-dot" />
-                {t("В наличии")}
+                {t(product.inStock ? "В наличии" : "Нет в наличии")}
               </span>
               <div className="product-purchase-controls">
                 <div
@@ -226,6 +252,7 @@ export default function ProductPage() {
                       setQuantity((value) => Math.max(1, value - 1))
                     }
                     aria-label={t("Уменьшить количество")}
+                    disabled={quantity === 1}
                   >
                     −
                   </button>
@@ -236,6 +263,7 @@ export default function ProductPage() {
                       setQuantity((value) => Math.min(999, value + 1))
                     }
                     aria-label={t("Увеличить количество")}
+                    disabled={quantity === 999}
                   >
                     +
                   </button>
@@ -244,6 +272,7 @@ export default function ProductPage() {
                   type="button"
                   className="product-add-button"
                   onClick={() => showAdded(product, quantity)}
+                  disabled={!product.inStock}
                 >
                   {t("Добавить в корзину ")}
                   <Icon name="arrow" />
@@ -274,6 +303,70 @@ export default function ProductPage() {
                 {t("Цена указана как пример для макета.")}
               </p>
             </div>
+            {compared && (
+              <section
+                className="product-comparison"
+                aria-label={t("Сравнение товаров")}
+              >
+                <label>
+                  {t("Сравнить с")}
+                  <select
+                    value={comparisonId}
+                    onChange={(event) => setComparisonId(event.target.value)}
+                  >
+                    {products
+                      .filter((item) => item.id !== product.id)
+                      .map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {t(item.name)}
+                        </option>
+                      ))}
+                  </select>
+                </label>
+                <div className="product-comparison-scroll">
+                  <table>
+                    <caption>{t("Сравнение товаров")}</caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">{t("Характеристики")}</th>
+                        <th scope="col">{t(product.name)}</th>
+                        <th scope="col">{t(comparison.name)}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[
+                        [
+                          "Цена, сум",
+                          formatPrice(product.price),
+                          formatPrice(comparison.price),
+                        ],
+                        [
+                          "Категория",
+                          t(product.category),
+                          t(comparison.category),
+                        ],
+                        [
+                          "Характеристики",
+                          t(product.details),
+                          t(comparison.details),
+                        ],
+                        [
+                          "Единица продажи",
+                          t(product.unit),
+                          t(comparison.unit),
+                        ],
+                      ].map(([label, left, right]) => (
+                        <tr key={label}>
+                          <th scope="row">{t(label)}</th>
+                          <td>{left}</td>
+                          <td>{right}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            )}
             <div className="product-delivery-note">
               <Icon name="truck" />
               <div>
@@ -299,11 +392,32 @@ export default function ProductPage() {
             role="tablist"
             aria-label={t("Информация о товаре")}
           >
-            {tabItems.map(([id, title]) => (
+            {tabItems.map(([id, title], index) => (
               <button
                 type="button"
                 key={id}
                 role="tab"
+                id={"product-tab-" + id}
+                aria-controls="product-tab-panel"
+                tabIndex={activeTab === id ? 0 : -1}
+                onKeyDown={(event) => {
+                  const keys = ["ArrowRight", "ArrowLeft", "Home", "End"];
+                  if (!keys.includes(event.key)) return;
+                  event.preventDefault();
+                  const next =
+                    event.key === "Home"
+                      ? 0
+                      : event.key === "End"
+                        ? tabItems.length - 1
+                        : (index +
+                            (event.key === "ArrowRight" ? 1 : -1) +
+                            tabItems.length) %
+                          tabItems.length;
+                  setActiveTab(tabItems[next][0]);
+                  document
+                    .getElementById("product-tab-" + tabItems[next][0])
+                    ?.focus();
+                }}
                 aria-selected={activeTab === id}
                 className={activeTab === id ? "is-active" : ""}
                 onClick={() => setActiveTab(id)}
@@ -312,70 +426,68 @@ export default function ProductPage() {
               </button>
             ))}
           </div>
-          {t(
-            activeTab === "delivery" ? (
-              <div className="product-details-content">
-                <div className="product-description">
-                  <h2>{t("Доставка и оплата")}</h2>
-                  <p>
-                    {t(
-                      "Доставим заказ по Бухаре и другим городам Узбекистана. Точные сроки и стоимость зависят от адреса и состава заказа.",
-                    )}
-                  </p>
-                </div>
-                <div className="product-spec-card">
-                  <div className="product-spec-row">
-                    <span>{t("Доставка")}</span>
-                    <strong>{t("По Узбекистану")}</strong>
+          <div
+            id="product-tab-panel"
+            role="tabpanel"
+            aria-labelledby={"product-tab-" + activeTab}
+            tabIndex={0}
+          >
+            {t(
+              activeTab === "delivery" ? (
+                <div className="product-details-content">
+                  <div className="product-description">
+                    <h2>{t("Доставка и оплата")}</h2>
+                    <p>
+                      {t(
+                        "Доставим заказ по Бухаре и другим городам Узбекистана. Точные сроки и стоимость зависят от адреса и состава заказа.",
+                      )}
+                    </p>
                   </div>
-                  <div className="product-spec-row">
-                    <span>{t("Самовывоз")}</span>
-                    <strong>{t("Доступен")}</strong>
+                  <div className="product-spec-card">
+                    <div className="product-spec-row">
+                      <span>{t("Доставка")}</span>
+                      <strong>{t("По Узбекистану")}</strong>
+                    </div>
+                    <div className="product-spec-row">
+                      <span>{t("Самовывоз")}</span>
+                      <strong>{t("Доступен")}</strong>
+                    </div>
+                    <div className="product-spec-row">
+                      <span>{t("Стоимость")}</span>
+                      <strong>{t("Рассчитывается при оформлении")}</strong>
+                    </div>
                   </div>
-                  <div className="product-spec-row">
-                    <span>{t("Стоимость")}</span>
-                    <strong>{t("Рассчитывается при оформлении")}</strong>
-                  </div>
                 </div>
-              </div>
-            ) : activeTab === "reviews" ? (
-              <div className="product-details-content">
-                <div className="product-description">
-                  <h2>{t("Отзывы покупателей")}</h2>
-                  <p>
-                    {t(
-                      "Для этого демонстрационного товара ещё нет отзывов. После подключения магазина здесь появятся оценки и комментарии покупателей.",
-                    )}
-                  </p>
-                </div>
-                <div className="product-spec-card product-empty-reviews">
-                  <Icon name="heart" />
-                  <strong>{t("Отзывов пока нет")}</strong>
-                  <p>{t("Станьте первым, кто поделится впечатлением.")}</p>
-                </div>
-              </div>
-            ) : (
-              <div className="product-details-content">
+              ) : activeTab === "reviews" ? (
+                <ProductReviews productId={product.id} />
+              ) : activeTab === "description" ? (
                 <div className="product-description">
                   <h2>{t(detail.sectionTitle)}</h2>
                   <p>{t(detail.description)}</p>
-                  <small>
-                    {t("Описание и характеристики демонстрационные.")}
-                    <br />
-                    {t("Перед запуском заменить данными поставщика.")}
-                  </small>
                 </div>
-                <div className="product-spec-card">
-                  {detail.specs.map(([label, value]) => (
-                    <div className="product-spec-row" key={label}>
-                      <span>{t(label)}</span>
-                      <strong>{t(value)}</strong>
-                    </div>
-                  ))}
+              ) : (
+                <div className="product-details-content">
+                  <div className="product-description">
+                    <h2>{t(detail.sectionTitle)}</h2>
+                    <p>{t(detail.description)}</p>
+                    <small>
+                      {t("Описание и характеристики демонстрационные.")}
+                      <br />
+                      {t("Перед запуском заменить данными поставщика.")}
+                    </small>
+                  </div>
+                  <div className="product-spec-card">
+                    {detail.specs.map(([label, value]) => (
+                      <div className="product-spec-row" key={label}>
+                        <span>{t(label)}</span>
+                        <strong>{t(value)}</strong>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ),
-          )}
+              ),
+            )}
+          </div>
         </div>
       </section>
 
@@ -388,68 +500,75 @@ export default function ProductPage() {
             <p>{t("ДЛЯ ВАШЕГО ПРОЕКТА")}</p>
             <h2 id="product-related-title">{t("Дополните заказ")}</h2>
           </div>
-          <Link to="/#products">
+          <Link to="/catalog">
             {t("Все товары ")}
             <Icon name="arrow" />
           </Link>
         </div>
         <div className="product-related-grid">
-          {[
-            ...products.filter((item) => item.id !== "drill"),
-            products.find((item) => item.id === "drill"),
-          ].map((item) => (
-            <article className="product-related-card" key={item.id}>
-              <div className="product-related-image">
-                <Link
-                  to={`/product/${item.id}`}
-                  aria-label={t(`Открыть товар: ${item.name}`)}
-                >
-                  <img src={item.image} alt={t(item.name)} loading="lazy" />
-                </Link>
-                <span>{t(item.badge)}</span>
-                <button
-                  type="button"
-                  className="product-related-favorite"
-                  aria-label={t(
-                    favorites.includes(item.id)
-                      ? `Убрать ${item.name} из избранного`
-                      : `Добавить ${item.name} в избранное`,
-                  )}
-                  aria-pressed={favorites.includes(item.id)}
-                  onClick={() => toggleFavorite(item.id)}
-                >
-                  <Icon
-                    name="heart"
-                    className={
-                      favorites.includes(item.id) ? "product-heart-active" : ""
-                    }
-                  />
-                </button>
-              </div>
-              <p className="product-related-category">{t(item.category)}</p>
-              <h3>
-                <Link to={`/product/${item.id}`}>{t(item.name)}</Link>
-              </h3>
-              <p className="product-related-details">{t(item.details)}</p>
-              <div className="product-related-price">
-                <strong>{t(formatPrice(item.price))}</strong>
-                <span>
-                  {t("сум / ")}
-                  {t(item.unit)}
-                </span>
-              </div>
-              <div className="product-related-bottom">
-                <span className="product-stock">
-                  <span className="product-stock-dot" />
-                  {t("В наличии")}
-                </span>
-                <button type="button" onClick={() => showAdded(item)}>
-                  {t("В корзину ")}
-                  <Icon name="arrow" />
-                </button>
-              </div>
-            </article>
-          ))}
+          {products
+            .filter((item) => item.id !== product.id)
+            .sort(
+              (a, b) =>
+                Number(b.categoryId === product.categoryId) -
+                Number(a.categoryId === product.categoryId),
+            )
+            .slice(0, 4)
+            .map((item) => (
+              <article className="product-related-card" key={item.id}>
+                <div className="product-related-image">
+                  <Link
+                    to={`/product/${item.id}`}
+                    aria-label={t(`Открыть товар: ${item.name}`)}
+                  >
+                    <img src={item.image} alt={t(item.name)} loading="lazy" />
+                  </Link>
+                  <span>{t(item.badge)}</span>
+                  <button
+                    type="button"
+                    className="product-related-favorite"
+                    aria-label={t(
+                      favorites.includes(item.id)
+                        ? `Убрать ${item.name} из избранного`
+                        : `Добавить ${item.name} в избранное`,
+                    )}
+                    aria-pressed={favorites.includes(item.id)}
+                    onClick={() => toggleFavorite(item.id)}
+                  >
+                    <Icon
+                      name="heart"
+                      className={
+                        favorites.includes(item.id)
+                          ? "product-heart-active"
+                          : ""
+                      }
+                    />
+                  </button>
+                </div>
+                <p className="product-related-category">{t(item.category)}</p>
+                <h3>
+                  <Link to={`/product/${item.id}`}>{t(item.name)}</Link>
+                </h3>
+                <p className="product-related-details">{t(item.details)}</p>
+                <div className="product-related-price">
+                  <strong>{t(formatPrice(item.price))}</strong>
+                  <span>
+                    {t("сум / ")}
+                    {t(item.unit)}
+                  </span>
+                </div>
+                <div className="product-related-bottom">
+                  <span className="product-stock">
+                    <span className="product-stock-dot" />
+                    {t("В наличии")}
+                  </span>
+                  <button type="button" onClick={() => showAdded(item)}>
+                    {t("В корзину ")}
+                    <Icon name="arrow" />
+                  </button>
+                </div>
+              </article>
+            ))}
         </div>
       </section>
 
@@ -485,6 +604,7 @@ export default function ProductPage() {
           >
             <div
               className="product-zoom-panel"
+              ref={zoomPanel}
               role="dialog"
               aria-modal="true"
               aria-label={t("Увеличенное изображение товара")}
@@ -502,6 +622,117 @@ export default function ProductPage() {
           </div>
         ),
       )}
+    </div>
+  );
+}
+
+function ProductReviews({ productId }) {
+  const { t, language } = useLanguage();
+  const storageKey = "stroy-uz-reviews:" + productId;
+  const [reviews, setReviews] = useState(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey) || "[]");
+      return Array.isArray(saved)
+        ? saved
+            .filter(
+              (review) =>
+                typeof review.name === "string" &&
+                typeof review.text === "string" &&
+                Number.isInteger(review.rating) &&
+                review.rating >= 1 &&
+                review.rating <= 5,
+            )
+            .slice(0, 100)
+        : [];
+    } catch {
+      return [];
+    }
+  });
+  const [message, setMessage] = useState("");
+  const average = reviews.length
+    ? (
+        reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
+      ).toLocaleString(language, { maximumFractionDigits: 1 })
+    : "—";
+  return (
+    <div className="product-reviews">
+      <div>
+        <h2>{t("Отзывы покупателей")}</h2>
+        <p className="product-reviews-summary">
+          {t("Средняя оценка")}: {average} / 5
+        </p>
+        {reviews.length ? (
+          reviews.map((review, index) => (
+            <article className="product-review" key={index}>
+              <strong>{review.name}</strong>
+              <span aria-label={t("Оценка") + ": " + review.rating + " / 5"}>
+                {"★".repeat(review.rating)}
+                {"☆".repeat(5 - review.rating)}
+              </span>
+              <p>{review.text}</p>
+            </article>
+          ))
+        ) : (
+          <p>{t("Отзывов пока нет")}</p>
+        )}
+      </div>
+      <form
+        className="product-review-form"
+        onSubmit={(event) => {
+          event.preventDefault();
+          const form = event.currentTarget;
+          const data = new FormData(form);
+          const name = String(data.get("name")).trim(),
+            text = String(data.get("text")).trim(),
+            rating = Number(data.get("rating"));
+          if (!name || text.length < 10) {
+            setMessage("Укажите имя и напишите отзыв минимум из 10 символов.");
+            return;
+          }
+          const next = [{ name, text, rating }, ...reviews].slice(0, 100);
+          setReviews(next);
+          try {
+            localStorage.setItem(storageKey, JSON.stringify(next));
+            setMessage("Спасибо! Ваш отзыв добавлен.");
+          } catch {
+            setMessage(
+              "Отзыв добавлен, но браузер не разрешил сохранить его после перезагрузки.",
+            );
+          }
+          form.reset();
+        }}
+      >
+        <h3>{t("Оставить отзыв")}</h3>
+        <p>{t("Отзывы сохраняются только в этом браузере.")}</p>
+        <label>
+          {t("Ваше имя")}
+          <input name="name" required maxLength={80} autoComplete="name" />
+        </label>
+        <label>
+          {t("Оценка")}
+          <select name="rating" defaultValue="5">
+            {[5, 4, 3, 2, 1].map((rating) => (
+              <option key={rating} value={rating}>
+                {rating} / 5
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          {t("Ваш отзыв")}
+          <textarea
+            name="text"
+            required
+            minLength={10}
+            maxLength={2000}
+            rows={4}
+          />
+        </label>
+        <button type="submit" className="product-add-button">
+          {t("Добавить отзыв")}
+        </button>
+        <p role="status">{t(message)}</p>
+      </form>
     </div>
   );
 }

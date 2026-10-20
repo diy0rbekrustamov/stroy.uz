@@ -513,6 +513,40 @@ JPG, PNG, WebP - до 10 МБ, до 8 фото|JPG, PNG, WebP — 10 MB gacha, 8
 Убрать|Olib tashlash
 в избранное|sevimlilarga
 из избранного|sevimlilardan
+Фильтры|Filtrlar
+Минимальная цена|Eng kam narx
+Максимальная цена|Eng yuqori narx
+Применить|Qo‘llash
+Материалы и инструменты|Materiallar va asboblar
+Для фундамента, ремонта и каждой задачи между ними.|Poydevordan ta’mirgacha — har bir vazifa uchun.
+Подборка товаров|Mahsulotlar tanlovi
+Страницы каталога|Katalog sahifalari
+Предыдущая страница|Oldingi sahifa
+Следующая страница|Keyingi sahifa
+Страница|Sahifa
+Не уверены в выборе?|Tanlashda ikkilanayapsizmi?
+Подберём материалы под задачу и поможем собрать смету.|Vazifangizga mos materiallarni tanlab, smeta tuzishga yordam beramiz.
+Помочь с подбором|Tanlashda yordam
+Что нужно для проекта?|Loyiha uchun nima kerak?
+Бюджет на единицу, сум|Bir dona uchun byudjet, so‘m
+Без ограничений|Cheklovsiz
+Выберите задачу и бюджет — покажем подходящие товары из каталога.|Toifa va byudjetni tanlang — mos mahsulotlarni ko‘rsatamiz.
+Подобрать товары|Mahsulotlarni tanlash
+Товар не найден|Mahsulot topilmadi
+Проверьте ссылку или выберите товар в каталоге.|Havolani tekshiring yoki katalogdan mahsulot tanlang.
+Нет в наличии|Mavjud emas
+Сравнение товаров|Mahsulotlarni taqqoslash
+Сравнить с|Taqqoslash uchun mahsulot
+Средняя оценка|O‘rtacha baho
+Оценка|Baho
+Оставить отзыв|Fikr qoldirish
+Отзывы сохраняются только в этом браузере.|Fikrlar faqat shu brauzerda saqlanadi.
+Ваше имя|Ismingiz
+Ваш отзыв|Fikringiz
+Добавить отзыв|Fikr qo‘shish
+Укажите имя и напишите отзыв минимум из 10 символов.|Ismingizni va kamida 10 belgidan iborat fikrni yozing.
+Спасибо! Ваш отзыв добавлен.|Rahmat! Fikringiz qo‘shildi.
+Отзыв добавлен, но браузер не разрешил сохранить его после перезагрузки.|Fikr qo‘shildi, lekin brauzer uni saqlashga ruxsat bermadi. Sahifa yangilanganda u yo‘qoladi.
 `;
 
 export const uz = Object.fromEntries(

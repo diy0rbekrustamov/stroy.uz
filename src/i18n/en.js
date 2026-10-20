@@ -513,6 +513,40 @@ JPG, PNG, WebP - до 10 МБ, до 8 фото|JPG, PNG, WebP — up to 10 MB, u
 Убрать|Remove
 в избранное|to favorites
 из избранного|from favorites
+Фильтры|Filters
+Минимальная цена|Minimum price
+Максимальная цена|Maximum price
+Применить|Apply
+Материалы и инструменты|Materials and tools
+Для фундамента, ремонта и каждой задачи между ними.|For foundations, renovations and every task in between.
+Подборка товаров|Product selection
+Страницы каталога|Catalog pages
+Предыдущая страница|Previous page
+Следующая страница|Next page
+Страница|Page
+Не уверены в выборе?|Not sure what to choose?
+Подберём материалы под задачу и поможем собрать смету.|Find materials for your project and plan your budget.
+Помочь с подбором|Help me choose
+Что нужно для проекта?|What does your project need?
+Бюджет на единицу, сум|Budget per unit, UZS
+Без ограничений|No limit
+Выберите задачу и бюджет — покажем подходящие товары из каталога.|Choose a category and budget to see matching catalog products.
+Подобрать товары|Find products
+Товар не найден|Product not found
+Проверьте ссылку или выберите товар в каталоге.|Check the link or choose a product from the catalog.
+Нет в наличии|Out of stock
+Сравнение товаров|Product comparison
+Сравнить с|Compare with
+Средняя оценка|Average rating
+Оценка|Rating
+Оставить отзыв|Write a review
+Отзывы сохраняются только в этом браузере.|Reviews are saved only in this browser.
+Ваше имя|Your name
+Ваш отзыв|Your review
+Добавить отзыв|Add review
+Укажите имя и напишите отзыв минимум из 10 символов.|Enter your name and a review of at least 10 characters.
+Спасибо! Ваш отзыв добавлен.|Thank you! Your review has been added.
+Отзыв добавлен, но браузер не разрешил сохранить его после перезагрузки.|Your review was added, but browser storage is unavailable. It will not survive a reload.
 `;
 
 export const en = Object.fromEntries(

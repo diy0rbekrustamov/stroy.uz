@@ -1,6 +1,11 @@
-import { matchesProduct, productCount } from "../i18n/translate.js";
+import {
+  readCatalogFilters,
+  filterCatalogProducts,
+  paginateCatalog,
+} from "../data/catalogFilters.js";
+import { productCount } from "../i18n/translate.js";
 import { useLanguage } from "../i18n/useLanguage.js";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import Icon from "../components/home/Icon.jsx";
 import { formatPrice } from "../components/home/homeData.js";
@@ -8,7 +13,6 @@ import { catalogCategories, catalogProducts } from "../data/catalogData.js";
 import { useShop } from "../context/ShopContext.jsx";
 import "./CatalogPage.css";
 
-const quickCategories = ["all", "mixes", "bricks", "metal", "tools"];
 const sortOptions = [
   ["popular", "Популярное"],
   ["price-asc", "Сначала дешевле"],
@@ -104,271 +108,383 @@ function CatalogProductCard({ product, isFavorite, onFavorite, onCart }) {
   );
 }
 
+const priceCeiling =
+  Math.ceil(Math.max(...catalogProducts.map((item) => item.price)) / 100000) *
+  100000;
+
+function CatalogFilters({ filters, onApply, onReset }) {
+  const { t } = useLanguage();
+  const [minPrice, setMinPrice] = useState(filters.min ?? "");
+  const [maxPrice, setMaxPrice] = useState(filters.max ?? "");
+  return (
+    <form
+      className="market-filters"
+      aria-label={t("Фильтры каталога")}
+      onSubmit={(event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        onApply({
+          category: data.get("category"),
+          min: minPrice,
+          max: maxPrice,
+          brand: data.get("brand"),
+          stock: data.has("stock") ? "1" : "",
+        });
+      }}
+    >
+      <h2>{t("Фильтры")}</h2>
+      <fieldset className="market-filter-group market-category-options">
+        <legend>{t("Категории")}</legend>
+        {[{ id: "all", name: "Все товары" }, ...catalogCategories].map(
+          (item) => (
+            <label key={item.id}>
+              <input
+                type="radio"
+                name="category"
+                value={item.id}
+                defaultChecked={filters.category === item.id}
+              />
+              <span>{t(item.name)}</span>
+            </label>
+          ),
+        )}
+      </fieldset>
+      <fieldset className="market-filter-group">
+        <legend>{t("Цена, сум")}</legend>
+        <div className="market-price-controls">
+          <input
+            type="number"
+            min="0"
+            max={maxPrice === "" ? undefined : maxPrice}
+            aria-label={t("Цена от")}
+            placeholder={t("От")}
+            value={minPrice}
+            onChange={(event) => setMinPrice(event.target.value)}
+          />
+          <input
+            type="number"
+            min={minPrice || 0}
+            aria-label={t("Цена до")}
+            placeholder={t("До")}
+            value={maxPrice}
+            onChange={(event) => setMaxPrice(event.target.value)}
+          />
+        </div>
+        <div className="market-range-controls">
+          <label>
+            {t("Минимальная цена")}
+            <input
+              type="range"
+              min="0"
+              max={priceCeiling}
+              step="1000"
+              value={Math.min(priceCeiling, Number(minPrice) || 0)}
+              onChange={(event) =>
+                setMinPrice(
+                  Math.min(
+                    Number(event.target.value),
+                    maxPrice === "" ? priceCeiling : Number(maxPrice),
+                  ),
+                )
+              }
+            />
+          </label>
+          <label>
+            {t("Максимальная цена")}
+            <input
+              type="range"
+              min="0"
+              max={priceCeiling}
+              step="1000"
+              value={Math.min(
+                priceCeiling,
+                maxPrice === "" ? priceCeiling : Number(maxPrice),
+              )}
+              onChange={(event) =>
+                setMaxPrice(
+                  Math.max(Number(event.target.value), Number(minPrice) || 0),
+                )
+              }
+            />
+          </label>
+        </div>
+      </fieldset>
+      <fieldset className="market-filter-group">
+        <legend>{t("Бренд")}</legend>
+        <select
+          name="brand"
+          aria-label={t("Выбрать бренд")}
+          defaultValue={filters.brand}
+        >
+          <option value="all">{t("Все бренды")}</option>
+          {[...new Set(catalogProducts.map((item) => item.brand))]
+            .sort()
+            .map((brand) => (
+              <option key={brand} value={brand}>
+                {brand}
+              </option>
+            ))}
+        </select>
+      </fieldset>
+      <label className="market-only-available">
+        <input type="checkbox" name="stock" defaultChecked={filters.stock} />
+        <span>{t("Только в наличии")}</span>
+      </label>
+      <button className="market-apply" type="submit">
+        {t("Применить")}
+        <Icon name="arrow" />
+      </button>
+      <button type="button" className="market-reset" onClick={onReset}>
+        {t("Сбросить фильтры")}
+      </button>
+    </form>
+  );
+}
+
 export default function CatalogPage() {
   const { t, language } = useLanguage();
-
-  const [searchParams, setSearchParams] = useSearchParams();
-  const selectedCategory = searchParams.get("category") || "all";
-  const search = (searchParams.get("q") || "").trim();
-  const category = catalogCategories.find(
-    (item) => item.id === selectedCategory,
-  );
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
-  const [brand, setBrand] = useState("all");
-  const [availableOnly, setAvailableOnly] = useState(false);
-  const [sort, setSort] = useState("popular");
-  const [notice, setNotice] = useState("");
+  const [params, setParams] = useSearchParams();
+  const filters = readCatalogFilters(params);
+  const matching = filterCatalogProducts(catalogProducts, filters, language);
+  const pagination = paginateCatalog(matching, filters.page);
   const { favorites, toggleFavorite, addToCart } = useShop();
-
+  const [notice, setNotice] = useState("");
+  const [helpOpen, setHelpOpen] = useState(false);
+  const update = (changes) => {
+    const next = new URLSearchParams(params);
+    next.delete("page");
+    for (const [key, value] of Object.entries(changes)) {
+      if (value === "" || value === "all" || value === "popular")
+        next.delete(key);
+      else next.set(key, String(value));
+    }
+    setParams(next);
+  };
+  const reset = () => {
+    const next = new URLSearchParams();
+    if (filters.search) next.set("q", filters.search);
+    setParams(next);
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [selectedCategory, search]);
-
-  const chooseCategory = (id) => {
-    const next = new URLSearchParams(searchParams);
-    if (id === "all") next.delete("category");
-    else next.set("category", id);
-    setSearchParams(next);
-  };
-  const resetFilters = () => {
-    setSearchParams({});
-    setMinPrice("");
-    setMaxPrice("");
-    setBrand("all");
-    setAvailableOnly(false);
-    setSort("popular");
-  };
-
-  const visibleProducts = useMemo(() => {
-    const minimum = minPrice.trim() === "" ? null : Number(minPrice);
-    const maximum = maxPrice.trim() === "" ? null : Number(maxPrice);
-    const matching = catalogProducts.filter((product) => {
-      if (category && product.categoryId !== category.id) return false;
-      if (search && !matchesProduct(product, search)) return false;
-      if (minimum !== null && product.price < minimum) return false;
-      if (maximum !== null && product.price > maximum) return false;
-      if (brand !== "all" && product.brand !== brand) return false;
-      if (availableOnly && !product.inStock) return false;
-      return true;
-    });
-    if (sort === "price-asc") matching.sort((a, b) => a.price - b.price);
-    if (sort === "price-desc") matching.sort((a, b) => b.price - a.price);
-    if (sort === "name")
-      matching.sort((a, b) => t(a.name).localeCompare(t(b.name), language));
-    return matching;
-  }, [
-    category,
-    search,
-    minPrice,
-    maxPrice,
-    brand,
-    availableOnly,
-    sort,
-    language,
-    t,
-  ]);
-
-  const handleCart = (product) => {
-    addToCart(product);
-    setNotice(`${product.name} добавлен в корзину`);
-  };
-
+  }, [params]);
   return (
     <div className="market-page market-catalog">
       <div className="market-container">
         <CatalogBreadcrumbs last="Каталог товаров" />
         <header className="market-catalog-heading">
-          <p className="market-overline">{t("СТРОИТЕЛЬНЫЙ МАРКЕТПЛЕЙС")}</p>
-          <h1>{t("Каталог товаров")}</h1>
+          <h1>{t("Материалы и инструменты")}</h1>
           <div className="market-catalog-heading-bottom">
-            <p>{t("Найдите всё необходимое для строительства и ремонта")}</p>
-            <span>{productCount(visibleProducts.length, language)}</span>
+            <p>{t("Для фундамента, ремонта и каждой задачи между ними.")}</p>
+            <span role="status">{productCount(matching.length, language)}</span>
           </div>
-        </header>
-        <div className="market-catalog-layout">
-          <aside className="market-filters" aria-label={t("Фильтры каталога")}>
-            <h2>{t("Категории")}</h2>
-            <div className="market-sidebar-categories">
+          <div
+            className="market-category-pills market-heading-pills"
+            aria-label={t("Быстрый выбор категории")}
+          >
+            {["all", ...catalogCategories.map((item) => item.id)].map((id) => (
               <button
                 type="button"
-                className={selectedCategory === "all" ? "is-current" : ""}
-                onClick={() => chooseCategory("all")}
+                key={id}
+                aria-pressed={filters.category === id}
+                className={filters.category === id ? "is-active" : ""}
+                onClick={() => update({ category: id })}
               >
-                {t("Все товары ")}
-                <span>›</span>
+                {t(
+                  id === "all"
+                    ? "Все товары"
+                    : catalogCategories.find((item) => item.id === id).name,
+                )}
               </button>
-              {catalogCategories.map((item) => (
-                <button
-                  type="button"
-                  className={selectedCategory === item.id ? "is-current" : ""}
-                  key={item.id}
-                  onClick={() => chooseCategory(item.id)}
-                >
-                  {t(item.name)}
-                  <span>›</span>
-                </button>
-              ))}
-            </div>
-            <div className="market-filter-divider" />
-            <fieldset className="market-filter-group">
-              <legend>{t("Цена, сум")}</legend>
-              <div className="market-price-controls">
-                <input
-                  type="number"
-                  min="0"
-                  inputMode="numeric"
-                  placeholder={t("От")}
-                  aria-label={t("Цена от")}
-                  value={minPrice}
-                  onChange={(event) => setMinPrice(event.target.value)}
-                />
-                <input
-                  type="number"
-                  min="0"
-                  inputMode="numeric"
-                  placeholder={t("До")}
-                  aria-label={t("Цена до")}
-                  value={maxPrice}
-                  onChange={(event) => setMaxPrice(event.target.value)}
-                />
-              </div>
-            </fieldset>
-            <fieldset className="market-filter-group">
-              <legend>{t("Бренд")}</legend>
-              <select
-                aria-label={t("Выбрать бренд")}
-                value={brand}
-                onChange={(event) => setBrand(event.target.value)}
-              >
-                <option value="all">{t("Все бренды")}</option>
-                {[...new Set(catalogProducts.map((p) => p.brand))]
-                  .sort()
-                  .map((item) => (
-                    <option key={item}>{t(item)}</option>
-                  ))}
-              </select>
-            </fieldset>
-            <label className="market-only-available">
-              <input
-                type="checkbox"
-                checked={availableOnly}
-                onChange={(event) => setAvailableOnly(event.target.checked)}
-              />
-              <span>{t("Только в наличии")}</span>
-            </label>
-            <button
-              type="button"
-              className="market-reset"
-              onClick={resetFilters}
-            >
-              {t("Сбросить фильтры ")}
-              <span aria-hidden="true">×</span>
-            </button>
-            <Link className="market-all-categories-link" to="/categories">
-              {t("Показать все категории ")}
-              <Icon name="arrow" />
-            </Link>
-          </aside>
-
+            ))}
+          </div>
+        </header>
+      </div>
+      <div className="market-catalog-surface">
+        <div className="market-container market-catalog-layout">
+          <CatalogFilters
+            key={params.toString()}
+            filters={filters}
+            onApply={update}
+            onReset={reset}
+          />
           <section
             className="market-catalog-main"
             aria-label={t("Товары каталога")}
           >
             <div className="market-catalog-toolbar">
-              <div
-                className="market-category-pills"
-                aria-label={t("Быстрый выбор категории")}
-              >
-                {quickCategories.map((id) => (
-                  <button
-                    type="button"
-                    key={id}
-                    className={selectedCategory === id ? "is-active" : ""}
-                    onClick={() => chooseCategory(id)}
-                  >
-                    {t(
-                      id === "all"
-                        ? "Все"
-                        : catalogCategories.find((item) => item.id === id).name,
-                    )}
-                  </button>
-                ))}
-              </div>
+              <span>{t("Подборка товаров")}</span>
               <div className="market-sort">
                 <label htmlFor="market-sort-select">{t("Сортировка")}</label>
                 <select
                   id="market-sort-select"
-                  value={sort}
-                  onChange={(event) => setSort(event.target.value)}
+                  value={filters.sort}
+                  onChange={(event) => update({ sort: event.target.value })}
                 >
                   {sortOptions.map(([id, label]) => (
-                    <option value={id} key={id}>
+                    <option key={id} value={id}>
                       {t(label)}
                     </option>
                   ))}
                 </select>
               </div>
             </div>
-            {search && (
+            {filters.search && (
               <p className="market-search-note">
                 {t("Результаты поиска по запросу «")}
-                {search}»
+                {filters.search}»
               </p>
             )}
-            {category && (
-              <div className="market-selected-category">
-                {t("Раздел: ")}
-                <strong>{t(category.name)}</strong>
-                <button type="button" onClick={() => chooseCategory("all")}>
-                  {t("Показать всё ×")}
-                </button>
-              </div>
-            )}
-            {t(
-              visibleProducts.length ? (
+            {matching.length ? (
+              <>
                 <div className="market-products-grid">
-                  {visibleProducts.map((product) => (
+                  {pagination.products.map((product) => (
                     <CatalogProductCard
                       key={product.id}
                       product={product}
                       isFavorite={favorites.includes(product.id)}
                       onFavorite={toggleFavorite}
-                      onCart={handleCart}
+                      onCart={(item) => {
+                        addToCart(item);
+                        setNotice(item.name + " добавлен в корзину");
+                      }}
                     />
                   ))}
                 </div>
-              ) : (
-                <div className="market-empty-result">
-                  <h2>{t("Товары не найдены")}</h2>
-                  <p>
-                    {t("Попробуйте изменить категорию, поиск или фильтры.")}
-                  </p>
-                  <button type="button" onClick={resetFilters}>
-                    {t("Показать все товары ")}
-                    <Icon name="arrow" />
-                  </button>
-                </div>
-              ),
+                {pagination.pages > 1 && (
+                  <nav
+                    className="market-pagination"
+                    aria-label={t("Страницы каталога")}
+                  >
+                    <button
+                      type="button"
+                      disabled={pagination.page === 1}
+                      aria-label={t("Предыдущая страница")}
+                      onClick={() => update({ page: pagination.page - 1 })}
+                    >
+                      ←
+                    </button>
+                    {Array.from(
+                      { length: pagination.pages },
+                      (_, index) => index + 1,
+                    ).map((page) => (
+                      <button
+                        type="button"
+                        key={page}
+                        aria-label={t("Страница") + " " + page}
+                        aria-current={
+                          page === pagination.page ? "page" : undefined
+                        }
+                        onClick={() => update({ page })}
+                      >
+                        {page}
+                      </button>
+                    ))}
+                    <button
+                      type="button"
+                      disabled={pagination.page === pagination.pages}
+                      aria-label={t("Следующая страница")}
+                      onClick={() => update({ page: pagination.page + 1 })}
+                    >
+                      →
+                    </button>
+                  </nav>
+                )}
+              </>
+            ) : (
+              <div className="market-empty-result">
+                <h2>{t("Товары не найдены")}</h2>
+                <p>{t("Попробуйте изменить категорию, поиск или фильтры.")}</p>
+                <button type="button" onClick={() => setParams({})}>
+                  {t("Показать все товары")}
+                </button>
+              </div>
             )}
             <p className="market-catalog-footnote">
               {t("Цены и ассортимент представлены для демонстрации макета.")}
             </p>
           </section>
         </div>
-        {notice && (
-          <div className="market-toast" role="status">
-            <span>{t(notice)}</span>
-            <button
-              type="button"
-              aria-label={t("Закрыть уведомление")}
-              onClick={() => setNotice("")}
-            >
-              ×
-            </button>
-          </div>
-        )}
       </div>
+      <div className="market-container">
+        <section
+          className="market-assistance"
+          aria-labelledby="catalog-help-title"
+        >
+          <div>
+            <h2 id="catalog-help-title">{t("Не уверены в выборе?")}</h2>
+            <p>{t("Подберём материалы под задачу и поможем собрать смету.")}</p>
+          </div>
+          <button
+            type="button"
+            className="market-apply"
+            aria-expanded={helpOpen}
+            aria-controls="catalog-help-form"
+            onClick={() => setHelpOpen(!helpOpen)}
+          >
+            {t("Помочь с подбором")}
+            <Icon name="arrow" />
+          </button>
+          {helpOpen && (
+            <form
+              id="catalog-help-form"
+              className="market-help-form"
+              onSubmit={(event) => {
+                event.preventDefault();
+                const values = new FormData(event.currentTarget);
+                setParams({
+                  category: values.get("category"),
+                  ...(values.get("budget")
+                    ? { max: values.get("budget") }
+                    : {}),
+                });
+                setHelpOpen(false);
+              }}
+            >
+              <label>
+                {t("Что нужно для проекта?")}
+                <select name="category">
+                  {catalogCategories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {t(category.name)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                {t("Бюджет на единицу, сум")}
+                <input
+                  name="budget"
+                  type="number"
+                  min="0"
+                  placeholder={t("Без ограничений")}
+                />
+              </label>
+              <p>
+                {t(
+                  "Выберите задачу и бюджет — покажем подходящие товары из каталога.",
+                )}
+              </p>
+              <button type="submit" className="market-apply">
+                {t("Подобрать товары")}
+                <Icon name="arrow" />
+              </button>
+            </form>
+          )}
+        </section>
+      </div>
+      {notice && (
+        <div className="market-toast" role="status">
+          <span>{t(notice)}</span>
+          <button
+            type="button"
+            aria-label={t("Закрыть уведомление")}
+            onClick={() => setNotice("")}
+          >
+            ×
+          </button>
+        </div>
+      )}
     </div>
   );
 }
