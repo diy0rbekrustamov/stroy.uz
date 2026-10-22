@@ -558,6 +558,173 @@ JPG, PNG, WebP - до 10 МБ, до 8 фото|JPG, PNG, WebP — up to 10 MB, u
 Восстановление пока недоступно: сервис отправки писем ещё не подключён.|Password recovery is not available yet: the email service has not been connected.
 При восстановлении ответ не должен раскрывать, существует ли аккаунт с указанным email.|Recovery responses must not reveal whether an account exists for the email address.
 Сервис восстановления ещё не запущен. Письма пока не отправляются.|The recovery service is not live yet. Emails are not being sent.
+Введите телефон в формате +998 XX XXX XX XX|Enter a phone number in the format +998 XX XXX XX XX
+Пароли должны совпадать|Passwords must match
+Регистрация пока недоступна: сервис авторизации ещё не подключён.|Registration is not available yet: the authentication service has not been connected.
+Все услуги|All services
+Отделочные работы|Finishing work
+Строительные работы|Construction work
+Монтаж и ремонт|Installation and repairs
+Заливка фундамента|Foundation pouring
+Кладка кирпича|Bricklaying
+Монтаж электропроводки|Electrical wiring installation
+Установка сантехники|Plumbing installation
+Монтаж кровли|Roof installation
+Укладка напольного покрытия|Flooring installation
+Ташкент|Tashkent
+Самарканд|Samarkand
+м³|m³
+точка|point
+Доступно для заказа|Available for booking
+Временно недоступно|Temporarily unavailable
+Объём работ|Work quantity
+Предварительная стоимость|Estimated cost
+Укажите объём от 0,01 до 100 000|Enter a quantity between 0.01 and 100,000
+Это демонстрационная услуга. Итоговую цену согласуют после оценки работ. Отправка заявок пока недоступна.|This is a demo service. The final price is agreed after assessing the work. Requests cannot be submitted yet.
+Услуги для вашего проекта|Services for your project
+Строительство, отделка и ремонт — выберите нужные работы.|Construction, finishing and repairs — choose the work you need.
+Демо-каталог: услуги, цены и доступность показаны для примера.|Demo catalog: services, prices and availability are illustrative.
+Категории услуг|Service categories
+Фильтры услуг|Service filters
+Город|City
+Все города|All cities
+Только доступные|Available only
+Каталог услуг|Service catalog
+Поиск услуг|Search services
+Найти|Search
+Найдено|Found
+Подробнее|View details
+Услуги не найдены|No services found
+Измените поиск или фильтры.|Change your search or filters.
+Страницы услуг|Service pages
+Услуга не найдена|Service not found
+В каталог услуг|Back to services
+Что входит в работу|What the work includes
+Подготовку, объём работ и материалы согласуют до начала. Материалы и доставка рассчитываются отдельно.|Preparation, scope and materials are agreed before work begins. Materials and delivery are priced separately.
+Исполнитель — демо|Demo provider
+Это пример профиля, а не подтверждённая компания. Контакты и отзывы исполнителя пока не подключены.|This is an example profile, not a verified company. Provider contacts and reviews are not available yet.
+Как устроена заявка|How requests work
+Опишите объект и объём работ.|Describe the site and scope of work.
+Согласуйте материалы, сроки и итоговую стоимость.|Agree on materials, dates and the final price.
+Подтвердите условия перед началом работ.|Confirm the terms before work starts.
+Запросить смету|Request an estimate
+Отправка заявок пока недоступна. Данные не отправлены; сервис ещё не подключён.|Requests cannot be sent yet. Your data has not been sent; the service is not connected.
+Город и адрес объекта *|City and site address *
+Желаемая дата|Preferred date
+Задача *|Job description *
+Согласен на обработку данных для заявки|I consent to data processing for this request
+Отправить заявку|Send request
+Рассчитать стоимость|Calculate cost
+Оформление заказа|Checkout
+Оформление заказов пока недоступно: сервис ещё не подключён. Товары сохранены в корзине.|Checkout is not available yet: the service is not connected. Your items remain in the cart.
+Сохранение пока недоступно: сервис продавца ещё не подключён. Данные не отправлены.|Saving is not available yet: the seller service is not connected. Your data has not been sent.
+Электрика|Electrical
+Перфоратор|Rotary hammer
+Дрель|Drill
+Шуруповерт|Power screwdriver
+Болгарка (УШМ)|Angle grinder
+Лобзик|Jigsaw
+Сварочный аппарат|Welding machine
+Кирпич|Brick
+Арматура|Rebar
+Кабель|Cable
+Розетка|Socket
+Автомат|Circuit breaker
+Только инструмент|Tool only
+С кейсом|With case
+С аккумулятором и зарядкой|With battery and charger
+2 аккумулятора + кейс|2 batteries + case
+Полный комплект|Complete kit
+Сверление|Drilling
+Сверление с ударом|Hammer drilling
+Долбление|Chiselling
+Сверление / Удар / Долбление|Drilling / Hammer / Chiselling
+Черный|Black
+Синий|Blue
+Красный|Red
+Зеленый|Green
+Желтый|Yellow
+Оранжевый|Orange
+До 120 символов|Up to 120 characters
+Выберите категорию|Select a category
+Добавьте хотя бы одно фото|Add at least one photo
+Введите описание|Enter a description
+Минимум 20 символов|At least 20 characters
+Выберите тип|Select a type
+Сначала выберите категорию|Select a category first
+Выберите комплектацию ∨|Select kit contents ∨
+Выберите режимы ∨|Select modes ∨
+Выберите цвет ∨|Select a color ∨
+Название, напр. Вес|Name, e.g. Weight
+Значение, напр. 2.5 кг|Value, e.g. 2.5 kg
+Выберите единицу|Select a unit
+шт|pcs
+комплект|kit
+Выберите город|Select a city
+Введите условия|Enter terms
+Подтвердите проверку данных|Confirm the information is correct
+Ремонт квартир|Apartment renovation
+Кровельные работы|Roofing
+Сварочные работы|Welding
+Грузоперевозки|Freight transport
+Уборка|Cleaning
+от|from
+за объём|by quantity
+по смете|by estimate
+фиксированная|fixed
+м.п.|linear m
+час|hour
+день|day
+объект|site
+Пн|Mon
+Вт|Tue
+Ср|Wed
+Чт|Thu
+Пт|Fri
+Сб|Sat
+Вс|Sun
+Помогите покупателю понять работу и запросить смету.|Help the customer understand your work and request an estimate.
+ДЕМО • Услуга и исполнитель иллюстративны. Поля * обязательны.|DEMO • Service and provider are illustrative. Fields marked * are required.
+Услуга|Service
+Доступность|Availability
+01 / О вашей работе|01 / About your work
+Введите название услуги|Enter a service name
+Укажите конкретную работу, без рекламных обещаний|Specify the work without promotional claims
+Фотографии работ *|Work photos *
+Добавьте фото работ|Add work photos
+Добавьте фото|Add a photo
+Описание услуги *|Service description *
+Введите состав работ|Enter the scope of work
+Минимум 30 символов|At least 30 characters
+Введите состав работ, ограничения и что оплачивается отдельно|Describe scope, limitations and separately priced items
+02 / Основа расчёта|02 / Pricing basis
+Тип цены *|Price type *
+Выберите тип цены|Select a price type
+Выберите: от / за объём / по смете ∨|Select: from / by quantity / by estimate ∨
+Единица расчёта *|Pricing unit *
+Ориентировочная цена, сум *|Estimated price, UZS *
+Введите сумму|Enter an amount
+Оценка, а не гарантия итоговой стоимости|An estimate, not a guaranteed final price
+Что влияет на смету *|What affects the estimate *
+Введите условия и дополнительные расходы|Enter terms and additional costs
+03 / Где и когда вы работаете|03 / Where and when you work
+Зона обслуживания *|Service area *
+Введите зону|Enter an area
+Введите районы или радиус|Enter districts or a radius
+Дни работы *|Working days *
+Выберите дни|Select days
+Начало|Start
+Окончание|End
+Дата выезда по согласованию, не мгновенная бронь.|Visit date is agreed separately; this is not an instant booking.
+04 / Контакты для заявок|04 / Request contacts
+Имя или название исполнителя *|Provider name *
+Введите название исполнителя|Enter a provider name
+Введите телефон|Enter a phone number
+Заменить действительным номером перед запуском|Replace with a valid number before launch
+Подтвердите право на фотографии|Confirm your rights to the photos
+Подтверждаю право на фотографии и корректность информации об услуге|I confirm my rights to the photos and the accuracy of service information
+Опубликовать услугу →|Publish service →
+Черновик не виден в каталоге. Для публикации нужны обязательные поля, фото и действующие контакты.|Drafts are not visible in the catalog. Publishing requires all required fields, photos and valid contacts.
 `;
 
 export const en = Object.fromEntries(

@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export default function CartPage() {
   const { t } = useLanguage();
-  const { cart, changeQuantity } = useShop();
+  const { cart, changeQuantity, openInfo } = useShop();
   const [view, setView] = useState("list"); // list | grid
 
   const entries = products.filter((p) => cart[p.id]);
@@ -257,13 +257,19 @@ export default function CartPage() {
               {t("сум")}
             </span>
           </div>
-          <Link
-            to="/checkout"
+          <button
+            type="button"
+            onClick={() =>
+              openInfo(
+                "Оформление заказа",
+                "Оформление заказов пока недоступно: сервис ещё не подключён. Товары сохранены в корзине.",
+              )
+            }
             className="w-full mt-5 h-[48px] bg-[#FFC107] hover:bg-[#FFB300] rounded-[12px] font-bold text-[14px] flex items-center justify-center gap-2 text-black transition"
           >
             {t("Оформить заказ")}
             <span>→</span>
-          </Link>
+          </button>
           <div className="mt-4 flex gap-2 text-[11px] text-[#8A94A0] leading-snug">
             <span className="mt-0.5">🛡️</span>
             <span>

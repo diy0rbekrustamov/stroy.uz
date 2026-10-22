@@ -174,6 +174,7 @@ export default function Navbar({
           ["Стройматериалы", "/categories"],
           ["Инструменты", "/catalog?category=tools"],
           ["Отделка", "/catalog?category=finishing"],
+          ["Услуги", "/services"],
           ["Доставка и оплата", "/#services"],
           ["Оптовым клиентам ↗", "/#business"],
         ].map(([label, href]) => (

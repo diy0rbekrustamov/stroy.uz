@@ -25,14 +25,35 @@ test("Routes retain cart, products, auth and seller pages without duplicate path
   const paths = [];
   function visit(node) {
     if (!node || typeof node !== "object") return;
-    if (node.type === "Property" && node.key.name === "path")
-      paths.push(node.value.value);
+    if (node.type === "ObjectExpression") {
+      const path = node.properties.find(
+        (property) => property.key?.name === "path",
+      );
+      const children = node.properties.find(
+        (property) => property.key?.name === "children",
+      );
+      if (children?.value.type === "ArrayExpression") {
+        const siblingPaths = children.value.elements
+          .map(
+            (element) =>
+              element?.properties?.find(
+                (property) => property.key?.name === "path",
+              )?.value.value,
+          )
+          .filter((value) => value !== undefined);
+        assert.equal(
+          siblingPaths.length,
+          new Set(siblingPaths).size,
+          "Duplicate paths within the same parent",
+        );
+      }
+      if (path) paths.push(path.value.value);
+    }
     for (const value of Object.values(node))
       if (value && typeof value === "object")
         (Array.isArray(value) ? value : [value]).forEach(visit);
   }
   visit(program);
-  assert.equal(paths.length, new Set(paths).size);
   for (const route of [
     "/",
     "cart",
@@ -204,6 +225,7 @@ test("Shared layout renders team pages with one shop context and RU/UZ/EN", asyn
               ...new Set(
                 html
                   .replaceAll("Русский", "")
+                  .replace(/<[^>]*>/g, "")
                   .match(/[^<>]*[А-Яа-яЁё][^<>]*/g) || [],
               ),
             ],

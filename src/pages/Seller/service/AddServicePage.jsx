@@ -20,6 +20,7 @@ const daysOptions = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 export default function AddServicePage() {
   const { t } = useLanguage();
   const [step, setStep] = useState("service");
+  const [submissionMessage, setSubmissionMessage] = useState("");
 
   const {
     register,
@@ -60,9 +61,10 @@ export default function AddServicePage() {
     } catch {}
   }, [setValue]);
 
-  const onSubmit = (data) => {
-    console.log("SERVICE DATA:", data);
-    alert(t("Услуга сохранена!"));
+  const onSubmit = () => {
+    setSubmissionMessage(
+      "Сохранение пока недоступно: сервис продавца ещё не подключён. Данные не отправлены.",
+    );
   };
 
   const handlePhotoChange = (e) => {
@@ -80,6 +82,9 @@ export default function AddServicePage() {
 
   return (
     <main className="flex-1 min-w-0 w-full max-w-">
+      <p role="status" className="text-sm text-amber-900 p-3">
+        {t(submissionMessage)}
+      </p>
       <div className="text- text-gray-400 mb-1 hidden md:block">
         {t("Мои услуги")}
       </div>
@@ -150,7 +155,7 @@ export default function AddServicePage() {
               <option value="">{t("Выберите категорию ∨")}</option>
               {serviceCategories.map((c) => (
                 <option key={c} value={c}>
-                  {c}
+                  {t(c)}
                 </option>
               ))}
             </select>
@@ -234,7 +239,7 @@ export default function AddServicePage() {
                 </option>
                 {priceTypes.map((p) => (
                   <option key={p} value={p}>
-                    {p}
+                    {t(p)}
                   </option>
                 ))}
               </select>
@@ -255,7 +260,7 @@ export default function AddServicePage() {
                 <option value="">{t("Выберите единицу ∨")}</option>
                 {unitOptions.map((u) => (
                   <option key={u} value={u}>
-                    {u}
+                    {t(u)}
                   </option>
                 ))}
               </select>
@@ -316,7 +321,7 @@ export default function AddServicePage() {
                 <option value="">{t("Выберите город ∨")}</option>
                 {cityOptions.map((c) => (
                   <option key={c} value={c}>
-                    {c}
+                    {t(c)}
                   </option>
                 ))}
               </select>
@@ -351,7 +356,7 @@ export default function AddServicePage() {
                   onClick={() => toggleDay(day)}
                   className={`px-3 py-1.5 rounded-full text- border ${workDays.includes(day) ? "bg-[#1C2E42] text-white border-[#1C2E42]" : "bg-white text-gray-600 border-gray-200"}`}
                 >
-                  {day}
+                  {t(day)}
                 </button>
               ))}
             </div>

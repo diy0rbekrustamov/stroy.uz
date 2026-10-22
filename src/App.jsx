@@ -17,6 +17,8 @@ import FavoritesPage from "./pages/FavoritesPage.jsx";
 
 import CatalogPage from "./pages/CatalogPage.jsx";
 import CategoriesPage from "./pages/CategoriesPage.jsx";
+import PublicServicesPage from "./pages/ServicesPage.jsx";
+import ServicePage from "./pages/ServicePage.jsx";
 import AddServicePage from "./pages/Seller/service/AddServicePage.jsx";
 const router = createBrowserRouter([
   {
@@ -24,6 +26,8 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "cart", element: <CartPage /> },
+      { path: "services", element: <PublicServicesPage /> },
+      { path: "services/:serviceId", element: <ServicePage /> },
       { path: "product/:productId", element: <ProductPage /> },
       { path: "product", element: <ProductPage /> },
       {

@@ -558,6 +558,173 @@ JPG, PNG, WebP - до 10 МБ, до 8 фото|JPG, PNG, WebP — 10 MB gacha, 8
 Восстановление пока недоступно: сервис отправки писем ещё не подключён.|Parolni tiklash hozircha mavjud emas: xat yuborish xizmati hali ulanmagan.
 При восстановлении ответ не должен раскрывать, существует ли аккаунт с указанным email.|Tiklash javobi ushbu email bilan hisob mavjudligini oshkor qilmasligi kerak.
 Сервис восстановления ещё не запущен. Письма пока не отправляются.|Tiklash xizmati hali ishga tushmagan. Xatlar hozircha yuborilmaydi.
+Введите телефон в формате +998 XX XXX XX XX|Telefon raqamini +998 XX XXX XX XX shaklida kiriting
+Пароли должны совпадать|Parollar bir xil bo‘lishi kerak
+Регистрация пока недоступна: сервис авторизации ещё не подключён.|Ro‘yxatdan o‘tish hozircha mavjud emas: avtorizatsiya xizmati hali ulanmagan.
+Все услуги|Barcha xizmatlar
+Отделочные работы|Pardozlash ishlari
+Строительные работы|Qurilish ishlari
+Монтаж и ремонт|O‘rnatish va ta’mirlash
+Заливка фундамента|Poydevor quyish
+Кладка кирпича|G‘isht terish
+Монтаж электропроводки|Elektr simlarini o‘rnatish
+Установка сантехники|Santexnika o‘rnatish
+Монтаж кровли|Tom yopish
+Укладка напольного покрытия|Pol qoplamasini yotqizish
+Ташкент|Toshkent
+Самарканд|Samarqand
+м³|m³
+точка|nuqta
+Доступно для заказа|Buyurtma uchun mavjud
+Временно недоступно|Vaqtincha mavjud emas
+Объём работ|Ish hajmi
+Предварительная стоимость|Taxminiy narx
+Укажите объём от 0,01 до 100 000|0,01 dan 100 000 gacha hajm kiriting
+Это демонстрационная услуга. Итоговую цену согласуют после оценки работ. Отправка заявок пока недоступна.|Bu namoyish xizmati. Yakuniy narx ishlar baholangandan so‘ng kelishiladi. Ariza yuborish hozircha mavjud emas.
+Услуги для вашего проекта|Loyihangiz uchun xizmatlar
+Строительство, отделка и ремонт — выберите нужные работы.|Qurilish, pardozlash va ta’mirlash — kerakli ishlarni tanlang.
+Демо-каталог: услуги, цены и доступность показаны для примера.|Namoyish katalogi: xizmatlar, narxlar va mavjudlik misol sifatida keltirilgan.
+Категории услуг|Xizmat toifalari
+Фильтры услуг|Xizmat filtrlari
+Город|Shahar
+Все города|Barcha shaharlar
+Только доступные|Faqat mavjudlari
+Каталог услуг|Xizmatlar katalogi
+Поиск услуг|Xizmatlarni qidirish
+Найти|Qidirish
+Найдено|Topildi
+Подробнее|Batafsil
+Услуги не найдены|Xizmatlar topilmadi
+Измените поиск или фильтры.|Qidiruv yoki filtrlarni o‘zgartiring.
+Страницы услуг|Xizmat sahifalari
+Услуга не найдена|Xizmat topilmadi
+В каталог услуг|Xizmatlar katalogiga
+Что входит в работу|Ish tarkibi
+Подготовку, объём работ и материалы согласуют до начала. Материалы и доставка рассчитываются отдельно.|Tayyorgarlik, ish hajmi va materiallar oldindan kelishiladi. Materiallar va yetkazib berish alohida hisoblanadi.
+Исполнитель — демо|Namoyish ijrochisi
+Это пример профиля, а не подтверждённая компания. Контакты и отзывы исполнителя пока не подключены.|Bu tasdiqlangan kompaniya emas, profil namunasi. Ijrochi kontaktlari va sharhlari hali ulanmagan.
+Как устроена заявка|Ariza qanday ishlaydi
+Опишите объект и объём работ.|Obyekt va ish hajmini tasvirlang.
+Согласуйте материалы, сроки и итоговую стоимость.|Materiallar, muddatlar va yakuniy narxni kelishing.
+Подтвердите условия перед началом работ.|Ish boshlanishidan oldin shartlarni tasdiqlang.
+Запросить смету|Smeta so‘rash
+Отправка заявок пока недоступна. Данные не отправлены; сервис ещё не подключён.|Arizalar hozircha yuborilmaydi. Ma’lumotlar yuborilmadi; xizmat hali ulanmagan.
+Город и адрес объекта *|Shahar va obyekt manzili *
+Желаемая дата|Istalgan sana
+Задача *|Vazifa *
+Согласен на обработку данных для заявки|Ariza uchun ma’lumotlar qayta ishlanishiga roziman
+Отправить заявку|Ariza yuborish
+Рассчитать стоимость|Narxni hisoblash
+Оформление заказа|Buyurtmani rasmiylashtirish
+Оформление заказов пока недоступно: сервис ещё не подключён. Товары сохранены в корзине.|Buyurtmani rasmiylashtirish hozircha mavjud emas: xizmat hali ulanmagan. Mahsulotlar savatda saqlangan.
+Сохранение пока недоступно: сервис продавца ещё не подключён. Данные не отправлены.|Saqlash hozircha mavjud emas: sotuvchi xizmati hali ulanmagan. Ma’lumotlar yuborilmadi.
+Электрика|Elektr ishlari
+Перфоратор|Perforator
+Дрель|Drel
+Шуруповерт|Shurupburagich
+Болгарка (УШМ)|Burchak silliqlagich
+Лобзик|Elektr lobzik
+Сварочный аппарат|Payvandlash apparati
+Кирпич|G‘isht
+Арматура|Armatura
+Кабель|Kabel
+Розетка|Rozetka
+Автомат|Avtomat
+Только инструмент|Faqat asbob
+С кейсом|G‘ilof bilan
+С аккумулятором и зарядкой|Akkumulyator va zaryadlovchi bilan
+2 аккумулятора + кейс|2 akkumulyator + g‘ilof
+Полный комплект|To‘liq to‘plam
+Сверление|Parmalash
+Сверление с ударом|Zarbali parmalash
+Долбление|O‘yish
+Сверление / Удар / Долбление|Parmalash / Zarba / O‘yish
+Черный|Qora
+Синий|Ko‘k
+Красный|Qizil
+Зеленый|Yashil
+Желтый|Sariq
+Оранжевый|To‘q sariq
+До 120 символов|120 ta belgigacha
+Выберите категорию|Toifani tanlang
+Добавьте хотя бы одно фото|Kamida bitta rasm qo‘shing
+Введите описание|Tavsifni kiriting
+Минимум 20 символов|Kamida 20 ta belgi
+Выберите тип|Turni tanlang
+Сначала выберите категорию|Avval toifani tanlang
+Выберите комплектацию ∨|To‘plamni tanlang ∨
+Выберите режимы ∨|Rejimlarni tanlang ∨
+Выберите цвет ∨|Rangni tanlang ∨
+Название, напр. Вес|Nomi, masalan Vazn
+Значение, напр. 2.5 кг|Qiymati, masalan 2.5 kg
+Выберите единицу|Birlikni tanlang
+шт|dona
+комплект|to‘plam
+Выберите город|Shaharni tanlang
+Введите условия|Shartlarni kiriting
+Подтвердите проверку данных|Ma’lumotlar to‘g‘riligini tasdiqlang
+Ремонт квартир|Xonadon ta’miri
+Кровельные работы|Tom ishlari
+Сварочные работы|Payvandlash ishlari
+Грузоперевозки|Yuk tashish
+Уборка|Tozalash
+от|dan
+за объём|hajm bo‘yicha
+по смете|smeta bo‘yicha
+фиксированная|belgilangan
+м.п.|pogon m
+час|soat
+день|kun
+объект|obyekt
+Пн|Du
+Вт|Se
+Ср|Chor
+Чт|Pay
+Пт|Ju
+Сб|Sha
+Вс|Yak
+Помогите покупателю понять работу и запросить смету.|Xaridorga ishni tushunish va smeta so‘rashga yordam bering.
+ДЕМО • Услуга и исполнитель иллюстративны. Поля * обязательны.|NAMOYISH • Xizmat va ijrochi misol tariqasida. * belgili maydonlar majburiy.
+Услуга|Xizmat
+Доступность|Mavjudlik
+01 / О вашей работе|01 / Ishingiz haqida
+Введите название услуги|Xizmat nomini kiriting
+Укажите конкретную работу, без рекламных обещаний|Reklama va’dalarisiz aniq ishni ko‘rsating
+Фотографии работ *|Ish rasmlari *
+Добавьте фото работ|Ish rasmlarini qo‘shing
+Добавьте фото|Rasm qo‘shing
+Описание услуги *|Xizmat tavsifi *
+Введите состав работ|Ish tarkibini kiriting
+Минимум 30 символов|Kamida 30 ta belgi
+Введите состав работ, ограничения и что оплачивается отдельно|Ish tarkibi, cheklovlar va alohida to‘lovlarni kiriting
+02 / Основа расчёта|02 / Hisoblash asosi
+Тип цены *|Narx turi *
+Выберите тип цены|Narx turini tanlang
+Выберите: от / за объём / по смете ∨|Tanlang: dan / hajm bo‘yicha / smeta bo‘yicha ∨
+Единица расчёта *|Hisoblash birligi *
+Ориентировочная цена, сум *|Taxminiy narx, so‘m *
+Введите сумму|Summani kiriting
+Оценка, а не гарантия итоговой стоимости|Taxminiy narx, yakuniy narx kafolati emas
+Что влияет на смету *|Smetaga ta’sir qiluvchi omillar *
+Введите условия и дополнительные расходы|Shartlar va qo‘shimcha xarajatlarni kiriting
+03 / Где и когда вы работаете|03 / Ish joyi va vaqti
+Зона обслуживания *|Xizmat hududi *
+Введите зону|Hududni kiriting
+Введите районы или радиус|Tumanlar yoki radiusni kiriting
+Дни работы *|Ish kunlari *
+Выберите дни|Kunlarni tanlang
+Начало|Boshlanish
+Окончание|Tugash
+Дата выезда по согласованию, не мгновенная бронь.|Tashrif sanasi kelishiladi; bu darhol band qilish emas.
+04 / Контакты для заявок|04 / Arizalar uchun kontaktlar
+Имя или название исполнителя *|Ijrochi ismi yoki nomi *
+Введите название исполнителя|Ijrochi nomini kiriting
+Введите телефон|Telefon raqamini kiriting
+Заменить действительным номером перед запуском|Ishga tushirishdan oldin haqiqiy raqam kiriting
+Подтвердите право на фотографии|Rasmlardan foydalanish huquqini tasdiqlang
+Подтверждаю право на фотографии и корректность информации об услуге|Rasmlarga huquqim va xizmat ma’lumotlari to‘g‘riligini tasdiqlayman
+Опубликовать услугу →|Xizmatni e’lon qilish →
+Черновик не виден в каталоге. Для публикации нужны обязательные поля, фото и действующие контакты.|Qoralama katalogda ko‘rinmaydi. E’lon qilish uchun majburiy maydonlar, rasmlar va haqiqiy kontaktlar kerak.
 `;
 
 export const uz = Object.fromEntries(

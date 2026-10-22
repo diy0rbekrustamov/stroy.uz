@@ -46,6 +46,7 @@ const colorOptions = [
 export default function AddProductPage() {
   const { t } = useLanguage();
   const [filter, setFilter] = useState("all");
+  const [submissionMessage, setSubmissionMessage] = useState("");
 
   const {
     register,
@@ -96,9 +97,10 @@ export default function AddProductPage() {
     } catch {}
   }, [setValue]);
 
-  const onSubmit = (data) => {
-    console.log("VALID DATA:", data);
-    alert("Готово! Смотри console");
+  const onSubmit = () => {
+    setSubmissionMessage(
+      "Сохранение пока недоступно: сервис продавца ещё не подключён. Данные не отправлены.",
+    );
   };
 
   const handlePhotoChange = (e) => {
@@ -108,6 +110,9 @@ export default function AddProductPage() {
 
   return (
     <>
+      <p role="status" className="text-sm text-amber-900 p-3">
+        {t(submissionMessage)}
+      </p>
       <main className="flex-1 min-w-0 w-full">
         <div className="text- text-gray-400 mb-1 hidden md:block">
           {t("← Мои товары")}
@@ -188,7 +193,7 @@ export default function AddProductPage() {
                   <option value="">{t("Выберите категорию ∨")}</option>
                   {categoryOptions.map((o) => (
                     <option key={o.value} value={o.value}>
-                      {o.label}
+                      {t(o.label)}
                     </option>
                   ))}
                 </select>
@@ -280,7 +285,7 @@ export default function AddProductPage() {
                   ) : (
                     availableTypes.map((v) => (
                       <option key={v} value={v}>
-                        {v}
+                        {t(v)}
                       </option>
                     ))
                   )}
@@ -325,7 +330,7 @@ export default function AddProductPage() {
                   <option value="">{t("Выберите комплектацию ∨")}</option>
                   {komplektOptions.map((v) => (
                     <option key={v} value={v}>
-                      {v}
+                      {t(v)}
                     </option>
                   ))}
                 </select>
@@ -344,7 +349,7 @@ export default function AddProductPage() {
                   <option value="">{t("Выберите режимы ∨")}</option>
                   {modesOptions.map((v) => (
                     <option key={v} value={v}>
-                      {v}
+                      {t(v)}
                     </option>
                   ))}
                 </select>
@@ -358,7 +363,7 @@ export default function AddProductPage() {
                   <option value="">{t("Выберите цвет ∨")}</option>
                   {colorOptions.map((v) => (
                     <option key={v} value={v}>
-                      {v}
+                      {t(v)}
                     </option>
                   ))}
                 </select>
@@ -440,8 +445,8 @@ export default function AddProductPage() {
                   className="w-full text-sm mt-1 outline-none bg-white text-gray-800"
                 >
                   <option value="">{t("Выберите единицу ∨")}</option>
-                  <option value="sht">шт</option>
-                  <option value="komplekt">комплект</option>
+                  <option value="sht">{t("шт")}</option>
+                  <option value="komplekt">{t("комплект")}</option>
                 </select>
                 {errors.unit && (
                   <p className="text- text-red-500 mt-1">
