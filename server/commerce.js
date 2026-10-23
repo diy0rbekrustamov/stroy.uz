@@ -263,6 +263,17 @@ export function commerceRoutes(app, { db }) {
           }[item.status].includes(status)
         )
           fail(409, "INVALID_TRANSITION");
+        if (item.data.kind === "rental" && status === "accepted") {
+          // Serialize confirmations for this individual machine.
+          await tx.query("SELECT id FROM listings WHERE id=$1 FOR UPDATE", [
+            item.listing_id,
+          ]);
+          const overlap = await tx.query(
+            "SELECT id FROM service_requests WHERE listing_id=$1 AND id<>$2 AND status='accepted' AND data->>'startDate'<=$4 AND data->>'endDate'>=$3",
+            [item.listing_id, item.id, item.data.startDate, item.data.endDate],
+          );
+          if (overlap.rows.length) fail(409, "RENTAL_UNAVAILABLE");
+        }
         return (
           await tx.query(
             "UPDATE service_requests SET status=$1 WHERE id=$2 RETURNING *",

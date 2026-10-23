@@ -1,12 +1,14 @@
-import { catalogProducts as products } from "../../data/catalogData.js";
+import { useCatalog } from "../../api/useCatalog.js";
 import { useLanguage } from "../../i18n/useLanguage.js";
-import { useEffect } from "react";
+import { useEffect,useRef } from "react";
 import { Link } from "react-router";
 import { formatPrice } from "../home/homeData.js";
 import { useShop } from "../../context/ShopContext.jsx";
 import "./ShopDialog.css";
 
 export default function ShopDialog() {
+  const {items:products} = useCatalog();
+  const panel=useRef(null);
   const { t } = useLanguage();
 
   const {
@@ -19,11 +21,25 @@ export default function ShopDialog() {
   } = useShop();
   useEffect(() => {
     if (!dialog) return;
+    const previous=document.activeElement;
+    const overflow=document.body.style.overflow;
+    document.body.style.overflow="hidden";
+    panel.current?.querySelector("button")?.focus();
     const onKeyDown = (event) => {
       if (event.key === "Escape") closeDialog();
+      if(event.key === "Tab") {
+        const controls=[...panel.current.querySelectorAll('a[href],button:not([disabled]),input,select,textarea,[tabindex="0"]')];
+        const first=controls[0],last=controls.at(-1);
+        if(event.shiftKey && document.activeElement===first){event.preventDefault();last?.focus();}
+        if(!event.shiftKey && document.activeElement===last){event.preventDefault();first?.focus();}
+      }
     };
     document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow=overflow;
+      previous?.focus();
+    };
   }, [dialog, closeDialog]);
   if (!dialog) return null;
   const entries = products.filter((product) =>
@@ -41,6 +57,7 @@ export default function ShopDialog() {
       }}
     >
       <section
+        ref={panel}
         className="shop-modal"
         role="dialog"
         aria-modal="true"

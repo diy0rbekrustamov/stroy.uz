@@ -1,3 +1,4 @@
+import { CatalogNotice } from "../components/ui/PageState.jsx";
 import ProductCard from "../components/ui/ProductCard.jsx";
 import { useCatalog } from "../api/useCatalog.js";
 import Button from "../components/ui/Button.jsx";
@@ -169,7 +170,7 @@ function CatalogFilters({ filters, onApply, onReset, expanded }) {
 }
 
 export default function CatalogPage() {
-  const { items: catalogProducts } = useCatalog();
+  const { items: catalogProducts, error, loading } = useCatalog();
   const { t, language } = useLanguage();
   const [params, setParams] = useSearchParams();
   const filters = readCatalogFilters(params);
@@ -201,6 +202,7 @@ export default function CatalogPage() {
     <div className="market-page market-catalog">
       <div className="market-container">
         <CatalogBreadcrumbs last="Каталог товаров" />
+        <CatalogNotice error={error} loading={loading} />
         <header className="market-catalog-heading">
           <h1>{t("Материалы и инструменты")}</h1>
           <div className="market-catalog-heading-bottom">

@@ -43,6 +43,14 @@ export const listing = z.object({
     .default(""),
   published: z.boolean().default(false),
 });
+export const rentalListing = listing.extend({
+  equipmentType: z.enum(["crane", "truck", "excavator"]),
+  capacity: text(100),
+  operatorIncluded: z.boolean(),
+  deliveryAvailable: z.boolean(),
+  minDays: z.number().int().min(1).max(365).default(1),
+  unit: z.literal("сутки"),
+});
 export function fail(statusCode, message) {
   const error = new Error(message);
   error.statusCode = statusCode;

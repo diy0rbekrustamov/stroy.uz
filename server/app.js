@@ -6,6 +6,7 @@ import { authRoutes } from "./auth.js";
 import { catalogRoutes } from "./catalog.js";
 import { commerceRoutes } from "./commerce.js";
 import { mediaRoutes } from "./media.js";
+import { rentalRoutes } from "./rentals.js";
 
 export async function buildApp({
   db,
@@ -70,5 +71,6 @@ export async function buildApp({
   await mediaRoutes(app, { env });
   catalogRoutes(app, { db });
   commerceRoutes(app, { db });
+  rentalRoutes(app, { db });
   return app;
 }

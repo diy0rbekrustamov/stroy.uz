@@ -1,8 +1,8 @@
-import renovation from "../assets/home/project-renovate.png";
-import building from "../assets/home/project-build.png";
-import tools from "../assets/home/project-tools.png";
-import cement from "../assets/home/journal-cement.png";
-import bricks from "../assets/home/journal-bricks.png";
+import renovation from "../assets/optimized/renovation.webp";
+import building from "../assets/optimized/structure.webp";
+import tools from "../assets/optimized/installation.webp";
+import cement from "../assets/optimized/structure.webp";
+import bricks from "../assets/optimized/structure.webp";
 import { matchesProduct } from "../i18n/translate.js";
 
 export const serviceCategories = [

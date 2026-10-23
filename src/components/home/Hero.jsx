@@ -1,6 +1,6 @@
 import { useLanguage } from "../../i18n/useLanguage.js";
 import Button from "../ui/Button.jsx";
-import hero from "../../assets/home/hero.png";
+import hero from "../../assets/optimized/hero-clean.webp";
 import Icon from "./Icon.jsx";
 
 export default function Hero() {

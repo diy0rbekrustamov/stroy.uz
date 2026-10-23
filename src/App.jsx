@@ -1,90 +1,128 @@
-import CartPage from "./pages/CartPage.jsx";
-import CheckoutPage from "./pages/CheckoutPage.jsx";
-import AccountPage from "./pages/AccountPage.jsx";
 import { ShopProvider } from "./context/ShopContext.jsx";
 import LanguageProvider from "./i18n/LanguageProvider.jsx";
-import ProductPage from "./pages/ProductPage.jsx";
 import Layout from "./components/layout/Layout.jsx";
 import LayoutSeller from "./components/seller/Layout.jsx";
 import HomePage from "./pages/HomePage.jsx";
-import RegisterPage from "./pages/RegisterPage.jsx";
-import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import AddProductPage from "./pages/Seller/product/AddProductPage.jsx";
-import ProductsPage from "./pages/Seller/product/ProductsPage.jsx";
-import ServicesPage from "./pages/Seller/service/ServicesPage.jsx";
-import OrdersPage from "./pages/Seller/order/OrdersPage.jsx";
-import FavoritesPage from "./pages/FavoritesPage.jsx";
+import { lazy, Suspense } from "react";
+import {
+  PageLoading,
+  PageNotFound,
+  RouteFailure,
+} from "./components/ui/PageState.jsx";
 
-import CatalogPage from "./pages/CatalogPage.jsx";
-import CategoriesPage from "./pages/CategoriesPage.jsx";
-import PublicServicesPage from "./pages/ServicesPage.jsx";
-import ServicePage from "./pages/ServicePage.jsx";
-import AddServicePage from "./pages/Seller/service/AddServicePage.jsx";
+const page = (loader) => {
+  const Component = lazy(loader);
+  return (
+    <Suspense fallback={<PageLoading />}>
+      <Component />
+    </Suspense>
+  );
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
+    errorElement: <RouteFailure />,
     children: [
-      { path: "cart", element: <CartPage /> },
-      { path: "checkout", element: <CheckoutPage /> },
-      { path: "account", element: <AccountPage /> },
-      { path: "services", element: <PublicServicesPage /> },
-      { path: "services/:serviceId", element: <ServicePage /> },
-      { path: "product/:productId", element: <ProductPage /> },
-      { path: "product", element: <ProductPage /> },
+      {
+        path: "rentals",
+        element: page(() => import("./pages/RentalsPage.jsx")),
+      },
+      {
+        path: "rentals/:rentalId",
+        element: page(() => import("./pages/RentalPage.jsx")),
+      },
+      { path: "cart", element: page(() => import("./pages/CartPage.jsx")) },
+      {
+        path: "checkout",
+        element: page(() => import("./pages/CheckoutPage.jsx")),
+      },
+      {
+        path: "account",
+        element: page(() => import("./pages/AccountPage.jsx")),
+      },
+      {
+        path: "services",
+        element: page(() => import("./pages/ServicesPage.jsx")),
+      },
+      {
+        path: "services/:serviceId",
+        element: page(() => import("./pages/ServicePage.jsx")),
+      },
+      {
+        path: "product/:productId",
+        element: page(() => import("./pages/ProductPage.jsx")),
+      },
+      {
+        path: "product",
+        element: page(() => import("./pages/ProductPage.jsx")),
+      },
       {
         index: true,
         element: <HomePage />,
       },
+      { path: "*", element: <PageNotFound /> },
       {
         path: "register",
-        element: <RegisterPage />,
+        element: page(() => import("./pages/RegisterPage.jsx")),
       },
       {
         path: "catalog",
-        element: <CatalogPage />,
+        element: page(() => import("./pages/CatalogPage.jsx")),
       },
       {
         path: "categories",
-        element: <CategoriesPage />,
+        element: page(() => import("./pages/CategoriesPage.jsx")),
       },
       {
         path: "login",
-        element: <LoginPage />,
+        element: page(() => import("./pages/LoginPage.jsx")),
       },
       {
         path: "reset-password",
-        element: <ResetPasswordPage />,
+        element: page(() => import("./pages/ResetPasswordPage.jsx")),
       },
       {
         path: "favorites",
-        element: <FavoritesPage />,
+        element: page(() => import("./pages/FavoritesPage.jsx")),
       },
       {
         path: "seller",
         element: <LayoutSeller />,
         children: [
           {
+            path: "rentals",
+            element: page(() => import("./pages/Seller/RentalsPage.jsx")),
+          },
+          {
             index: true,
-            element: <ProductsPage />,
+            element: page(
+              () => import("./pages/Seller/product/ProductsPage.jsx"),
+            ),
           },
           {
             path: "add-product",
-            element: <AddProductPage />,
+            element: page(
+              () => import("./pages/Seller/product/AddProductPage.jsx"),
+            ),
           },
           {
             path: "services",
-            element: <ServicesPage />,
+            element: page(
+              () => import("./pages/Seller/service/ServicesPage.jsx"),
+            ),
           },
           {
             path: "add-service",
-            element: <AddServicePage />,
+            element: page(
+              () => import("./pages/Seller/service/AddServicePage.jsx"),
+            ),
           },
           {
             path: "orders",
-            element: <OrdersPage />,
+            element: page(() => import("./pages/Seller/order/OrdersPage.jsx")),
           },
         ],
       },

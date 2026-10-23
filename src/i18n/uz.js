@@ -772,6 +772,65 @@ cancelled|Bekor qilindi
 Отменить|Bekor qilish
 Андижан|Andijon
 Фергана|Farg‘ona
+Страница не найдена|Sahifa topilmadi
+Проверьте адрес или вернитесь в каталог.|Manzilni tekshiring yoki katalogga qayting.
+Не удалось открыть страницу|Sahifani ochib bo‘lmadi
+Проверьте подключение и повторите попытку.|Ulanishni tekshiring va qayta urinib ko‘ring.
+Повторить|Qayta urinish
+Сейчас показан демонстрационный каталог. Подключение к серверу недоступно.|Namoyish katalogi ko‘rsatilmoqda. Serverga ulanib bo‘lmadi.
+Изображение недоступно|Rasm mavjud emas
+Техника уже забронирована на эти даты. Выберите другой период.|Texnika bu sanalarda band. Boshqa muddatni tanlang.
+Период меньше минимального срока аренды.|Muddat minimal ijara muddatidan qisqa.
+Проверьте даты аренды.|Ijara sanalarini tekshiring.
+Заявки на демонстрационную технику не принимаются.|Namoyish texnikasi uchun arizalar qabul qilinmaydi.
+Автокраны|Avtokranlar
+Самосвалы / КамАЗы|Samosvallar / KamAZlar
+Экскаваторы|Ekskavatorlar
+Автокран · 25 т|Avtokran · 25 t
+25 т|25 t
+сутки|sutka
+Самосвал · 20 т|Samosval · 20 t
+20 т|20 t
+Гусеничный экскаватор · 20 т|Gusenitsali ekskavator · 20 t
+Техника не найдена|Texnika topilmadi
+Аренда техники|Texnika ijarasi
+Демонстрационная техника: изображения и цены приведены для примера. Заявки на неё не принимаются.|Namoyish texnikasi: rasmlar va narxlar misol uchun. Arizalar qabul qilinmaydi.
+Условия аренды|Ijara shartlari
+С оператором|Operator bilan
+Без оператора|Operatorsiz
+Доставка обсуждается отдельно|Yetkazib berish alohida kelishiladi
+Самовывоз / подача по согласованию|Olib ketish / yetkazish kelishuv asosida
+Минимум суток|Minimal sutkalar
+До подтверждения согласуйте|Tasdiqlashdan oldin kelishing
+Рабочие часы в сутки, топливо, подачу и возврат, залог и ответственность за повреждения согласуйте с владельцем. Расчёт на сайте предварительный.|Kunlik ish soati, yoqilg‘i, yetkazish va qaytarish, garov va zarar uchun javobgarlikni egasi bilan kelishing. Saytdagi hisob taxminiy.
+Заявка на аренду|Ijara arizasi
+Начало аренды|Ijara boshlanishi
+Окончание аренды|Ijara tugashi
+Суток|Sutka
+Предварительно|Taxminiy jami
+Даты включительно. До 365 суток, с учётом минимального срока аренды.|Ikkala sana ham hisobga olinadi. Minimal muddatga rioya qilgan holda 365 sutkagacha.
+Имя|Ism
+Телефон|Telefon
+Адрес объекта|Obyekt manzili
+Задача|Vazifa
+Подтверждаю контактные данные для заявки.|Ariza uchun aloqa ma’lumotlarini tasdiqlayman.
+Отправка…|Yuborilmoqda…
+Отправка заявки не резервирует технику и не списывает деньги. Дождитесь подтверждения владельца.|Ariza yuborish texnikani band qilmaydi va pul yechmaydi. Egasining tasdig‘ini kuting.
+Заявка сохранена.|Ariza saqlandi.
+Краны, самосвалы и экскаваторы для вашего объекта.|Obyektingiz uchun kranlar, samosvallar va ekskavatorlar.
+Тип техники|Texnika turi
+Вся техника|Barcha texnika
+Поиск техники|Texnika qidirish
+Попробуйте изменить фильтры.|Filtrlarni o‘zgartirib ko‘ring.
+Как арендовать технику|Texnikani qanday ijaraga olish mumkin
+Выберите машину и даты, отправьте заявку. Владелец подтвердит доступность и итоговую стоимость. Отправка заявки не является оплатой или бронированием.|Texnika va sanalarni tanlab ariza yuboring. Egasi mavjudlik va yakuniy narxni tasdiqlaydi. Ariza to‘lov yoki band qilish hisoblanmaydi.
+Сдать технику в аренду|Texnikani ijaraga berish
+Моя техника|Mening texnikam
+Добавить технику|Texnika qo‘shish
+Одна карточка — одна машина. Указывайте реальную цену за сутки и условия работы.|Har bir texnika uchun alohida e’lon. Haqiqiy kunlik narx va ish shartlarini kiriting.
+Цена за сутки, сум|Sutkalik narx, so‘m
+Доступна подача техники|Texnikani yetkazish mavjud
+Сохранение…|Saqlanmoqda…
 `;
 
 export const uz = Object.fromEntries(

@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { useLanguage } from "../../i18n/useLanguage.js";
 import ProductCard from "./ProductCard .jsx";
 import Icon from "./Icon.jsx";
@@ -41,10 +42,10 @@ export default function Product({
             </p>
             <h2 id="products-title">{t("Материалы, с которых строят")}</h2>
           </div>
-          <a href="#categories">
+          <Link to="/catalog">
             {t("В каталог")}
             <Icon name="arrow" />
-          </a>
+          </Link>
         </div>
         <div className="home-filters" aria-label={t("Подбор товаров")}>
           {filters.map(([id, label]) => (

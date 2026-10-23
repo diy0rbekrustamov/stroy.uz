@@ -177,6 +177,7 @@ export default function Navbar({
           ["Инструменты", "/catalog?category=tools"],
           ["Отделка", "/catalog?category=finishing"],
           ["Услуги", "/services"],
+          ["Аренда техники", "/rentals"],
           ["Доставка и оплата", "/#services"],
           ["Оптовым клиентам ↗", "/#business"],
         ].map(([label, href]) => (

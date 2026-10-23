@@ -20,13 +20,15 @@ try {
   const { serviceCatalog } = await vite.ssrLoadModule(
     "/src/data/serviceCatalog.js",
   );
+  const { rentalCatalog } = await vite.ssrLoadModule("/src/data/rentalCatalog.js");
   await db.transaction(async (tx) => {
     for (const [items, kind] of [
       [catalogProducts, "product"],
       [serviceCatalog, "service"],
+      [rentalCatalog, "rental"],
     ])
       for (const item of items) {
-        const { image: _image, ...data } = item;
+      const { image: _image, thumbnail: _thumbnail, ...data } = item;
         data.imageKey = item.id;
         data.image = "";
         data.demo = true;
@@ -38,7 +40,7 @@ try {
             JSON.stringify(data),
             item.price,
             kind === "product" ? 100 : 0,
-            kind === "product" || item.available,
+            kind === "product" || kind === "rental" || item.available,
           ],
         );
       }

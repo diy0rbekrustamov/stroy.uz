@@ -77,6 +77,7 @@ export default function AccountPage() {
           <section className="auth-info" key={request.id}>
             <strong>#{request.id.slice(0, 8)}</strong>
             <p>{request.data.task}</p>
+            {request.data.kind === "rental" && <p>{t(request.data.name)} · {request.data.startDate} — {request.data.endDate} · {request.data.days} {t("сутки")}</p>}
             <p>{t(statusLabel(request.status))}</p>
           </section>
         ))}

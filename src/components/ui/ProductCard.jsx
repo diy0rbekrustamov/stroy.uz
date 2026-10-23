@@ -3,6 +3,7 @@ import { useLanguage } from "../../i18n/useLanguage.js";
 import { formatPrice } from "../home/homeData.js";
 import Icon from "../home/Icon.jsx";
 import Button from "./Button.jsx";
+import ShopImage from "./ShopImage.jsx";
 
 export default function ProductCard({
   product,
@@ -21,8 +22,10 @@ export default function ProductCard({
           to={`/product/${product.id}`}
           aria-label={t(`Открыть товар: ${product.name}`)}
         >
-          <img
+          <ShopImage
             src={product.image}
+            srcSet={product.thumbnail ? product.thumbnail+" 400w, "+product.image+" 800w" : undefined}
+            sizes="(max-width: 767px) 44vw, (max-width: 1199px) 28vw, 280px"
             alt={t(product.name)}
             loading="lazy"
             width="400"

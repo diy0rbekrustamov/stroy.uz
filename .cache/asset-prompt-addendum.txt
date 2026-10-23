@@ -1,0 +1,11 @@
+
+## Дополнительные изображения
+
+Резервное изображение: `src/assets/optimized/placeholder.webp`.
+
+Use case: product-mockup. Asset: neutral square fallback product illustration for STROY UZ marketplace, shown when a seller has not uploaded a photograph. A single unbranded closed kraft cardboard shipping box, clean folded geometric surfaces, one restrained amber packing tape strip, centered three-quarter view, premium realistic 3D studio render with soft contact shadow. Warm off-white background #f6f5f3, very clean generous negative space. No tools or particular building materials, no text, logo, label, icons, watermark, or collage. Physically plausible geometry.
+
+Hero без встроенной подписи: `src/assets/optimized/hero-clean.webp`.
+
+Edit target: the provided STROY UZ hero image. Remove ONLY the dark rectangular caption banner near the bottom, including its tiny orange cube icon and all text. Reconstruct the concrete block surface and dark navy background behind this banner naturally and seamlessly. Preserve exactly the existing floating composition of concrete blocks, amber transparent glass beam, red hollow clay brick, polished steel I-beam and timber beam. Preserve the camera angle, object placement, proportions, lighting, material detail and dark navy background. No new text, no labels, no frame, no logo, no watermark. Keep the image as close as possible to the original except the banner removal.
+

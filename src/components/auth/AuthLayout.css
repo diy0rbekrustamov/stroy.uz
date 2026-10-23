@@ -52,16 +52,7 @@
   height: auto;
   display: block;
 }
-.auth-art:after {
-  content: "";
-  position: absolute;
-  left: 34.6%;
-  top: 83%;
-  width: 53.5%;
-  height: 7%;
-  background: #192b38;
-  border-radius: 6px;
-}
+
 .auth-panel {
   min-width: 0;
   padding: 36px;

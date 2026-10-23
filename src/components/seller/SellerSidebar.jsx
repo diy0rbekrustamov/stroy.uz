@@ -9,6 +9,7 @@ export default function LayoutSeller() {
   const menu = [
     { label: "Товары", path: "/seller", end: true }, // index uchun end:true
     { label: "Услуги", path: "/seller/services" },
+    { label: "Аренда техники", path: "/seller/rentals" },
     { label: "Заказы", path: "/seller/orders" },
   ];
 

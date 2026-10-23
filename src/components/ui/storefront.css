@@ -6,6 +6,18 @@
   --shop-radius: 8px;
   min-width: 0;
 }
+/* Shared interaction treatment; keep touch devices free of hover motion. */
+.shop-shell :is(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid #b57313;
+  outline-offset: 3px;
+}
+.ui-product-card__price strong { font-variant-numeric: tabular-nums; }
+.ui-product-card img[data-fallback] { object-fit: contain; opacity: .8; }
+.shop-shell .shop-modal-head > button { min-width: 44px; min-height: 44px; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .ui-product-card { transition: box-shadow .2s ease, transform .2s ease; }
+  .ui-product-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px #202d3a0d; }
+}
 .ui-button {
   display: inline-flex;
   align-items: center;

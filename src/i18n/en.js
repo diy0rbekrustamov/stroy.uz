@@ -772,6 +772,65 @@ cancelled|Cancelled
 Отменить|Cancel
 Андижан|Andijan
 Фергана|Fergana
+Страница не найдена|Page not found
+Проверьте адрес или вернитесь в каталог.|Check the address or return to the catalog.
+Не удалось открыть страницу|Unable to open this page
+Проверьте подключение и повторите попытку.|Check your connection and try again.
+Повторить|Try again
+Сейчас показан демонстрационный каталог. Подключение к серверу недоступно.|Showing the demo catalog. The server is currently unavailable.
+Изображение недоступно|Image unavailable
+Техника уже забронирована на эти даты. Выберите другой период.|Equipment is already booked for these dates. Choose another period.
+Период меньше минимального срока аренды.|The period is shorter than the minimum rental duration.
+Проверьте даты аренды.|Check the rental dates.
+Заявки на демонстрационную технику не принимаются.|Requests for demo equipment are not accepted.
+Автокраны|Mobile cranes
+Самосвалы / КамАЗы|Dump trucks / KamAZ
+Экскаваторы|Excavators
+Автокран · 25 т|Mobile crane · 25 t
+25 т|25 t
+сутки|day
+Самосвал · 20 т|Dump truck · 20 t
+20 т|20 t
+Гусеничный экскаватор · 20 т|Tracked excavator · 20 t
+Техника не найдена|Equipment not found
+Аренда техники|Equipment rental
+Демонстрационная техника: изображения и цены приведены для примера. Заявки на неё не принимаются.|Demo equipment: images and prices are illustrative. Requests are not accepted.
+Условия аренды|Rental details
+С оператором|With operator
+Без оператора|Without operator
+Доставка обсуждается отдельно|Delivery is agreed separately
+Самовывоз / подача по согласованию|Collection / transport by agreement
+Минимум суток|Minimum days
+До подтверждения согласуйте|Agree before confirming
+Рабочие часы в сутки, топливо, подачу и возврат, залог и ответственность за повреждения согласуйте с владельцем. Расчёт на сайте предварительный.|Agree daily working hours, fuel, delivery and return, deposit and damage responsibility with the owner. Website estimates are provisional.
+Заявка на аренду|Rental request
+Начало аренды|Rental start
+Окончание аренды|Rental end
+Суток|Days
+Предварительно|Estimated total
+Даты включительно. До 365 суток, с учётом минимального срока аренды.|Dates are inclusive. Up to 365 days, subject to the minimum rental period.
+Имя|Name
+Телефон|Phone
+Адрес объекта|Job site address
+Задача|Job description
+Подтверждаю контактные данные для заявки.|I confirm the contact details for this request.
+Отправка…|Sending…
+Отправка заявки не резервирует технику и не списывает деньги. Дождитесь подтверждения владельца.|Sending a request does not reserve equipment or charge you. Wait for the owner's confirmation.
+Заявка сохранена.|Request saved.
+Краны, самосвалы и экскаваторы для вашего объекта.|Cranes, dump trucks and excavators for your job site.
+Тип техники|Equipment type
+Вся техника|All equipment
+Поиск техники|Search equipment
+Попробуйте изменить фильтры.|Try changing the filters.
+Как арендовать технику|How to rent equipment
+Выберите машину и даты, отправьте заявку. Владелец подтвердит доступность и итоговую стоимость. Отправка заявки не является оплатой или бронированием.|Choose equipment and dates, then send a request. The owner confirms availability and the final price. A request is not a payment or reservation.
+Сдать технику в аренду|List equipment for rent
+Моя техника|My equipment
+Добавить технику|Add equipment
+Одна карточка — одна машина. Указывайте реальную цену за сутки и условия работы.|One listing per machine. Enter the actual daily rate and working conditions.
+Цена за сутки, сум|Daily rate, UZS
+Доступна подача техники|Equipment transport available
+Сохранение…|Saving…
 `;
 
 export const en = Object.fromEntries(

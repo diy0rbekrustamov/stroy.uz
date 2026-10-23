@@ -1,8 +1,10 @@
+import { CatalogNotice } from "../components/ui/PageState.jsx";
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router";
 import { useCatalog } from "../api/useCatalog.js";
 import { serviceCategories, filterServices } from "../data/serviceCatalog.js";
 import { useLanguage } from "../i18n/useLanguage.js";
+import ShopImage from "../components/ui/ShopImage.jsx";
 import { CatalogBreadcrumbs } from "./CatalogPage.jsx";
 import Button from "../components/ui/Button.jsx";
 import "./CatalogPage.css";
@@ -39,7 +41,7 @@ function ServiceDetails({ service, onClose }) {
       >
         ×
       </button>
-      <img src={service.image} alt="" />
+      <ShopImage src={service.image} alt="" />
       <p className="service-meta">
         {t(service.category)} · {t(service.city)}
       </p>
@@ -84,7 +86,7 @@ function ServiceDetails({ service, onClose }) {
 }
 
 export default function ServicesPage() {
-  const { items: serviceCatalog } = useCatalog("services");
+  const { items: serviceCatalog, error, loading } = useCatalog("services");
   const { t, language } = useLanguage();
   const [params, setParams] = useSearchParams();
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -115,6 +117,7 @@ export default function ServicesPage() {
     <div className="market-page services-page">
       <div className="market-container">
         <CatalogBreadcrumbs last="Услуги" />
+        <CatalogNotice error={error} loading={loading} />
         <header className="market-catalog-heading">
           <h1>{t("Услуги для вашего проекта")}</h1>
           <p>
@@ -293,7 +296,7 @@ export default function ServicesPage() {
                 <div className="services-grid">
                   {filtered.slice((page - 1) * 6, page * 6).map((service) => (
                     <article className="service-card" key={service.id}>
-                      <img
+                      <ShopImage
                         src={service.image}
                         alt=""
                         loading="lazy"

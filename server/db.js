@@ -47,10 +47,13 @@ export async function connectDatabase(env = process.env) {
 }
 
 export async function migrate(db) {
-  const sql = await readFile(
-    new URL("./migrations/001_initial.sql", import.meta.url),
-    "utf8",
-  );
+  const sql = (
+    await Promise.all(
+      ["001_initial.sql", "002_rentals.sql"].map((name) =>
+        readFile(new URL("./migrations/" + name, import.meta.url), "utf8"),
+      ),
+    )
+  ).join("\n");
   await db.transaction(async (tx) => {
     // SQL is checked in; never interpolate request data here.
     if (tx.exec) await tx.exec(sql);

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router";
 import { useLanguage } from "../i18n/useLanguage.js";
+import ShopImage from "../components/ui/ShopImage.jsx";
 import { useCatalog } from "../api/useCatalog.js";
 import { api } from "../api/client.js";
 import Button from "../components/ui/Button.jsx";
@@ -56,7 +57,7 @@ export default function ServicePage() {
         </p>
         <div className="service-page-grid">
           <div className="service-description">
-            <img
+            <ShopImage
               className="service-photo"
               src={service.image}
               alt={t(service.name)}

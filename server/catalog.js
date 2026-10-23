@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
-import { listing, fail } from "./validation.js";
+import { listing, rentalListing, fail } from "./validation.js";
 export const presentListing = (item) => ({
   ...item.data,
   details: item.data.details || item.data.description || "",
@@ -17,6 +17,7 @@ export function catalogRoutes(app, { db }) {
   for (const [path, kind] of [
     ["products", "product"],
     ["services", "service"],
+    ["rentals", "rental"],
   ]) {
     app.get("/api/" + path, async (request) => {
       const {
@@ -64,9 +65,9 @@ export function catalogRoutes(app, { db }) {
       "/api/seller/" + path,
       { preHandler: app.sellerOnly },
       async (request, reply) => {
-        const { price, stock, published, ...data } = listing.parse(
-          request.body,
-        );
+        const { price, stock, published, ...data } = (
+          kind === "rental" ? rentalListing : listing
+        ).parse(request.body);
         const item = (
           await db.query(
             "INSERT INTO listings(id,seller_id,kind,data,price,stock,published) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *",
@@ -89,9 +90,9 @@ export function catalogRoutes(app, { db }) {
       "/api/seller/" + path + "/:id",
       { preHandler: app.sellerOnly },
       async (request) => {
-        const { price, stock, published, ...data } = listing.parse(
-          request.body,
-        );
+        const { price, stock, published, ...data } = (
+          kind === "rental" ? rentalListing : listing
+        ).parse(request.body);
         const item = (
           await db.query(
             "UPDATE listings SET data=$1,price=$2,stock=$3,published=$4 WHERE id=$5 AND seller_id=$6 AND kind=$7 RETURNING *",

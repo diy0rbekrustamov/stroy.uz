@@ -59,6 +59,7 @@ export default function ApiOrders() {
               ? item.quantity + " × " + item.price
               : item.data.task}
           </p>
+          {item.data?.kind === "rental" && <p>{item.data.startDate} — {item.data.endDate} · {item.data.days} {t("сутки")} · {item.data.estimate} {t("сум")}</p>}
           {(item.status === "new"
             ? ["accepted", "cancelled"]
             : item.status === "accepted"

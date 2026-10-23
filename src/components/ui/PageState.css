@@ -1,0 +1,11 @@
+.page-state { padding: clamp(48px,10vw,120px) 24px; min-height: 50vh; max-width: 980px; margin: auto; text-align: center; color: #202d3a; font-family: Arial,sans-serif; }
+.page-state h1 { font-size: clamp(27px,4vw,42px); line-height: 1.15; letter-spacing: -.03em; margin: 20px 0 16px; }
+.page-state > p { color: #647483; line-height: 1.65; margin-bottom: 24px; }
+.page-state > a:not(.ui-button) { display: inline-flex; min-height: 44px; align-items: center; margin: 8px 12px; text-underline-offset: 4px; }
+.page-state .page-state__code { font-size: clamp(80px,18vw,148px); font-weight: 800; letter-spacing: -.08em; color: #e9a333; line-height: 1; margin: 0; }
+.page-state__mark { display: grid; place-items: center; width: 52px; height: 52px; margin: auto; border: 1px solid #e4d6bf; border-radius: 14px; background: #fff3df; color: #a56300; font-size: 26px; font-weight: 800; }
+.page-state__skeleton { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; margin: 32px auto 0; max-width: 640px; }
+.page-state__skeleton i { display: block; height: 130px; border-radius: 12px; background: linear-gradient(100deg,#f0efed 20%,#f8f7f5 45%,#f0efed 70%); background-size: 220% 100%; animation: page-shimmer 1.8s ease-in-out infinite; }
+.catalog-notice { padding: 12px 16px; margin: 16px auto; border: 1px solid #efdfbf; border-radius: 8px; background: #fff8ea; color: #725623; line-height: 1.6; font-size: 12px; }
+@keyframes page-shimmer { to { background-position: -220% 0; } }
+@media(prefers-reduced-motion:reduce) { .page-state__skeleton i {animation:none;} }

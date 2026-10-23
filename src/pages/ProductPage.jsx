@@ -1,6 +1,7 @@
 import ProductCard from "../components/ui/ProductCard.jsx";
 import { useCatalog } from "../api/useCatalog.js";
 import { useLanguage } from "../i18n/useLanguage.js";
+import ShopImage from "../components/ui/ShopImage.jsx";
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router";
 import Icon from "../components/home/Icon.jsx";
@@ -197,7 +198,7 @@ function ProductDetail({ product, products }) {
               onClick={() => setImageOpen(true)}
               aria-label={t(`Увеличить изображение: ${product.name}`)}
             >
-              <img src={product.image} alt={t(detail.title)} />
+              <ShopImage src={product.image} alt={t(detail.title)} width="800" height="800" />
               <span className="product-image-badge">{t(product.badge)}</span>
             </button>
             <div className="product-gallery-controls">
@@ -207,7 +208,7 @@ function ProductDetail({ product, products }) {
                 aria-label={t("Показать общий вид товара")}
                 onClick={() => setImageOpen(true)}
               >
-                <img src={product.image} alt="" />
+                <ShopImage src={product.image} alt="" width="80" height="80" />
               </button>
               <span className="product-gallery-hint">
                 {t("Нажмите на изображение для увеличения")}
@@ -576,7 +577,7 @@ function ProductDetail({ product, products }) {
               >
                 ×
               </button>
-              <img src={product.image} alt={t(detail.title)} />
+              <ShopImage src={product.image} alt={t(detail.title)} width="800" height="800" />
             </div>
           </div>
         ),

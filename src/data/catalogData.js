@@ -1,9 +1,9 @@
 import { products as homepageProducts } from "../components/home/homeData.js";
-import rebar from "../assets/catalog/rebar.svg";
-import tile from "../assets/catalog/tile.svg";
-import pipe from "../assets/catalog/pipe.svg";
-import plaster from "../assets/catalog/plaster.svg";
-import insulation from "../assets/catalog/insulation.svg";
+import rebar from "../assets/optimized/rebar.webp";
+import tile from "../assets/optimized/tile.webp";
+import pipe from "../assets/optimized/pipe.webp";
+import plaster from "../assets/optimized/plaster.webp";
+import insulation from "../assets/optimized/insulation.webp";
 
 /** Shared catalog taxonomy. Keep ids stable: they are part of the URL. */
 export const catalogCategories = [

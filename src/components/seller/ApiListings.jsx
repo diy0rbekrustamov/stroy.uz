@@ -46,11 +46,31 @@ export default function ApiListings({ kind }) {
   );
   return (
     <section className="auth-panel" style={{ width: "100%" }}>
-      <h1>{t(kind === "products" ? "Мои товары" : "Мои услуги")}</h1>
+      <h1>
+        {t(
+          kind === "rentals"
+            ? "Моя техника"
+            : kind === "products"
+              ? "Мои товары"
+              : "Мои услуги",
+        )}
+      </h1>
       <Button
-        to={kind === "products" ? "/seller/add-product" : "/seller/add-service"}
+        to={
+          kind === "rentals"
+            ? "/seller/rentals#rental-create"
+            : kind === "products"
+              ? "/seller/add-product"
+              : "/seller/add-service"
+        }
       >
-        {t(kind === "products" ? "Добавить товар" : "Добавить услугу")}
+        {t(
+          kind === "rentals"
+            ? "Добавить технику"
+            : kind === "products"
+              ? "Добавить товар"
+              : "Добавить услугу",
+        )}
       </Button>
       <div className="auth-form">
         <label className="auth-field">

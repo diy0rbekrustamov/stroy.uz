@@ -1,4 +1,8 @@
 const messages = {
+  RENTAL_UNAVAILABLE: "Техника уже забронирована на эти даты. Выберите другой период.",
+  RENTAL_MIN_DAYS: "Период меньше минимального срока аренды.",
+  INVALID_DATE: "Проверьте даты аренды.",
+  DEMO_LISTING: "Заявки на демонстрационную технику не принимаются.",
   AUTH_REQUIRED: "Войдите в аккаунт, чтобы продолжить.",
   INVALID_CREDENTIALS: "Неверный email или пароль.",
   EMAIL_UNAVAILABLE: "Этот email уже используется.",
