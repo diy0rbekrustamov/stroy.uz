@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router";
+import { useCatalog } from "../api/useCatalog.js";
 import {
-  serviceCatalog,
   serviceCategories,
   filterServices,
 } from "../data/serviceCatalog.js";
@@ -87,6 +87,7 @@ function ServiceDetails({ service, onClose }) {
 }
 
 export default function ServicesPage() {
+  const {items:serviceCatalog} = useCatalog("services");
   const { t, language } = useLanguage();
   const [params, setParams] = useSearchParams();
   const [filtersOpen, setFiltersOpen] = useState(false);

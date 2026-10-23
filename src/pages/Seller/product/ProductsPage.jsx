@@ -2,6 +2,8 @@ import { useNavigate } from "react-router";
 import { useLanguage } from "../../../i18n/useLanguage.js";
 import { useState } from "react";
 import { matchesProduct } from "../../../i18n/translate.js";
+import { useSession } from "../../../api/useSession.js";
+import ApiListings from "../../../components/seller/ApiListings.jsx";
 
 const products = [
   {
@@ -44,6 +46,7 @@ const products = [
 
 export default function ProductsPage() {
   const { t } = useLanguage();
+  const {user} = useSession();
   const [filter, setFilter] = useState("all");
   const [product, setProduct] = useState("");
   const navigate = useNavigate();
@@ -64,6 +67,7 @@ export default function ProductsPage() {
     navigate("add-product");
   };
 
+  if(user) return <ApiListings kind="products" />;
   return (
     <>
       <main className="flex-1 min-w-0 w-full">

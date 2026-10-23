@@ -1,4 +1,5 @@
 import ProductCard from "../components/ui/ProductCard.jsx";
+import { useCatalog } from "../api/useCatalog.js";
 import Button from "../components/ui/Button.jsx";
 import {
   readCatalogFilters,
@@ -168,6 +169,7 @@ function CatalogFilters({ filters, onApply, onReset, expanded }) {
 }
 
 export default function CatalogPage() {
+  const {items:catalogProducts} = useCatalog();
   const { t, language } = useLanguage();
   const [params, setParams] = useSearchParams();
   const filters = readCatalogFilters(params);

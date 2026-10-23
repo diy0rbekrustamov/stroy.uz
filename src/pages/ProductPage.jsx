@@ -1,5 +1,5 @@
 import ProductCard from "../components/ui/ProductCard.jsx";
-import { catalogProducts as products } from "../data/catalogData.js";
+import { useCatalog } from "../api/useCatalog.js";
 import { useLanguage } from "../i18n/useLanguage.js";
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router";
@@ -87,6 +87,7 @@ const tabItems = [
 ];
 
 export default function ProductPage() {
+  const {items:products} = useCatalog();
   const { productId = "drill" } = useParams();
   const { t } = useLanguage();
   const product = products.find((item) => item.id === productId);
@@ -100,10 +101,10 @@ export default function ProductPage() {
         </Link>
       </section>
     );
-  return <ProductDetail key={product.id} product={product} />;
+  return <ProductDetail key={product.id} product={product} products={products} />;
 }
 
-function ProductDetail({ product }) {
+function ProductDetail({ product,products }) {
   const { t } = useLanguage();
   const detail = productDetails[product.id] || {
     title: product.name,
@@ -126,9 +127,9 @@ function ProductDetail({ product }) {
   const [compared, setCompared] = useState(false);
   const [toast, setToast] = useState("");
   const [comparisonId, setComparisonId] = useState(
-    () => products.find((item) => item.id !== product.id).id,
+    () => products.find((item) => item.id !== product.id)?.id || product.id,
   );
-  const comparison = products.find((item) => item.id === comparisonId);
+  const comparison = products.find((item) => item.id === comparisonId) || product;
   const zoomPanel = useRef(null);
   useEffect(() => {
     window.scrollTo(0, 0);

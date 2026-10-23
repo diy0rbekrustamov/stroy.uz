@@ -1,4 +1,4 @@
-import { catalogProducts as products } from "../data/catalogData.js";
+import { useCatalog } from "../api/useCatalog.js";
 import { useLanguage } from "../i18n/useLanguage.js";
 import { Link } from "react-router";
 import { formatPrice } from "../components/home/homeData.js";
@@ -6,8 +6,9 @@ import { useShop } from "../context/ShopContext.jsx";
 import { useState } from "react";
 
 export default function CartPage() {
+  const {items:products} = useCatalog();
   const { t } = useLanguage();
-  const { cart, changeQuantity, openInfo } = useShop();
+  const { cart, changeQuantity } = useShop();
   const [view, setView] = useState("list"); // list | grid
 
   const entries = products.filter((p) => cart[p.id]);
@@ -257,19 +258,13 @@ export default function CartPage() {
               {t("сум")}
             </span>
           </div>
-          <button
-            type="button"
-            onClick={() =>
-              openInfo(
-                "Оформление заказа",
-                "Оформление заказов пока недоступно: сервис ещё не подключён. Товары сохранены в корзине.",
-              )
-            }
+          <Link
+            to="/checkout"
             className="w-full mt-5 h-[48px] bg-[#FFC107] hover:bg-[#FFB300] rounded-[12px] font-bold text-[14px] flex items-center justify-center gap-2 text-black transition"
           >
             {t("Оформить заказ")}
             <span>→</span>
-          </button>
+          </Link>
           <div className="mt-4 flex gap-2 text-[11px] text-[#8A94A0] leading-snug">
             <span className="mt-0.5">🛡️</span>
             <span>

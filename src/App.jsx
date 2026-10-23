@@ -1,4 +1,6 @@
 import CartPage from "./pages/CartPage.jsx";
+import CheckoutPage from "./pages/CheckoutPage.jsx";
+import AccountPage from "./pages/AccountPage.jsx";
 import { ShopProvider } from "./context/ShopContext.jsx";
 import LanguageProvider from "./i18n/LanguageProvider.jsx";
 import ProductPage from "./pages/ProductPage.jsx";
@@ -26,6 +28,8 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "cart", element: <CartPage /> },
+      { path: "checkout", element: <CheckoutPage /> },
+      { path: "account", element: <AccountPage /> },
       { path: "services", element: <PublicServicesPage /> },
       { path: "services/:serviceId", element: <ServicePage /> },
       { path: "product/:productId", element: <ProductPage /> },

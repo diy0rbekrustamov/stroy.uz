@@ -725,6 +725,45 @@ JPG, PNG, WebP - до 10 МБ, до 8 фото|JPG, PNG, WebP — up to 10 MB, u
 Подтверждаю право на фотографии и корректность информации об услуге|I confirm my rights to the photos and the accuracy of service information
 Опубликовать услугу →|Publish service →
 Черновик не виден в каталоге. Для публикации нужны обязательные поля, фото и действующие контакты.|Drafts are not visible in the catalog. Publishing requires all required fields, photos and valid contacts.
+Войдите в аккаунт, чтобы продолжить.|Sign in to continue.
+Неверный email или пароль.|Incorrect email or password.
+Этот email уже используется.|This email is already in use.
+Для этого действия нужен аккаунт продавца.|A seller account is required.
+Проверьте заполнение полей.|Check the form fields.
+Недостаточно товара в наличии. Обновите корзину.|Insufficient stock. Refresh your cart.
+Почтовый сервис ещё не настроен.|The email service is not configured yet.
+Ссылка недействительна или срок её действия истёк.|The link is invalid or has expired.
+Запись не найдена.|Record not found.
+Сессия изменилась. Обновите страницу.|Your session has changed. Reload the page.
+Это изменение статуса недоступно.|This status change is not allowed.
+Слишком много попыток. Повторите позже.|Too many attempts. Try again later.
+Сервис временно недоступен. Повторите позже.|The service is temporarily unavailable. Try again later.
+Не удалось загрузить изображение. Используйте JPG, PNG или WebP до 5 МБ.|Image upload failed. Use JPG, PNG or WebP up to 5 MB.
+Загрузка…|Loading…
+Выйти|Sign out
+Мои заказы|My orders
+Пока пусто|Nothing here yet
+Мои заявки|My requests
+Подтверждаю состав заказа и контактные данные.|I confirm the order items and contact details.
+Стоимость доставки согласуется отдельно. Онлайн-оплата не выполняется.|Delivery costs are agreed separately. No online payment is taken.
+Подтвердить заказ|Confirm order
+Если аккаунт существует, инструкция по восстановлению будет отправлена на email.|If the account exists, recovery instructions will be emailed.
+Заявка сохранена. Номер:|Request saved. Reference:
+Итоговую цену и сроки согласуйте с исполнителем до начала работ.|Agree on the final price and dates with the provider before work starts.
+Новый пароль|New password
+Пароль изменён. Войдите с новым паролем.|Password changed. Sign in with your new password.
+Сохранить пароль|Save password
+Изменения сохранены.|Changes saved.
+Статус|Status
+Черновики|Drafts
+Название|Name
+Фото|Photo
+Сохранить|Save
+new|New
+accepted|Accepted
+shipped|Shipped
+completed|Completed
+cancelled|Cancelled
 `;
 
 export const en = Object.fromEntries(

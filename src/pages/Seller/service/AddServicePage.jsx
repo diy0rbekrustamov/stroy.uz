@@ -1,6 +1,9 @@
 import { useLanguage } from "../../../i18n/useLanguage.js";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { api } from "../../../api/client.js";
+import { uploadImage } from "../../../api/upload.js";
 
 const serviceCategories = [
   "Ремонт квартир",
@@ -21,6 +24,8 @@ export default function AddServicePage() {
   const { t } = useLanguage();
   const [step, setStep] = useState("service");
   const [submissionMessage, setSubmissionMessage] = useState("");
+  const [saving,setSaving]=useState(false);
+  const navigate=useNavigate();
 
   const {
     register,
@@ -61,11 +66,15 @@ export default function AddServicePage() {
     } catch {}
   }, [setValue]);
 
-  const onSubmit = () => {
-    setSubmissionMessage(
-      "Сохранение пока недоступно: сервис продавца ещё не подключён. Данные не отправлены.",
-    );
+  const saveService=async(data,published)=>{
+    if(saving)return;setSaving(true);setSubmissionMessage("");
+    try {
+      const image=await uploadImage(data.photos[0]);
+      await api("/seller/services",{method:"POST",body:{name:data.serviceName,description:data.description,category:data.category,price:Number(data.price),stock:0,unit:data.unit,city:data.city,image,published}});
+      window.dispatchEvent(new Event("stroy-catalog"));navigate("/seller/services");
+    }catch(error){setSubmissionMessage(error.message);}finally{setSaving(false);}
   };
+  const onSubmit=data=>saveService(data,true);
 
   const handlePhotoChange = (e) => {
     const files = Array.from(e.target.files).slice(0, 8);
@@ -491,7 +500,7 @@ export default function AddServicePage() {
             </button>
             <button
               type="button"
-              onClick={() => handleSubmit(onSubmit)()}
+              onClick={() => handleSubmit(data=>saveService(data,false))()}
               className="bg-white border text-xs py-3 rounded-lg"
             >
               {t("Сохранить черновик →")}

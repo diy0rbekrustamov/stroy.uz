@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { api } from "../api/client.js";
 import { useLanguage } from "../i18n/useLanguage.js";
 import AuthLayout from "../components/auth/AuthLayout.jsx";
 import Button from "../components/ui/Button.jsx";
@@ -8,6 +9,8 @@ import { validateRegistration } from "../data/authValidation.js";
 
 export default function RegisterPage() {
   const { t } = useLanguage();
+  const navigate = useNavigate();
+  const [busy,setBusy] = useState(false);
   const [role, setRole] = useState("seller");
   const [visible, setVisible] = useState({});
   const [form, setForm] = useState({
@@ -122,15 +125,13 @@ export default function RegisterPage() {
           "Покупатель — заказы и избранное. Продавец — товары, услуги и заявки. Роль можно дополнить позже.",
         )}
       </p>
-      <p className="auth-note auth-role-description">
-        {t("Регистрация пока недоступна: сервис авторизации ещё не подключён.")}
-      </p>
       <form
         className="auth-form"
         aria-label={t("Регистрация")}
         noValidate
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault();
+          if(busy) return;
           const next = validateRegistration(form, role);
           setErrors(next);
           setMessage("");
@@ -139,9 +140,11 @@ export default function RegisterPage() {
             event.currentTarget.elements.namedItem(first)?.focus();
             return;
           }
-          setMessage(
-            "Регистрация пока недоступна: сервис авторизации ещё не подключён.",
-          );
+          setBusy(true);
+          try {
+            const {user}=await api("/auth/register",{method:"POST",body:{...form,role}});
+            navigate(user.role === "seller" ? "/seller" : "/account");
+          } catch(error) {setMessage(error.message);} finally {setBusy(false);}
         }}
       >
         {field("name", "Ваше имя *", "Введите имя", "text", "name")}
@@ -194,7 +197,7 @@ export default function RegisterPage() {
             </p>
           )}
         </div>
-        <Button type="submit">
+        <Button type="submit" disabled={busy}>
           {t("Создать аккаунт")}
           <Icon name="arrow" />
         </Button>

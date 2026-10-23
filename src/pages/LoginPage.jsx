@@ -1,5 +1,6 @@
 import { useLanguage } from "../i18n/useLanguage.js";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { api } from "../api/client.js";
 import { useState } from "react";
 import AuthLayout from "../components/auth/AuthLayout.jsx";
 import Button from "../components/ui/Button.jsx";
@@ -8,6 +9,8 @@ import { validateAuthForm } from "../data/authValidation.js";
 
 export default function LoginPage() {
   const { t } = useLanguage();
+  const navigate = useNavigate();
+  const [busy,setBusy] = useState(false);
   const [role, setRole] = useState("buyer");
   const [showPass, setShowPass] = useState(false);
   const [form, setForm] = useState({
@@ -54,8 +57,9 @@ export default function LoginPage() {
         className="auth-form"
         aria-label={t("Вход")}
         noValidate
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault();
+          if(busy) return;
           const next = validateAuthForm(form);
           setErrors(next);
           setMessage("");
@@ -64,9 +68,11 @@ export default function LoginPage() {
             event.currentTarget.elements.namedItem(first)?.focus();
             return;
           }
-          setMessage(
-            "Вход пока недоступен: сервис авторизации ещё не подключён.",
-          );
+          setBusy(true);
+          try {
+            const {user} = await api("/auth/login",{method:"POST",body:{email:form.email,password:form.password,remember:form.remember}});
+            navigate(user.role === "seller" ? "/seller" : "/account");
+          } catch(error) {setMessage(error.message);} finally {setBusy(false);}
         }}
       >
         <div className="auth-field">
@@ -166,7 +172,7 @@ export default function LoginPage() {
             </p>
           )}
         </div>
-        <Button type="submit">
+        <Button type="submit" disabled={busy}>
           {t("Войти")}
           <Icon name="arrow" />
         </Button>

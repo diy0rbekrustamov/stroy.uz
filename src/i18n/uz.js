@@ -725,6 +725,45 @@ JPG, PNG, WebP - до 10 МБ, до 8 фото|JPG, PNG, WebP — 10 MB gacha, 8
 Подтверждаю право на фотографии и корректность информации об услуге|Rasmlarga huquqim va xizmat ma’lumotlari to‘g‘riligini tasdiqlayman
 Опубликовать услугу →|Xizmatni e’lon qilish →
 Черновик не виден в каталоге. Для публикации нужны обязательные поля, фото и действующие контакты.|Qoralama katalogda ko‘rinmaydi. E’lon qilish uchun majburiy maydonlar, rasmlar va haqiqiy kontaktlar kerak.
+Войдите в аккаунт, чтобы продолжить.|Davom etish uchun hisobga kiring.
+Неверный email или пароль.|Email yoki parol noto‘g‘ri.
+Этот email уже используется.|Bu email allaqachon ishlatilmoqda.
+Для этого действия нужен аккаунт продавца.|Bu amal uchun sotuvchi hisobi kerak.
+Проверьте заполнение полей.|Maydonlarni tekshiring.
+Недостаточно товара в наличии. Обновите корзину.|Mahsulot yetarli emas. Savatni yangilang.
+Почтовый сервис ещё не настроен.|Pochta xizmati hali sozlanmagan.
+Ссылка недействительна или срок её действия истёк.|Havola yaroqsiz yoki muddati tugagan.
+Запись не найдена.|Yozuv topilmadi.
+Сессия изменилась. Обновите страницу.|Sessiya o‘zgardi. Sahifani yangilang.
+Это изменение статуса недоступно.|Bu holat o‘zgarishiga ruxsat yo‘q.
+Слишком много попыток. Повторите позже.|Urinishlar juda ko‘p. Keyinroq qayta urinib ko‘ring.
+Сервис временно недоступен. Повторите позже.|Xizmat vaqtincha mavjud emas. Keyinroq qayta urinib ko‘ring.
+Не удалось загрузить изображение. Используйте JPG, PNG или WebP до 5 МБ.|Rasm yuklanmadi. 5 MB gacha JPG, PNG yoki WebP ishlating.
+Загрузка…|Yuklanmoqda…
+Выйти|Chiqish
+Мои заказы|Buyurtmalarim
+Пока пусто|Hozircha bo‘sh
+Мои заявки|Arizalarim
+Подтверждаю состав заказа и контактные данные.|Buyurtma tarkibi va kontakt ma’lumotlarini tasdiqlayman.
+Стоимость доставки согласуется отдельно. Онлайн-оплата не выполняется.|Yetkazib berish narxi alohida kelishiladi. Onlayn to‘lov amalga oshirilmaydi.
+Подтвердить заказ|Buyurtmani tasdiqlash
+Если аккаунт существует, инструкция по восстановлению будет отправлена на email.|Agar hisob mavjud bo‘lsa, tiklash yo‘riqnomasi emailga yuboriladi.
+Заявка сохранена. Номер:|Ariza saqlandi. Raqami:
+Итоговую цену и сроки согласуйте с исполнителем до начала работ.|Ish boshlanishidan oldin ijrochi bilan yakuniy narx va muddatlarni kelishing.
+Новый пароль|Yangi parol
+Пароль изменён. Войдите с новым паролем.|Parol o‘zgartirildi. Yangi parol bilan kiring.
+Сохранить пароль|Parolni saqlash
+Изменения сохранены.|O‘zgarishlar saqlandi.
+Статус|Holat
+Черновики|Qoralamalar
+Название|Nomi
+Фото|Rasm
+Сохранить|Saqlash
+new|Yangi
+accepted|Qabul qilindi
+shipped|Jo‘natildi
+completed|Yakunlandi
+cancelled|Bekor qilindi
 `;
 
 export const uz = Object.fromEntries(

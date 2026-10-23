@@ -36,6 +36,7 @@ export function ShopProvider({ children }) {
   const cartCount = Object.values(cart).reduce((sum, amount) => sum + amount, 0);
   const value = useMemo(() => ({
     cart, favorites, cartCount, addToCart, changeQuantity, toggleFavorite,
+    clearCart: () => updateCart(() => ({})),
     dialog, closeDialog: () => setDialog(null),
     openCart: () => setDialog({ type: "cart", title: "Корзина" }),
     openInfo: (title, text = "Этот раздел пока готовится.") => setDialog({ type: "info", title, text }),

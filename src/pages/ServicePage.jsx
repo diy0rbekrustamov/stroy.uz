@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router";
 import { useLanguage } from "../i18n/useLanguage.js";
-import { serviceCatalog } from "../data/serviceCatalog.js";
+import { useCatalog } from "../api/useCatalog.js";
+import { api } from "../api/client.js";
 import Button from "../components/ui/Button.jsx";
 import "./CatalogPage.css";
 import "./ServicesPage.css";
 
 export default function ServicePage() {
+  const {items:serviceCatalog,remote} = useCatalog("services");
   const { serviceId } = useParams();
   const service = serviceCatalog.find((item) => item.id === serviceId);
   const { t, language } = useLanguage();
   const [quantity, setQuantity] = useState("40");
   const [message, setMessage] = useState("");
+  const [busy,setBusy]=useState(false);
   const [today] = useState(() =>
     new Intl.DateTimeFormat("en-CA", {
       year: "numeric",
@@ -96,11 +99,14 @@ export default function ServicePage() {
           <form
             className="service-request"
             aria-label={t("Запросить смету")}
-            onSubmit={(event) => {
+            onSubmit={async (event) => {
               event.preventDefault();
-              setMessage(
-                "Отправка заявок пока недоступна. Данные не отправлены; сервис ещё не подключён.",
-              );
+              if(busy)return;
+              const data=new FormData(event.currentTarget);setBusy(true);setMessage("");
+              try{
+                const result=await api("/services/"+service.id+"/requests",{method:"POST",body:{name:data.get("name"),phone:data.get("phone"),address:data.get("address"),quantity:Number(quantity),...(data.get("date") ? {date:data.get("date")} : {}),task:data.get("task"),consent:data.has("consent")}});
+                setMessage("Заявка сохранена. Номер: " + result.request.id);
+              }catch(error){setMessage(error.message);}finally{setBusy(false);}
             }}
             onChange={() => setMessage("")}
           >
@@ -110,7 +116,7 @@ export default function ServicePage() {
             </strong>
             <p className="auth-note">
               {t(
-                "Это демонстрационная услуга. Итоговую цену согласуют после оценки работ. Отправка заявок пока недоступна.",
+                "Итоговую цену и сроки согласуйте с исполнителем до начала работ.",
               )}
             </p>
             <label>
@@ -188,13 +194,12 @@ export default function ServicePage() {
               <input type="checkbox" name="consent" required />
               {t("Согласен на обработку данных для заявки")}
             </label>
-            <Button type="submit" disabled={!service.available}>
+            <Button type="submit" disabled={!service.available || busy || !remote}>
               {t("Отправить заявку")}
             </Button>
             <p className="service-demo" role="status">
               {t(
-                message ||
-                  "Отправка заявок пока недоступна. Данные не отправлены; сервис ещё не подключён.",
+                message || (!remote ? "Сервис временно недоступен. Повторите позже." : ""),
               )}
             </p>
           </form>
