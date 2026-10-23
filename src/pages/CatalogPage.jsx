@@ -169,7 +169,7 @@ function CatalogFilters({ filters, onApply, onReset, expanded }) {
 }
 
 export default function CatalogPage() {
-  const {items:catalogProducts} = useCatalog();
+  const { items: catalogProducts } = useCatalog();
   const { t, language } = useLanguage();
   const [params, setParams] = useSearchParams();
   const filters = readCatalogFilters(params);

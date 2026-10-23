@@ -6,7 +6,7 @@ import { useShop } from "../context/ShopContext.jsx";
 import { useState } from "react";
 
 export default function CartPage() {
-  const {items:products} = useCatalog();
+  const { items: products } = useCatalog();
   const { t } = useLanguage();
   const { cart, changeQuantity } = useShop();
   const [view, setView] = useState("list"); // list | grid

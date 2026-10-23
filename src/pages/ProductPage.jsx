@@ -87,7 +87,7 @@ const tabItems = [
 ];
 
 export default function ProductPage() {
-  const {items:products} = useCatalog();
+  const { items: products } = useCatalog();
   const { productId = "drill" } = useParams();
   const { t } = useLanguage();
   const product = products.find((item) => item.id === productId);
@@ -101,10 +101,12 @@ export default function ProductPage() {
         </Link>
       </section>
     );
-  return <ProductDetail key={product.id} product={product} products={products} />;
+  return (
+    <ProductDetail key={product.id} product={product} products={products} />
+  );
 }
 
-function ProductDetail({ product,products }) {
+function ProductDetail({ product, products }) {
   const { t } = useLanguage();
   const detail = productDetails[product.id] || {
     title: product.name,
@@ -129,7 +131,8 @@ function ProductDetail({ product,products }) {
   const [comparisonId, setComparisonId] = useState(
     () => products.find((item) => item.id !== product.id)?.id || product.id,
   );
-  const comparison = products.find((item) => item.id === comparisonId) || product;
+  const comparison =
+    products.find((item) => item.id === comparisonId) || product;
   const zoomPanel = useRef(null);
   useEffect(() => {
     window.scrollTo(0, 0);

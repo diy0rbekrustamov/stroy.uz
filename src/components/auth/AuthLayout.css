@@ -220,6 +220,7 @@
   margin: 0;
 }
 .auth-info {
+  overflow-wrap: anywhere;
   padding: 16px;
   border-radius: 7px;
   background: #f5f6f7;

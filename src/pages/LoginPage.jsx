@@ -10,13 +10,12 @@ import { validateAuthForm } from "../data/authValidation.js";
 export default function LoginPage() {
   const { t } = useLanguage();
   const navigate = useNavigate();
-  const [busy,setBusy] = useState(false);
+  const [busy, setBusy] = useState(false);
   const [role, setRole] = useState("buyer");
   const [showPass, setShowPass] = useState(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
-    consent: false,
     remember: false,
   });
   const [errors, setErrors] = useState({});
@@ -59,7 +58,7 @@ export default function LoginPage() {
         noValidate
         onSubmit={async (event) => {
           event.preventDefault();
-          if(busy) return;
+          if (busy) return;
           const next = validateAuthForm(form);
           setErrors(next);
           setMessage("");
@@ -70,9 +69,20 @@ export default function LoginPage() {
           }
           setBusy(true);
           try {
-            const {user} = await api("/auth/login",{method:"POST",body:{email:form.email,password:form.password,remember:form.remember}});
+            const { user } = await api("/auth/login", {
+              method: "POST",
+              body: {
+                email: form.email,
+                password: form.password,
+                remember: form.remember,
+              },
+            });
             navigate(user.role === "seller" ? "/seller" : "/account");
-          } catch(error) {setMessage(error.message);} finally {setBusy(false);}
+          } catch (error) {
+            setMessage(error.message);
+          } finally {
+            setBusy(false);
+          }
         }}
       >
         <div className="auth-field">
@@ -148,29 +158,6 @@ export default function LoginPage() {
           <Link className="auth-link" to="/reset-password">
             {t("Забыли пароль?")}
           </Link>
-        </div>
-        <div>
-          <label className="auth-checkbox">
-            <input
-              name="consent"
-              type="checkbox"
-              required
-              checked={form.consent}
-              onChange={(event) => change("consent", event.target.checked)}
-              aria-invalid={!!errors.consent}
-              aria-describedby={
-                errors.consent ? "login-consent-error" : undefined
-              }
-            />
-            {t(
-              "Я согласен с условиями использования и политикой конфиденциальности",
-            )}
-          </label>
-          {errors.consent && (
-            <p className="auth-error" id="login-consent-error">
-              {t(errors.consent)}
-            </p>
-          )}
         </div>
         <Button type="submit" disabled={busy}>
           {t("Войти")}

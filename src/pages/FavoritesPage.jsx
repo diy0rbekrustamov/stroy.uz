@@ -9,7 +9,7 @@ import "./FavoritesPage.css";
 
 /** The favorites live in the same store as the catalog and product details. */
 export default function FavoritesPage() {
-  const {items:catalogProducts} = useCatalog();
+  const { items: catalogProducts } = useCatalog();
   const { t } = useLanguage();
 
   const { favorites, toggleFavorite, addToCart } = useShop();

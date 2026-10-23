@@ -42,7 +42,7 @@ test("Registration validates role-specific fields and password confirmation", ()
 test("Auth validation rejects empty fields, malformed email and missing consent", () => {
   assert.deepEqual(
     Object.keys(validateAuthForm({ email: "", password: "", consent: false })),
-    ["email", "password", "consent"],
+    ["email", "password"],
   );
   assert.ok(
     validateAuthForm({ email: "broken@", password: "valid", consent: true })

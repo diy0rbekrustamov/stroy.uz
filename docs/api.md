@@ -36,6 +36,8 @@ Embedded mode and demo seeding refuse to run in production. Put a TLS reverse
 proxy in front of the API; route /api to Node and serve dist as the SPA,
 including the fallback to index.html for React Router paths.
 The application intentionally does not enable cross-origin requests.
+When using exactly one trusted reverse proxy, bind the API to loopback and
+set TRUST_PROXY_HOPS=1 so rate limits use the actual client address.
 Use a dedicated database user and persistent storage for .data/uploads
 (or MEDIA_DIR), and configure backups before real customer traffic.
 

@@ -764,6 +764,14 @@ accepted|Accepted
 shipped|Shipped
 completed|Completed
 cancelled|Cancelled
+Принят|Accepted
+Отправлен|Shipped
+Отменён|Cancelled
+Принять|Accept
+Завершить|Complete
+Отменить|Cancel
+Андижан|Andijan
+Фергана|Fergana
 `;
 
 export const en = Object.fromEntries(

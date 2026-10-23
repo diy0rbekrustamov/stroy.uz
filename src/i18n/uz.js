@@ -764,6 +764,14 @@ accepted|Qabul qilindi
 shipped|Jo‘natildi
 completed|Yakunlandi
 cancelled|Bekor qilindi
+Принят|Qabul qilindi
+Отправлен|Jo‘natildi
+Отменён|Bekor qilindi
+Принять|Qabul qilish
+Завершить|Yakunlash
+Отменить|Bekor qilish
+Андижан|Andijon
+Фергана|Farg‘ona
 `;
 
 export const uz = Object.fromEntries(

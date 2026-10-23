@@ -50,8 +50,8 @@ export default function AddProductPage() {
   const { t } = useLanguage();
   const [filter, setFilter] = useState("all");
   const [submissionMessage, setSubmissionMessage] = useState("");
-  const [saving,setSaving]=useState(false);
-  const navigate=useNavigate();
+  const [saving, setSaving] = useState(false);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -102,20 +102,52 @@ export default function AddProductPage() {
     } catch {}
   }, [setValue]);
 
-  const saveProduct=async(data,published)=>{
-    if(saving)return;setSaving(true);setSubmissionMessage("");
+  const saveProduct = async (data, published) => {
+    if (saving) return;
+    setSaving(true);
+    setSubmissionMessage("");
     try {
-      const image=await uploadImage(data.photos[0]);
-      await api("/seller/products",{method:"POST",body:{
-        name:data.productName,description:data.description,category:categoryOptions.find(item=>item.value===data.category)?.label || data.category,
-        categoryId:{tools:"tools",materials:"mixes",electric:"plumbing"}[data.category] || "",
-        price:Number(data.price),stock:Number(data.stock),unit:data.unit==="sht" ? "шт." : "комплект",city:data.city,image,published,
-        details:[data.type,data.voltage,data.equipment,data.modes,data.color].filter(Boolean).join(" · "),
-      }});
-      window.dispatchEvent(new Event("stroy-catalog"));navigate("/seller");
-    }catch(error){setSubmissionMessage(error.message);}finally{setSaving(false);}
+      const image = await uploadImage(data.photos[0]);
+      await api("/seller/products", {
+        method: "POST",
+        body: {
+          name: data.productName,
+          description: data.description,
+          category:
+            categoryOptions.find((item) => item.value === data.category)
+              ?.label || data.category,
+          categoryId:
+            { tools: "tools", materials: "mixes", electric: "plumbing" }[
+              data.category
+            ] || "",
+          price: Number(data.price),
+          stock: Number(data.stock),
+          unit: data.unit === "sht" ? "шт." : "комплект",
+          city:
+            { Tashkent: "Ташкент", Samarkand: "Самарканд" }[data.city] ||
+            data.city,
+          image,
+          published,
+          details: [
+            data.type,
+            data.voltage,
+            data.equipment,
+            data.modes,
+            data.color,
+          ]
+            .filter(Boolean)
+            .join(" · "),
+        },
+      });
+      window.dispatchEvent(new Event("stroy-catalog"));
+      navigate("/seller");
+    } catch (error) {
+      setSubmissionMessage(error.message);
+    } finally {
+      setSaving(false);
+    }
   };
-  const onSubmit=data=>saveProduct(data,true);
+  const onSubmit = (data) => saveProduct(data, true);
 
   const handlePhotoChange = (e) => {
     const files = Array.from(e.target.files).slice(0, 8);
@@ -580,7 +612,9 @@ export default function AddProductPage() {
               </button>
               <button
                 type="button"
-                onClick={() => handleSubmit(data=>saveProduct(data,false))()}
+                onClick={() =>
+                  handleSubmit((data) => saveProduct(data, false))()
+                }
                 className="bg-white border text-xs py-3 rounded-lg"
               >
                 {t("Сохранить черновик →")}

@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router";
 import { useCatalog } from "../api/useCatalog.js";
-import {
-  serviceCategories,
-  filterServices,
-} from "../data/serviceCatalog.js";
+import { serviceCategories, filterServices } from "../data/serviceCatalog.js";
 import { useLanguage } from "../i18n/useLanguage.js";
 import { CatalogBreadcrumbs } from "./CatalogPage.jsx";
 import Button from "../components/ui/Button.jsx";
@@ -87,7 +84,7 @@ function ServiceDetails({ service, onClose }) {
 }
 
 export default function ServicesPage() {
-  const {items:serviceCatalog} = useCatalog("services");
+  const { items: serviceCatalog } = useCatalog("services");
   const { t, language } = useLanguage();
   const [params, setParams] = useSearchParams();
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -133,7 +130,12 @@ export default function ServicesPage() {
           className="market-category-pills services-categories"
           aria-label={t("Категории услуг")}
         >
-          {serviceCategories.map((category) => (
+          {[
+            ...new Set([
+              ...serviceCategories,
+              ...serviceCatalog.map((item) => item.category),
+            ]),
+          ].map((category) => (
             <button
               type="button"
               key={category}
@@ -191,7 +193,14 @@ export default function ServicesPage() {
                 {t("Город")}
                 <select name="city" defaultValue={params.get("city") || ""}>
                   <option value="">{t("Все города")}</option>
-                  {["Бухара", "Ташкент", "Самарканд"].map((city) => (
+                  {[
+                    ...new Set([
+                      "Бухара",
+                      "Ташкент",
+                      "Самарканд",
+                      ...serviceCatalog.map((item) => item.city),
+                    ]),
+                  ].map((city) => (
                     <option key={city} value={city}>
                       {t(city)}
                     </option>

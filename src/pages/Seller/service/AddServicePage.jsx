@@ -24,8 +24,8 @@ export default function AddServicePage() {
   const { t } = useLanguage();
   const [step, setStep] = useState("service");
   const [submissionMessage, setSubmissionMessage] = useState("");
-  const [saving,setSaving]=useState(false);
-  const navigate=useNavigate();
+  const [saving, setSaving] = useState(false);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -66,15 +66,42 @@ export default function AddServicePage() {
     } catch {}
   }, [setValue]);
 
-  const saveService=async(data,published)=>{
-    if(saving)return;setSaving(true);setSubmissionMessage("");
+  const saveService = async (data, published) => {
+    if (saving) return;
+    setSaving(true);
+    setSubmissionMessage("");
     try {
-      const image=await uploadImage(data.photos[0]);
-      await api("/seller/services",{method:"POST",body:{name:data.serviceName,description:data.description,category:data.category,price:Number(data.price),stock:0,unit:data.unit,city:data.city,image,published}});
-      window.dispatchEvent(new Event("stroy-catalog"));navigate("/seller/services");
-    }catch(error){setSubmissionMessage(error.message);}finally{setSaving(false);}
+      const image = await uploadImage(data.photos[0]);
+      await api("/seller/services", {
+        method: "POST",
+        body: {
+          name: data.serviceName,
+          description: data.description,
+          category: data.category,
+          price: Number(data.price),
+          stock: 0,
+          unit: data.unit,
+          city:
+            {
+              Tashkent: "Ташкент",
+              Samarkand: "Самарканд",
+              Bukhara: "Бухара",
+              Andijan: "Андижан",
+              Fergana: "Фергана",
+            }[data.city] || data.city,
+          image,
+          published,
+        },
+      });
+      window.dispatchEvent(new Event("stroy-catalog"));
+      navigate("/seller/services");
+    } catch (error) {
+      setSubmissionMessage(error.message);
+    } finally {
+      setSaving(false);
+    }
   };
-  const onSubmit=data=>saveService(data,true);
+  const onSubmit = (data) => saveService(data, true);
 
   const handlePhotoChange = (e) => {
     const files = Array.from(e.target.files).slice(0, 8);
@@ -500,7 +527,7 @@ export default function AddServicePage() {
             </button>
             <button
               type="button"
-              onClick={() => handleSubmit(data=>saveService(data,false))()}
+              onClick={() => handleSubmit((data) => saveService(data, false))()}
               className="bg-white border text-xs py-3 rounded-lg"
             >
               {t("Сохранить черновик →")}

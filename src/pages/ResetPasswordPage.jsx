@@ -10,8 +10,8 @@ import { validateAuthForm } from "../data/authValidation.js";
 
 export default function ResetPasswordPage() {
   const { t } = useLanguage();
-  const [params]=useSearchParams();
-  const [busy,setBusy]=useState(false);
+  const [params] = useSearchParams();
+  const [busy, setBusy] = useState(false);
   const [form, setForm] = useState({ email: "", consent: false });
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
@@ -20,7 +20,8 @@ export default function ResetPasswordPage() {
     setErrors((current) => ({ ...current, [key]: undefined }));
     setMessage("");
   };
-  if(params.get("token")) return <ResetPasswordConfirm token={params.get("token")} />;
+  if (params.get("token"))
+    return <ResetPasswordConfirm token={params.get("token")} />;
   return (
     <AuthLayout
       title="Восстановление пароля"
@@ -32,7 +33,7 @@ export default function ResetPasswordPage() {
         noValidate
         onSubmit={async (event) => {
           event.preventDefault();
-          if(busy) return;
+          if (busy) return;
           const next = validateAuthForm(form, "reset");
           setErrors(next);
           setMessage("");
@@ -43,9 +44,15 @@ export default function ResetPasswordPage() {
           }
           setBusy(true);
           try {
-            await api("/auth/forgot-password",{method:"POST",body:form});
-            setMessage("Если аккаунт существует, инструкция по восстановлению будет отправлена на email.");
-          } catch(error) {setMessage(error.message);} finally {setBusy(false);}
+            await api("/auth/forgot-password", { method: "POST", body: form });
+            setMessage(
+              "Если аккаунт существует, инструкция по восстановлению будет отправлена на email.",
+            );
+          } catch (error) {
+            setMessage(error.message);
+          } finally {
+            setBusy(false);
+          }
         }}
       >
         <div className="auth-field">

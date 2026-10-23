@@ -10,7 +10,7 @@ import { validateRegistration } from "../data/authValidation.js";
 export default function RegisterPage() {
   const { t } = useLanguage();
   const navigate = useNavigate();
-  const [busy,setBusy] = useState(false);
+  const [busy, setBusy] = useState(false);
   const [role, setRole] = useState("seller");
   const [visible, setVisible] = useState({});
   const [form, setForm] = useState({
@@ -131,7 +131,7 @@ export default function RegisterPage() {
         noValidate
         onSubmit={async (event) => {
           event.preventDefault();
-          if(busy) return;
+          if (busy) return;
           const next = validateRegistration(form, role);
           setErrors(next);
           setMessage("");
@@ -142,9 +142,16 @@ export default function RegisterPage() {
           }
           setBusy(true);
           try {
-            const {user}=await api("/auth/register",{method:"POST",body:{...form,role}});
+            const { user } = await api("/auth/register", {
+              method: "POST",
+              body: { ...form, role },
+            });
             navigate(user.role === "seller" ? "/seller" : "/account");
-          } catch(error) {setMessage(error.message);} finally {setBusy(false);}
+          } catch (error) {
+            setMessage(error.message);
+          } finally {
+            setBusy(false);
+          }
         }}
       >
         {field("name", "Ваше имя *", "Введите имя", "text", "name")}
