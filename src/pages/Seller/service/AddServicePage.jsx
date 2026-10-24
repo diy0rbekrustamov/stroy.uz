@@ -132,7 +132,7 @@ export default function AddServicePage() {
       </p>
 
       <div className="bg-[#FEF3C7] text- p-2.5 rounded-lg mb-4 text-[#92400E] leading-[1.4]">
-        {t("ДЕМО • Услуга и исполнитель иллюстративны. Поля * обязательны.")}
+        {t("Заполните данные объявления. Поля * обязательны.")}
       </div>
 
       <div className="flex gap-2 mb-5">

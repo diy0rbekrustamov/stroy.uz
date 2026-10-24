@@ -831,6 +831,18 @@ cancelled|Bekor qilindi
 Цена за сутки, сум|Sutkalik narx, so‘m
 Доступна подача техники|Texnikani yetkazish mavjud
 Сохранение…|Saqlanmoqda…
+Очистить поиск|Qidiruvni tozalash
+Стать продавцом|Sotuvchi bo‘lish
+Укажите название магазина, чтобы публиковать товары, услуги и технику. Покупки и история заказов сохранятся.|Tovar, xizmat va texnika e’lonlarini joylash uchun do‘kon nomini kiriting. Xaridlar va buyurtmalar tarixi saqlanadi.
+Название магазина|Do‘kon nomi
+Открыть кабинет продавца|Sotuvchi kabinetini ochish
+Загрузка объявлений…|E’lonlar yuklanmoqda…
+Не удалось загрузить объявления. Проверьте подключение и повторите попытку.|E’lonlarni yuklab bo‘lmadi. Ulanishni tekshiring va qayta urinib ko‘ring.
+Объявлений пока нет|Hozircha e’lonlar yo‘q
+Здесь появятся опубликованные предложения продавцов.|Bu yerda sotuvchilarning chop etilgan e’lonlari paydo bo‘ladi.
+Разместить объявление|E’lon joylash
+Заполните данные объявления. Поля * обязательны.|E’lon ma’lumotlarini kiriting. * belgili maydonlar majburiy.
+Демонстрационные товары нельзя оформить. Выберите предложения продавцов.|Namoyish tovarlariga buyurtma berib bo‘lmaydi. Sotuvchilar takliflarini tanlang.
 `;
 
 export const uz = Object.fromEntries(

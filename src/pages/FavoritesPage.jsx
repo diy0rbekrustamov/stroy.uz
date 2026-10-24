@@ -1,3 +1,4 @@
+import { ListingState } from "../components/ui/ListingState.jsx";
 import ProductCard from "../components/ui/ProductCard.jsx";
 import { useLanguage } from "../i18n/useLanguage.js";
 import { useEffect } from "react";
@@ -9,7 +10,7 @@ import "./FavoritesPage.css";
 
 /** The favorites live in the same store as the catalog and product details. */
 export default function FavoritesPage() {
-  const { items: catalogProducts } = useCatalog();
+  const { items: catalogProducts, loading, error } = useCatalog();
   const { t } = useLanguage();
 
   const { favorites, toggleFavorite, addToCart } = useShop();
@@ -21,6 +22,7 @@ export default function FavoritesPage() {
     window.scrollTo(0, 0);
   }, []);
 
+  if (loading || error) return <ListingState loading={loading} error={error}/>;
   return (
     <div className="favorites-page">
       <div className="favorites-container">

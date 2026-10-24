@@ -172,7 +172,7 @@ export default function AddProductPage() {
 
         <div className="bg-[#FEF3C7] text- p-2.5 rounded-lg mb-4 text-[#92400E] leading-[1.4]">
           {t(
-            "ДЕМО • Товар и данные продавца приведены для макета. Поля * обязательны.",
+            "Заполните данные объявления. Поля * обязательны.",
           )}
         </div>
 

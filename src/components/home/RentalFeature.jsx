@@ -1,11 +1,13 @@
 import { Link } from "react-router";
-import { rentalCatalog } from "../../data/rentalCatalog.js";
+import { useCatalog } from "../../api/useCatalog.js";
+import { ListingState } from "../ui/ListingState.jsx";
 import { useLanguage } from "../../i18n/useLanguage.js";
 import Icon from "./Icon.jsx";
 import "../../pages/RentalsPage.css";
 
 export default function RentalFeature() {
   const { t } = useLanguage();
+  const {items,loading,error}=useCatalog("rentals");
   return (
     <section
       className="home-container home-section"
@@ -21,10 +23,11 @@ export default function RentalFeature() {
           <Icon name="arrow" />
         </Link>
       </div>
+      <ListingState loading={loading} error={error} empty={!items.length}/>
       <div className="rental-grid">
-        {rentalCatalog.map((item) => (
+        {items.slice(0,3).map((item) => (
           <article className="rental-card" key={item.id}>
-            <Link to={"/rentals?type=" + item.equipmentType}>
+            <Link to={"/rentals/" + item.id}>
               <img
                 src={item.image}
                 alt={t(item.category)}

@@ -1,8 +1,9 @@
 import LanguageSwitcher from "./LanguageSwitcher.jsx";
+import "./HeaderSearch.css";
 import { useSession } from "../../api/useSession.js";
 import { useLanguage } from "../../i18n/useLanguage.js";
 import { Link } from "react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { useShop } from "../../context/ShopContext.jsx";
 import Brand from "./Brand.jsx";
@@ -23,6 +24,7 @@ export default function Navbar({
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [internalQuery, setInternalQuery] = useState("");
+  const searchInput = useRef(null);
   const navigate = useNavigate();
   const shop = useShop();
   const handleSearch = onSearch || setInternalQuery;
@@ -66,6 +68,7 @@ export default function Navbar({
             >
               {t("Помощь")}
             </button>
+            <Link to="/seller" className="text-[#788694]">{t(user?.role === "seller" ? "Кабинет продавца" : "Стать продавцом")}</Link>
             <Link to="/#business" className="text-[#788694]">
               {t("Для бизнеса")}
             </Link>
@@ -78,7 +81,7 @@ export default function Navbar({
       <div className="storefront-header-main w-[min(100%-144px,1296px)] max-[1199px]:w-[calc(100%-64px)] max-[767px]:w-[calc(100%-32px)] mx-auto flex items-center gap-[42px] max-[1199px]:gap-6 min-h-[94px] max-[991px]:flex-wrap max-[991px]:py-5 max-[767px]:flex-wrap max-[767px]:gap-4 max-[767px]:py-5">
         <Brand />
         <form
-          className="flex items-center gap-3 bg-[#f5f6f7] py-2 px-4 rounded-lg flex-1 min-w-0 max-[991px]:order-3 max-[991px]:basis-full max-[767px]:order-4 max-[767px]:basis-full"
+          className="header-search flex-1 min-w-0 max-[991px]:order-3 max-[991px]:basis-full max-[767px]:order-4 max-[767px]:basis-full"
           role="search"
           onSubmit={(e) => {
             e.preventDefault();
@@ -87,33 +90,21 @@ export default function Navbar({
               navigate(
                 `/catalog?q=${encodeURIComponent(effectiveQuery.trim())}`,
               );
-            if (window.location.pathname === "/") {
-              document
-                .getElementById("products")
-                ?.scrollIntoView({ behavior: "smooth" });
-            }
           }}
         >
-          <button
-            type="submit"
-            aria-label={t("Найти товары")}
-            className="bg-transparent p-[6px_0] flex border-0 cursor-pointer"
-          >
-            <Icon name="search" />
-          </button>
+          <span className="header-search__icon"><Icon name="search" /></span>
           <input
+            ref={searchInput}
+            type="search"
+            enterKeyHint="search"
             aria-label={t("Поиск")}
             placeholder={t("Найти материалы, инструмент или бренд")}
             value={effectiveQuery}
-            onChange={(e) => handleSearch(e.target.value)}
-            className="border-0 bg-transparent w-full min-w-0 h-8 text-[14px] outline-none font-inherit"
+            onChange={(event) => handleSearch(event.target.value)}
+            className="header-search__input"
           />
-          <span
-            aria-hidden="true"
-            className="text-[#788694] max-[767px]:!hidden"
-          >
-            ⌕
-          </span>
+          {effectiveQuery && <button type="button" className="header-search__clear" aria-label={t("Очистить поиск")} onClick={() => { handleSearch(""); searchInput.current?.focus(); }}><span aria-hidden="true">×</span></button>}
+          <button type="submit" className="header-search__submit" aria-label={t("Найти товары")}>{t("Найти")}</button>
         </form>
         <div className="flex items-center gap-[42px] max-[1199px]:gap-4 max-[991px]:ml-auto max-[767px]:ml-auto max-[767px]:gap-2">
           <button
@@ -192,6 +183,7 @@ export default function Navbar({
             {t(" ")}
           </Link>
         ))}
+        <Link to="/seller" onClick={()=>setMenuOpen(false)} className="hidden max-[767px]:block p-3">{t(user?.role === "seller" ? "Кабинет продавца" : "Стать продавцом")}</Link>
       </nav>
     </header>
   );

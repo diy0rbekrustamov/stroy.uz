@@ -831,6 +831,18 @@ cancelled|Cancelled
 Цена за сутки, сум|Daily rate, UZS
 Доступна подача техники|Equipment transport available
 Сохранение…|Saving…
+Очистить поиск|Clear search
+Стать продавцом|Become a seller
+Укажите название магазина, чтобы публиковать товары, услуги и технику. Покупки и история заказов сохранятся.|Enter your store name to publish products, services and equipment. Your purchases and order history will be kept.
+Название магазина|Store name
+Открыть кабинет продавца|Open seller dashboard
+Загрузка объявлений…|Loading listings…
+Не удалось загрузить объявления. Проверьте подключение и повторите попытку.|Unable to load listings. Check your connection and try again.
+Объявлений пока нет|No listings yet
+Здесь появятся опубликованные предложения продавцов.|Published seller listings will appear here.
+Разместить объявление|Create a listing
+Заполните данные объявления. Поля * обязательны.|Enter the listing details. Fields marked * are required.
+Демонстрационные товары нельзя оформить. Выберите предложения продавцов.|Demo products cannot be ordered. Choose seller listings.
 `;
 
 export const en = Object.fromEntries(

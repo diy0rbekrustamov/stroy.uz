@@ -55,6 +55,7 @@ export async function api(path, { method = "GET", body } = {}) {
         "/auth/login",
         "/auth/register",
         "/auth/logout",
+        "/auth/seller",
         "/auth/reset-password",
       ].includes(path)
     )

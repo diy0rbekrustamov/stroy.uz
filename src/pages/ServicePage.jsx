@@ -1,3 +1,4 @@
+import { ListingState } from "../components/ui/ListingState.jsx";
 import { useState } from "react";
 import { Link, useParams } from "react-router";
 import { useLanguage } from "../i18n/useLanguage.js";
@@ -9,7 +10,7 @@ import "./CatalogPage.css";
 import "./ServicesPage.css";
 
 export default function ServicePage() {
-  const { items: serviceCatalog, remote } = useCatalog("services");
+  const { items: serviceCatalog, remote, loading, error } = useCatalog("services");
   const { serviceId } = useParams();
   const service = serviceCatalog.find((item) => item.id === serviceId);
   const { t, language } = useLanguage();
@@ -31,6 +32,7 @@ export default function ServicePage() {
     Number(quantity) >= 0.01 &&
     Number(quantity) <= 100000 &&
     Number.isFinite(Number(quantity));
+  if (loading || error) return <ListingState loading={loading} error={error}/>;
   if (!service)
     return (
       <div className="market-page">
@@ -52,9 +54,6 @@ export default function ServicePage() {
             {t(service.category)} · {t(service.city)}
           </p>
         </header>
-        <p className="service-demo">
-          {t("Демо-каталог: услуги, цены и доступность показаны для примера.")}
-        </p>
         <div className="service-page-grid">
           <div className="service-description">
             <ShopImage
@@ -79,11 +78,9 @@ export default function ServicePage() {
               </p>
             </section>
             <section>
-              <h2>{t("Исполнитель — демо")}</h2>
+              <h2>{t("Продавец")}</h2>
               <p>
-                {t(
-                  "Это пример профиля, а не подтверждённая компания. Контакты и отзывы исполнителя пока не подключены.",
-                )}
+                {service.sellerName}
               </p>
             </section>
             <section>
@@ -217,7 +214,7 @@ export default function ServicePage() {
             </label>
             <Button
               type="submit"
-              disabled={!service.available || busy || !remote}
+              disabled={!service.available || busy || !remote || !!service.demo}
             >
               {t("Отправить заявку")}
             </Button>

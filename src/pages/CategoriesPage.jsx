@@ -1,3 +1,4 @@
+import { useCatalog } from "../api/useCatalog.js";
 import { productCount } from "../i18n/translate.js";
 import { useLanguage } from "../i18n/useLanguage.js";
 import { useEffect } from "react";
@@ -6,13 +7,14 @@ import Icon from "../components/home/Icon.jsx";
 import {
   catalogCategories,
   catalogCategoryPath,
-  catalogProducts,
 } from "../data/catalogData.js";
 import { CatalogBreadcrumbs } from "./CatalogPage.jsx";
 import "./CatalogPage.css";
+import "./CategoriesPage.css";
 
 export default function CategoriesPage() {
   const { t, language } = useLanguage();
+  const {items:catalogProducts}=useCatalog();
 
   useEffect(() => {
     window.scrollTo(0, 0);

@@ -43,7 +43,7 @@ export function commerceRoutes(app, { db }) {
         )) {
           const product = (
             await tx.query(
-              "SELECT * FROM listings WHERE id=$1 AND kind='product' AND published=true FOR UPDATE",
+              "SELECT * FROM listings WHERE id=$1 AND kind='product' AND published=true AND seller_id IS NOT NULL AND COALESCE(data->>'demo','false')<>'true' FOR UPDATE",
               [input.id],
             )
           ).rows[0];
@@ -186,7 +186,7 @@ export function commerceRoutes(app, { db }) {
         fail(400, "INVALID_DATE");
       const service = (
         await db.query(
-          "SELECT * FROM listings WHERE id=$1 AND kind='service' AND published=true",
+          "SELECT * FROM listings WHERE id=$1 AND kind='service' AND published=true AND seller_id IS NOT NULL AND COALESCE(data->>'demo','false')<>'true'",
           [request.params.id],
         )
       ).rows[0];

@@ -1,3 +1,4 @@
+import { ListingState, DemoNotice } from "../components/ui/ListingState.jsx";
 import { CatalogNotice } from "../components/ui/PageState.jsx";
 import ProductCard from "../components/ui/ProductCard.jsx";
 import { useCatalog } from "../api/useCatalog.js";
@@ -198,10 +199,13 @@ export default function CatalogPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [params]);
+  if (!loading && !error && !catalogProducts.length) return <div className="market-page market-container"><h1>{t("Материалы и инструменты")}</h1><ListingState empty/></div>;
+  if (loading || error) return <div className="market-page market-container"><h1>{t("Материалы и инструменты")}</h1><ListingState loading={loading} error={error}/></div>;
   return (
     <div className="market-page market-catalog">
       <div className="market-container">
         <CatalogBreadcrumbs last="Каталог товаров" />
+        <DemoNotice items={catalogProducts}/>
         <CatalogNotice error={error} loading={loading} />
         <header className="market-catalog-heading">
           <h1>{t("Материалы и инструменты")}</h1>
@@ -348,9 +352,6 @@ export default function CatalogPage() {
                 </button>
               </div>
             )}
-            <p className="market-catalog-footnote">
-              {t("Цены и ассортимент представлены для демонстрации макета.")}
-            </p>
           </section>
         </div>
       </div>

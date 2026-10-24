@@ -1,3 +1,4 @@
+import { useCatalog } from "../api/useCatalog.js";
 import { createContext, useContext, useMemo, useState } from "react";
 
 const ShopContext = createContext(null);
@@ -11,9 +12,13 @@ const readStored = (key, fallback) => {
 };
 
 export function ShopProvider({ children }) {
-  const [cart, setCart] = useState(() => readStored("stroy-uz-cart", {}));
-  const [favorites, setFavorites] = useState(() => readStored("stroy-uz-favorites", []));
+  const [storedCart, setCart] = useState(() => readStored("stroy-uz-cart", {}));
+  const [storedFavorites, setFavorites] = useState(() => readStored("stroy-uz-favorites", []));
   const [dialog, setDialog] = useState(null);
+  const {items:products}=useCatalog();
+  const ids=new Set(products.map(item=>item.id));
+  const cart=Object.fromEntries(Object.entries(storedCart).filter(([id])=>ids.has(id)));
+  const favorites=storedFavorites.filter(id=>ids.has(id));
   const updateCart = (updater) => setCart((current) => {
     const next = updater(current);
     try { localStorage.setItem("stroy-uz-cart", JSON.stringify(next)); } catch { /* Storage can be disabled. */ }

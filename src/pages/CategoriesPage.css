@@ -1,0 +1,22 @@
+.market-categories-page .market-category-tile {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+  min-height: 270px;
+  padding: 24px;
+  background: #f7f6f4;
+}
+.market-categories-page .market-tile-copy { width:100%; height:100%; }
+.market-categories-page .market-tile-copy h3 { font-size:clamp(18px,1.55vw,23px); line-height:1.25; margin:22px 0 12px; overflow-wrap:break-word; }
+.market-categories-page .market-tile-copy p { color:#617080; line-height:1.6; }
+.market-categories-page .market-tile-bottom { padding-top:24px; width:100%; justify-content:space-between; gap:12px; }
+.market-categories-page .market-tile-arrow { width:40px; height:40px; flex-shrink:0; }
+.market-categories-page .market-category-tile > img { position:static; width:100%; height:auto; aspect-ratio:1; max-height:200px; object-fit:contain; border-radius:12px; mix-blend-mode:multiply; }
+.market-categories-page .market-category-tile:hover { background:#f0eeea; }
+@media(max-width:767px) {
+  .market-categories-page .market-category-tile { min-height:230px; padding:20px; gap:14px; }
+  .market-categories-page .market-tile-copy h3 { font-size:20px; }
+  .market-categories-page .market-categories-toprow h2 { font-size:22px; }
+}
+@media(prefers-reduced-motion:reduce) { .market-categories-page .market-category-tile { transition:none; transform:none; } }

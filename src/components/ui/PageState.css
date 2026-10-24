@@ -9,3 +9,7 @@
 .catalog-notice { padding: 12px 16px; margin: 16px auto; border: 1px solid #efdfbf; border-radius: 8px; background: #fff8ea; color: #725623; line-height: 1.6; font-size: 12px; }
 @keyframes page-shimmer { to { background-position: -220% 0; } }
 @media(prefers-reduced-motion:reduce) { .page-state__skeleton i {animation:none;} }
+
+.listing-empty {padding:40px 24px;margin:24px 0;border:1px dashed #d9dfe4;border-radius:12px;text-align:center;background:#fff;}
+.listing-empty h2 {font-size:22px;margin:0 0 12px;}
+.listing-empty p {color:#647483;line-height:1.6;margin-bottom:20px;}

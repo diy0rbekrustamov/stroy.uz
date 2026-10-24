@@ -1,3 +1,4 @@
+import { ListingState } from "../components/ui/ListingState.jsx";
 import { useCatalog } from "../api/useCatalog.js";
 import { useLanguage } from "../i18n/useLanguage.js";
 import { Link } from "react-router";
@@ -6,7 +7,7 @@ import { useShop } from "../context/ShopContext.jsx";
 import { useState } from "react";
 
 export default function CartPage() {
-  const { items: products } = useCatalog();
+  const { items: products, loading, error } = useCatalog();
   const { t } = useLanguage();
   const { cart, changeQuantity } = useShop();
   const [view, setView] = useState("list"); // list | grid
@@ -19,6 +20,7 @@ export default function CartPage() {
 
   const totalQty = Object.values(cart).reduce((a, b) => a + b, 0);
 
+  if (loading || error) return <ListingState loading={loading} error={error}/>;
   if (entries.length === 0) {
     return (
       <div className="max-w-[1280px] mx-auto px-6 py-20 text-center">

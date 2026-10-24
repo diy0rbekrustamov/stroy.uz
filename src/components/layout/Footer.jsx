@@ -107,7 +107,7 @@ export default function Footer({ onInfo }) {
         </div>
         {/*.home-footer-bottom */}
         <div className="flex justify-between gap-6 border-t border-[#3a4450] mt-10 pt-[44px] text-[11px] text-[#aab2bd] max-[767px]:flex-col max-[767px]:pt-6">
-          <span>{t("© STROY UZ. Концепция интернет-магазина.")}</span>
+          <span>{t("© STROY UZ.")}</span>
           <div className="flex gap-4">
             <button
               type="button"

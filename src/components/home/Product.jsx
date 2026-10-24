@@ -1,3 +1,4 @@
+import { ListingState, DemoNotice } from "../ui/ListingState.jsx";
 import { Link } from "react-router";
 import { useLanguage } from "../../i18n/useLanguage.js";
 import ProductCard from "./ProductCard .jsx";
@@ -12,6 +13,8 @@ const filters = [
 
 export default function Product({
   products,
+  loading,
+  error,
   filter,
   onFilter,
   favorites,
@@ -80,6 +83,8 @@ export default function Product({
             </p>
           ),
         )}
+        <DemoNotice items={products}/>
+        <ListingState loading={loading} error={error} empty={!visible.length}/>
         <div className="home-product-grid">
           {visible.map((product) => (
             <ProductCard
@@ -91,18 +96,7 @@ export default function Product({
             />
           ))}
         </div>
-        {t(
-          !visible.length && (
-            <p className="home-empty">
-              {t(
-                "Товаров пока нет. Выберите другую категорию или измените поисковый запрос.",
-              )}
-            </p>
-          ),
-        )}
-        <p className="home-demo-note">
-          {t("Цены и ассортимент показаны для демонстрации макета.")}
-        </p>
+
       </div>
     </section>
   );

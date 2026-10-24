@@ -36,9 +36,7 @@ export default function AccountPage() {
         <p>
           {user.name} · {user.email}
         </p>
-        {user.role === "seller" && (
-          <Button to="/seller">{t("Кабинет продавца")}</Button>
-        )}{" "}
+        <Button to="/seller">{t(user.role === "seller" ? "Кабинет продавца" : "Стать продавцом")}</Button>{" "}
         <Button
           variant="secondary"
           onClick={async () => {

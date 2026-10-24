@@ -4,26 +4,23 @@ import { Outlet } from "react-router";
 import { useSession } from "../../api/useSession.js";
 import { useLanguage } from "../../i18n/useLanguage.js";
 import Button from "../ui/Button.jsx";
+import SellerAccess from "./SellerAccess.jsx";
 
 function Layout() {
   const { user, loading, error } = useSession(),
     { t } = useLanguage();
+  if (loading) return <p role="status">{t("Загрузка…")}</p>;
+  if (error) return <section className="auth-panel"><h1>{t("Кабинет продавца")}</h1><p role="alert">{t(error)}</p><Button onClick={()=>window.dispatchEvent(new Event("stroy-session"))}>{t("Повторить")}</Button></section>;
   if (!loading && !error && !user)
     return (
       <section className="auth-panel">
         <h1>{t("Кабинет продавца")}</h1>
         <p>{t("Войдите в аккаунт, чтобы продолжить.")}</p>
-        <Button to="/login">{t("Войти")}</Button>
+        <Button to="/login">{t("Войти")}</Button>{" "}<Button to="/register">{t("Регистрация")}</Button>
       </section>
     );
   if (user && user.role !== "seller")
-    return (
-      <section className="auth-panel">
-        <h1>{t("Кабинет продавца")}</h1>
-        <p>{t("Для этого действия нужен аккаунт продавца.")}</p>
-        <Button to="/account">{t("Личный кабинет")}</Button>
-      </section>
-    );
+    return <SellerAccess />;
   return (
     <>
       <div className="min-h-screen bg-[#F6F7F9] font-sans">

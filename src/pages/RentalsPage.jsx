@@ -1,3 +1,4 @@
+import { ListingState, DemoNotice } from "../components/ui/ListingState.jsx";
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import { useCatalog } from "../api/useCatalog.js";
@@ -35,6 +36,8 @@ export default function RentalsPage() {
       ? a.price - b.price
       : a.name.localeCompare(b.name),
   );
+  if (!loading && !error && !items.length) return <div className="market-page market-container"><h1>{t("Аренда техники")}</h1><ListingState empty/></div>;
+  if (loading || error) return <div className="market-page market-container"><h1>{t("Аренда техники")}</h1><ListingState loading={loading} error={error}/></div>;
   return (
     <div className="market-page rental-page">
       <div className="market-container">

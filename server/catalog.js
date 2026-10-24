@@ -3,6 +3,7 @@ import { z } from "zod";
 import { listing, rentalListing, fail } from "./validation.js";
 export const presentListing = (item) => ({
   ...item.data,
+  sellerName: item.seller_name || "",
   details: item.data.details || item.data.description || "",
   id: item.id,
   sellerId: item.seller_id,
@@ -32,7 +33,7 @@ export function catalogRoutes(app, { db }) {
         })
         .parse(request.query);
       const { rows } = await db.query(
-        "SELECT * FROM listings WHERE kind=$1 AND published=true AND ($2='' OR data->>'name' ILIKE $3 OR data->>'category' ILIKE $3) ORDER BY created_at DESC,id LIMIT $4 OFFSET $5",
+        "SELECT listings.*, (SELECT store_name FROM users WHERE id=listings.seller_id) AS seller_name FROM listings WHERE kind=$1 AND published=true AND seller_id IS NOT NULL AND COALESCE(data->>'demo','false')<>'true' AND ($2='' OR data->>'name' ILIKE $3 OR data->>'category' ILIKE $3) ORDER BY created_at DESC,id LIMIT $4 OFFSET $5",
         [kind, q, "%" + q + "%", limit, offset],
       );
       return { items: rows.map(presentListing) };
@@ -40,7 +41,7 @@ export function catalogRoutes(app, { db }) {
     app.get("/api/" + path + "/:id", async (request) => {
       const item = (
         await db.query(
-          "SELECT * FROM listings WHERE id=$1 AND kind=$2 AND published=true",
+          "SELECT listings.*, (SELECT store_name FROM users WHERE id=listings.seller_id) AS seller_name FROM listings WHERE id=$1 AND kind=$2 AND published=true AND seller_id IS NOT NULL AND COALESCE(data->>'demo','false')<>'true'",
           [request.params.id, kind],
         )
       ).rows[0];

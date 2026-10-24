@@ -24,5 +24,5 @@ export function RouteFailure() {
 export function CatalogNotice({error,loading}) {
   const {t}=useLanguage();
   if(!error || loading)return null;
-  return <p className="catalog-notice" role="status">{t("Сейчас показан демонстрационный каталог. Подключение к серверу недоступно.")}</p>;
+  return <p className="catalog-notice" role="status">{t("Не удалось загрузить объявления. Проверьте подключение и повторите попытку.")}</p>;
 }

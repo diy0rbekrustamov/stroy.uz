@@ -16,6 +16,7 @@ export default function CheckoutPage() {
   const [busy, setBusy] = useState(false),
     [message, setMessage] = useState("");
   const submission = useRef(null);
+  const hasDemoItems = items.some(item=>item.demo && cart[item.id]);
   if (loading) return <p role="status">{t("Загрузка…")}</p>;
   if (!user)
     return (
@@ -49,6 +50,7 @@ export default function CheckoutPage() {
             className="auth-form"
             onSubmit={async (event) => {
               event.preventDefault();
+              if (hasDemoItems) return;
               if (busy) return;
               const data = new FormData(event.currentTarget);
               const fingerprint = JSON.stringify(cart);
@@ -111,7 +113,8 @@ export default function CheckoutPage() {
                 "Стоимость доставки согласуется отдельно. Онлайн-оплата не выполняется.",
               )}
             </p>
-            <Button type="submit" disabled={busy}>
+            {hasDemoItems && <p role="status">{t("Демонстрационные товары нельзя оформить. Выберите предложения продавцов.")}</p>}
+            <Button type="submit" disabled={busy || hasDemoItems}>
               {t("Подтвердить заказ")}
             </Button>
             <p role="status" className="auth-status">

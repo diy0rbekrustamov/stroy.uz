@@ -1,3 +1,4 @@
+import { ListingState, DemoNotice } from "../components/ui/ListingState.jsx";
 import { CatalogNotice } from "../components/ui/PageState.jsx";
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router";
@@ -113,20 +114,18 @@ export default function ServicesPage() {
     new Intl.NumberFormat(
       language === "en" ? "en-US" : language === "uz" ? "uz-UZ" : "ru-RU",
     ).format(value);
+  if (!loading && !error && !serviceCatalog.length) return <div className="market-page market-container"><h1>{t("Услуги для вашего проекта")}</h1><ListingState empty/></div>;
+  if (loading || error) return <div className="market-page market-container"><h1>{t("Услуги для вашего проекта")}</h1><ListingState loading={loading} error={error}/></div>;
   return (
     <div className="market-page services-page">
       <div className="market-container">
         <CatalogBreadcrumbs last="Услуги" />
+        <DemoNotice items={serviceCatalog}/>
         <CatalogNotice error={error} loading={loading} />
         <header className="market-catalog-heading">
           <h1>{t("Услуги для вашего проекта")}</h1>
           <p>
             {t("Строительство, отделка и ремонт — выберите нужные работы.")}
-          </p>
-          <p className="service-demo">
-            {t(
-              "Демо-каталог: услуги, цены и доступность показаны для примера.",
-            )}
           </p>
         </header>
         <div

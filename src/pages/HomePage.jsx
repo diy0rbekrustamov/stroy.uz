@@ -1,3 +1,4 @@
+import { useCatalog } from "../api/useCatalog.js";
 import { useLanguage } from "../i18n/useLanguage.js";
 import { Link, useOutletContext } from "react-router";
 import Hero from "../components/home/Hero.jsx";
@@ -6,7 +7,6 @@ import RentalFeature from "../components/home/RentalFeature.jsx";
 import Icon from "../components/home/Icon.jsx";
 import {
   categories,
-  products,
   projects,
   articles,
 } from "../components/home/homeData.js";
@@ -15,6 +15,7 @@ import "./HomePage.css";
 
 function HomePage() {
   const { t } = useLanguage();
+  const { items: products, loading, error } = useCatalog();
 
   const {
     query,
@@ -86,7 +87,9 @@ function HomePage() {
           </div>
         </section>
         <Product
-          products={products}
+          products={products.slice(0, 4)}
+          loading={loading}
+          error={error}
           filter={filter}
           onFilter={setFilter}
           favorites={favorites}

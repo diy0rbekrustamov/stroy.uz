@@ -1,3 +1,4 @@
+import { ListingState } from "../components/ui/ListingState.jsx";
 import ProductCard from "../components/ui/ProductCard.jsx";
 import { useCatalog } from "../api/useCatalog.js";
 import { useLanguage } from "../i18n/useLanguage.js";
@@ -88,10 +89,11 @@ const tabItems = [
 ];
 
 export default function ProductPage() {
-  const { items: products } = useCatalog();
-  const { productId = "drill" } = useParams();
+  const { items: products, loading, error } = useCatalog();
+  const { productId } = useParams();
   const { t } = useLanguage();
-  const product = products.find((item) => item.id === productId);
+  const product = productId ? products.find((item) => item.id === productId) : products[0];
+  if (loading || error) return <ListingState loading={loading} error={error}/>;
   if (!product)
     return (
       <section className="product-not-found product-container">
@@ -115,7 +117,7 @@ function ProductDetail({ product, products }) {
     article: "SU-" + product.id.toUpperCase(),
     chips: [product.details],
     sectionTitle: "Характеристики товара",
-    description: product.details,
+    description: product.description || product.details,
     specs: [
       ["Категория", product.category],
       ["Характеристики", product.details],
@@ -228,7 +230,7 @@ function ProductDetail({ product, products }) {
             <p className="product-article">
               {t("Артикул: ")}
               {t(detail.article)}
-              {t(" · Демонстрационный товар")}
+
             </p>
             <div className="product-chips">
               {detail.chips.map((chip) => (
@@ -476,11 +478,6 @@ function ProductDetail({ product, products }) {
                   <div className="product-description">
                     <h2>{t(detail.sectionTitle)}</h2>
                     <p>{t(detail.description)}</p>
-                    <small>
-                      {t("Описание и характеристики демонстрационные.")}
-                      <br />
-                      {t("Перед запуском заменить данными поставщика.")}
-                    </small>
                   </div>
                   <div className="product-spec-card">
                     {detail.specs.map(([label, value]) => (
