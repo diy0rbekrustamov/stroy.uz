@@ -1,0 +1,151 @@
+.locale-deck {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 5px 0;
+  padding: 4px;
+  background: #202d3a;
+  border: 1px solid #354451;
+  border-radius: 30px;
+  box-shadow: 0 3px 12px #202d3a18;
+  isolation: isolate;
+  flex-shrink: 0;
+}
+.locale-orbit {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  margin-left: 3px;
+  border: 1px solid #82909c55;
+  border-radius: 50%;
+  color: #e9a333;
+  font: 9px/1 monospace;
+  transform: rotate(calc(var(--locale-index) * 120deg));
+  transition: transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.locale-orbit:before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border: 1px solid transparent;
+  border-top-color: #e9a333;
+  border-bottom-color: #e9a333;
+  border-radius: 50%;
+  transform: rotate(-35deg);
+}
+.locale-orbit:after {
+  content: "";
+  position: absolute;
+  right: -3px;
+  top: 10px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #e9a333;
+  box-shadow: 0 0 8px #e9a333;
+}
+.locale-orbit > span {
+  transform: rotate(calc(var(--locale-index) * -120deg));
+  animation: locale-number 0.6s both;
+}
+.locale-track {
+  position: relative;
+  display: flex;
+}
+.locale-track button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  min-height: 36px;
+  border: 0;
+  background: transparent;
+  border-radius: 22px;
+  cursor: pointer;
+  color: #c6cdd4;
+  font:
+    700 11px/1 Arial,
+    sans-serif;
+  letter-spacing: 0.06em;
+  transition: color 0.25s;
+}
+.locale-track button[aria-pressed="true"] {
+  color: #202d3a;
+}
+.locale-track button:hover {
+  color: white;
+}
+.locale-track button[aria-pressed="true"]:hover {
+  color: #202d3a;
+}
+.locale-track button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+.locale-slider {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 42px;
+  background: #efa932;
+  border-radius: 22px;
+  box-shadow: 0 2px 7px #0003;
+  transform: translateX(calc(var(--locale-index) * 42px));
+  transition:
+    transform 0.7s cubic-bezier(0.22, 1.5, 0.38, 1),
+    border-radius 0.3s;
+}
+.locale-deck:hover .locale-slider {
+  border-radius: 11px;
+}
+@keyframes locale-number {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-old(root) {
+  animation: locale-out 0.65s ease both;
+}
+::view-transition-new(root) {
+  animation: locale-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  mix-blend-mode: normal;
+}
+::view-transition-group(root) {
+  animation-duration: 0.8s;
+}
+@keyframes locale-reveal {
+  from {
+    clip-path: circle(0 at var(--locale-x, 50%) var(--locale-y, 0));
+    filter: saturate(1.6);
+  }
+  to {
+    clip-path: circle(150vmax at var(--locale-x, 50%) var(--locale-y, 0));
+    filter: saturate(1);
+  }
+}
+@keyframes locale-out {
+  to {
+    filter: blur(2px);
+    opacity: 0.65;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .locale-deck * {
+    animation: none !important;
+    transition: none !important;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-group(root) {
+    animation: none !important;
+  }
+}

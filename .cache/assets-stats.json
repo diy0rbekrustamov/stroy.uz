@@ -1,0 +1,170 @@
+[
+  {
+    "name": "bricks",
+    "before": 2700126,
+    "after": 86162,
+    "width": 800,
+    "height": 800
+  },
+  {
+    "name": "bricks-400",
+    "before": 2700126,
+    "after": 24320,
+    "width": 400,
+    "height": 400
+  },
+  {
+    "name": "business",
+    "before": 578575,
+    "after": 78620,
+    "width": 648,
+    "height": 432
+  },
+  {
+    "name": "cement",
+    "before": 2178851,
+    "after": 37480,
+    "width": 800,
+    "height": 800
+  },
+  {
+    "name": "cement-400",
+    "before": 2178851,
+    "after": 11072,
+    "width": 400,
+    "height": 400
+  },
+  {
+    "name": "drill",
+    "before": 2022785,
+    "after": 40342,
+    "width": 800,
+    "height": 800
+  },
+  {
+    "name": "drill-400",
+    "before": 2022785,
+    "after": 13146,
+    "width": 400,
+    "height": 400
+  },
+  {
+    "name": "hero",
+    "before": 930818,
+    "after": 83212,
+    "width": 728,
+    "height": 720
+  },
+  {
+    "name": "journal-bricks",
+    "before": 111671,
+    "after": 12180,
+    "width": 416,
+    "height": 132
+  },
+  {
+    "name": "journal-cement",
+    "before": 149239,
+    "after": 24414,
+    "width": 416,
+    "height": 132
+  },
+  {
+    "name": "journal-tools",
+    "before": 106628,
+    "after": 12086,
+    "width": 416,
+    "height": 132
+  },
+  {
+    "name": "paint",
+    "before": 1847876,
+    "after": 15488,
+    "width": 800,
+    "height": 800
+  },
+  {
+    "name": "paint-400",
+    "before": 1847876,
+    "after": 6180,
+    "width": 400,
+    "height": 400
+  },
+  {
+    "name": "project-build",
+    "before": 105866,
+    "after": 16558,
+    "width": 368,
+    "height": 114
+  },
+  {
+    "name": "project-renovate",
+    "before": 78832,
+    "after": 8624,
+    "width": 368,
+    "height": 114
+  },
+  {
+    "name": "project-tools",
+    "before": 94987,
+    "after": 12906,
+    "width": 368,
+    "height": 114
+  },
+  {
+    "name": "rebar",
+    "before": 1983667,
+    "after": 48300,
+    "width": 800,
+    "height": 800
+  },
+  {
+    "name": "tile",
+    "before": 2005465,
+    "after": 40912,
+    "width": 800,
+    "height": 800
+  },
+  {
+    "name": "pipe",
+    "before": 1752506,
+    "after": 21730,
+    "width": 800,
+    "height": 800
+  },
+  {
+    "name": "plaster",
+    "before": 1924807,
+    "after": 33276,
+    "width": 800,
+    "height": 800
+  },
+  {
+    "name": "insulation",
+    "before": 2501066,
+    "after": 87728,
+    "width": 800,
+    "height": 800
+  },
+  {
+    "name": "renovation",
+    "before": 2759968,
+    "after": 89564,
+    "width": 960,
+    "height": 640
+  },
+  {
+    "name": "structure",
+    "before": 2722784,
+    "after": 108250,
+    "width": 960,
+    "height": 640
+  },
+  {
+    "name": "installation",
+    "before": 2819078,
+    "after": 88956,
+    "width": 960,
+    "height": 640
+  }
+]
