@@ -44,12 +44,12 @@ const products = [
 export default function ProductsPage() {
   const { t } = useLanguage();
   const [filter, setFilter] = useState("all");
-  const [product, setProduct] = useState("");
+  const [productName, setProductName] = useState("");
   const navigate = useNavigate();
   const navigateToAddProduct = () => {
     localStorage.setItem(
       "productName",
-      JSON.stringify({ defaultName: product }),
+      JSON.stringify({ defaultName: productName }),
     );
 
     navigate("add-product");
@@ -103,8 +103,8 @@ export default function ProductsPage() {
           <div className="flex-1 bg-white rounded-xl border border-gray-100 shadow-sm p-4">
             <div className="text-[11px] text-gray-400">{t("Поиск")}</div>
             <input
-              value={product}
-              onChange={(e) => setProduct(e.target.value)}
+              value={productName}
+              onChange={(e) => setProductName(e.target.value)}
               placeholder={t("Название услуги")}
               className="w-full text-[14px] outline-none placeholder:text-gray-900 mt-1 font-medium"
             />
