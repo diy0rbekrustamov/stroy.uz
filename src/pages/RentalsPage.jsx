@@ -49,6 +49,7 @@ export default function RentalsPage() {
           <h1>{t("Аренда техники")}</h1>
           <p>{t("Краны, самосвалы и экскаваторы для вашего объекта.")}</p>
         </header>
+        <DemoNotice items={items} />
         <CatalogNotice
           error={items.every((item) => item.demo) ? null : error}
           loading={loading}

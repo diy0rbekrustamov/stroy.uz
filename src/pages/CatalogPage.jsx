@@ -13,7 +13,7 @@ import { useLanguage } from "../i18n/useLanguage.js";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import Icon from "../components/home/Icon.jsx";
-import { catalogCategories, catalogProducts } from "../data/catalogData.js";
+import { catalogCategories } from "../data/catalogData.js";
 import { useShop } from "../context/ShopContext.jsx";
 import "./CatalogPage.css";
 
@@ -36,11 +36,8 @@ export function CatalogBreadcrumbs({ last }) {
   );
 }
 
-const priceCeiling =
-  Math.ceil(Math.max(...catalogProducts.map((item) => item.price)) / 100000) *
-  100000;
-
-function CatalogFilters({ filters, onApply, onReset, expanded }) {
+function CatalogFilters({ filters, onApply, onReset, expanded, products }) {
+  const priceCeiling = Math.max(100000, Math.ceil(Math.max(0,...products.map(item=>item.price)) / 100000) * 100000);
   const { t } = useLanguage();
   const [minPrice, setMinPrice] = useState(filters.min ?? "");
   const [maxPrice, setMaxPrice] = useState(filters.max ?? "");
@@ -146,7 +143,7 @@ function CatalogFilters({ filters, onApply, onReset, expanded }) {
           defaultValue={filters.brand}
         >
           <option value="all">{t("Все бренды")}</option>
-          {[...new Set(catalogProducts.map((item) => item.brand))]
+          {[...new Set(products.map((item) => item.brand).filter(Boolean))]
             .sort()
             .map((brand) => (
               <option key={brand} value={brand}>
@@ -249,6 +246,7 @@ export default function CatalogPage() {
               <Icon name="layers" />
             </Button>
             <CatalogFilters
+              products={catalogProducts}
               key={params.toString()}
               filters={filters}
               expanded={filtersOpen}
