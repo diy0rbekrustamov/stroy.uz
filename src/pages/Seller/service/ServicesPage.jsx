@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router";
 import { useLanguage } from "../../../i18n/useLanguage.js";
 import { useState } from "react";
+import { useSession } from "../../../api/useSession.js";
+import ApiListings from "../../../components/seller/ApiListings.jsx";
 
 const services = [
   {
@@ -40,6 +42,7 @@ const services = [
 
 export default function MyServicesPage() {
   const { t } = useLanguage();
+  const {user} = useSession();
   const [serviceName, setServiceName] = useState("");
   const navigate = useNavigate();
   const [filter, setFilter] = useState("all");
@@ -60,6 +63,7 @@ export default function MyServicesPage() {
     // Navigate to the add service page
   };
 
+  if(user) return <ApiListings kind="services" />;
   return (
     <>
       {/* MAIN */}

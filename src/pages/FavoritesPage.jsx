@@ -3,12 +3,13 @@ import { useLanguage } from "../i18n/useLanguage.js";
 import { useEffect } from "react";
 import { Link } from "react-router";
 import Icon from "../components/home/Icon.jsx";
-import { catalogProducts } from "../data/catalogData.js";
+import { useCatalog } from "../api/useCatalog.js";
 import { useShop } from "../context/ShopContext.jsx";
 import "./FavoritesPage.css";
 
 /** The favorites live in the same store as the catalog and product details. */
 export default function FavoritesPage() {
+  const { items: catalogProducts } = useCatalog();
   const { t } = useLanguage();
 
   const { favorites, toggleFavorite, addToCart } = useShop();

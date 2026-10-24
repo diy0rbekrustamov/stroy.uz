@@ -1,4 +1,5 @@
 import LanguageSwitcher from "./LanguageSwitcher.jsx";
+import { useSession } from "../../api/useSession.js";
 import { useLanguage } from "../../i18n/useLanguage.js";
 import { Link } from "react-router";
 import { useState } from "react";
@@ -18,6 +19,7 @@ export default function Navbar({
   onInfo,
 }) {
   const { t } = useLanguage();
+  const {user} = useSession();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [internalQuery, setInternalQuery] = useState("");
@@ -127,11 +129,11 @@ export default function Navbar({
           </button>
           <button
             type="button"
-            onClick={() => navigate("/login")}
+            onClick={() => navigate(user ? "/account" : "/login")}
             className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[30px] border-0 cursor-pointer font-inherit"
           >
             <Icon name="user" />
-            <span className="max-[767px]:text-[0px]">{t("Войти")}</span>
+            <span className="max-[767px]:text-[0px]">{t(user ? "Личный кабинет" : "Войти")}</span>
           </button>
           <button
             type="button"
@@ -174,6 +176,8 @@ export default function Navbar({
           ["Стройматериалы", "/categories"],
           ["Инструменты", "/catalog?category=tools"],
           ["Отделка", "/catalog?category=finishing"],
+          ["Услуги", "/services"],
+          ["Аренда техники", "/rentals"],
           ["Доставка и оплата", "/#services"],
           ["Оптовым клиентам ↗", "/#business"],
         ].map(([label, href]) => (

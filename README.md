@@ -2,6 +2,8 @@
 
 Маркетплейс строительных материалов. Стек: React 19, Vite 8, JavaScript/JSX, Tailwind CSS 4, Oxlint.
 
+Сервер: Node.js + Fastify + PostgreSQL. [Запуск API, база, SMTP и эндпоинты](docs/api.md).
+
 ## Локальный запуск
 
 Требуется Node.js 20.19+ или 22.12+ (для текущего Vite); используется npm и `package-lock.json`.

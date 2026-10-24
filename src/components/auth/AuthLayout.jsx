@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { useLanguage } from "../../i18n/useLanguage.js";
-import materials from "../../assets/home/hero.png";
+import materials from "../../assets/optimized/hero-clean.webp";
 import "./AuthLayout.css";
 
 export default function AuthLayout({ title, description, children }) {

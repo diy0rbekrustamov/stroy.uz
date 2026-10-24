@@ -1,13 +1,17 @@
-import cement from "../../assets/home/cement.png";
-import bricks from "../../assets/home/bricks.png";
-import drill from "../../assets/home/drill.png";
-import paint from "../../assets/home/paint.png";
-import build from "../../assets/home/project-build.png";
-import renovate from "../../assets/home/project-renovate.png";
-import tools from "../../assets/home/project-tools.png";
-import journalCement from "../../assets/home/journal-cement.png";
-import journalBricks from "../../assets/home/journal-bricks.png";
-import journalTools from "../../assets/home/journal-tools.png";
+import cement from "../../assets/optimized/cement.webp";
+import bricks from "../../assets/optimized/bricks.webp";
+import drill from "../../assets/optimized/drill.webp";
+import paint from "../../assets/optimized/paint.webp";
+import cementThumb from "../../assets/optimized/cement-400.webp";
+import bricksThumb from "../../assets/optimized/bricks-400.webp";
+import drillThumb from "../../assets/optimized/drill-400.webp";
+import paintThumb from "../../assets/optimized/paint-400.webp";
+import build from "../../assets/optimized/structure.webp";
+import renovate from "../../assets/optimized/renovation.webp";
+import tools from "../../assets/optimized/installation.webp";
+import journalCement from "../../assets/optimized/journal-cement.webp";
+import journalBricks from "../../assets/optimized/journal-bricks.webp";
+import journalTools from "../../assets/optimized/journal-tools.webp";
 
 export const categories = [
   ["Цемент и сухие смеси", "Для прочного основания", "build"],
@@ -28,6 +32,7 @@ export const products = [
     badge: "ХИТ",
     group: "build",
     image: cement,
+    thumbnail: cementThumb,
   },
   {
     id: "bricks",
@@ -39,6 +44,7 @@ export const products = [
     badge: "ДЛЯ СТРОЙКИ",
     group: "build",
     image: bricks,
+    thumbnail: bricksThumb,
   },
   {
     id: "drill",
@@ -50,6 +56,7 @@ export const products = [
     badge: "ВЫБОР МАСТЕРА",
     group: "tools",
     image: drill,
+    thumbnail: drillThumb,
   },
   {
     id: "paint",
@@ -61,6 +68,7 @@ export const products = [
     badge: "НОВИНКА",
     group: "renovate",
     image: paint,
+    thumbnail: paintThumb,
   },
 ];
 export const projects = [

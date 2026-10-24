@@ -11,6 +11,7 @@ const columns = [
       ["Инструменты", "/catalog?category=tools"],
       ["Отделка", "/catalog?category=finishing"],
       ["Сантехника", "/catalog?category=plumbing"],
+      ["Аренда техники", "/rentals"],
     ],
   ],
   [

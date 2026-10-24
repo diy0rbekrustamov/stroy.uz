@@ -1,6 +1,7 @@
 import ProductCard from "../components/ui/ProductCard.jsx";
-import { catalogProducts as products } from "../data/catalogData.js";
+import { useCatalog } from "../api/useCatalog.js";
 import { useLanguage } from "../i18n/useLanguage.js";
+import ShopImage from "../components/ui/ShopImage.jsx";
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router";
 import Icon from "../components/home/Icon.jsx";
@@ -87,6 +88,7 @@ const tabItems = [
 ];
 
 export default function ProductPage() {
+  const { items: products } = useCatalog();
   const { productId = "drill" } = useParams();
   const { t } = useLanguage();
   const product = products.find((item) => item.id === productId);
@@ -100,10 +102,12 @@ export default function ProductPage() {
         </Link>
       </section>
     );
-  return <ProductDetail key={product.id} product={product} />;
+  return (
+    <ProductDetail key={product.id} product={product} products={products} />
+  );
 }
 
-function ProductDetail({ product }) {
+function ProductDetail({ product, products }) {
   const { t } = useLanguage();
   const detail = productDetails[product.id] || {
     title: product.name,
@@ -126,9 +130,10 @@ function ProductDetail({ product }) {
   const [compared, setCompared] = useState(false);
   const [toast, setToast] = useState("");
   const [comparisonId, setComparisonId] = useState(
-    () => products.find((item) => item.id !== product.id).id,
+    () => products.find((item) => item.id !== product.id)?.id || product.id,
   );
-  const comparison = products.find((item) => item.id === comparisonId);
+  const comparison =
+    products.find((item) => item.id === comparisonId) || product;
   const zoomPanel = useRef(null);
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -193,7 +198,7 @@ function ProductDetail({ product }) {
               onClick={() => setImageOpen(true)}
               aria-label={t(`Увеличить изображение: ${product.name}`)}
             >
-              <img src={product.image} alt={t(detail.title)} />
+              <ShopImage src={product.image} alt={t(detail.title)} width="800" height="800" />
               <span className="product-image-badge">{t(product.badge)}</span>
             </button>
             <div className="product-gallery-controls">
@@ -203,7 +208,7 @@ function ProductDetail({ product }) {
                 aria-label={t("Показать общий вид товара")}
                 onClick={() => setImageOpen(true)}
               >
-                <img src={product.image} alt="" />
+                <ShopImage src={product.image} alt="" width="80" height="80" />
               </button>
               <span className="product-gallery-hint">
                 {t("Нажмите на изображение для увеличения")}
@@ -572,7 +577,7 @@ function ProductDetail({ product }) {
               >
                 ×
               </button>
-              <img src={product.image} alt={t(detail.title)} />
+              <ShopImage src={product.image} alt={t(detail.title)} width="800" height="800" />
             </div>
           </div>
         ),

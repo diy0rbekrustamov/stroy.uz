@@ -1,7 +1,8 @@
 import { useLanguage } from "../i18n/useLanguage.js";
-import { useOutletContext } from "react-router";
+import { Link, useOutletContext } from "react-router";
 import Hero from "../components/home/Hero.jsx";
 import Product from "../components/home/Product.jsx";
+import RentalFeature from "../components/home/RentalFeature.jsx";
 import Icon from "../components/home/Icon.jsx";
 import {
   categories,
@@ -9,7 +10,7 @@ import {
   projects,
   articles,
 } from "../components/home/homeData.js";
-import business from "../assets/home/business.png";
+import business from "../assets/optimized/business.webp";
 import "./HomePage.css";
 
 function HomePage() {
@@ -19,7 +20,6 @@ function HomePage() {
     query,
     filter,
     setFilter,
-    setQuery,
     favorites,
     favorite,
     add,
@@ -63,16 +63,10 @@ function HomePage() {
               <p className="home-section-label">{t("01 / КАТАЛОГ")}</p>
               <h2 id="categories-title">{t("Всё начинается с материалов")}</h2>
             </div>
-            <a
-              href="#products"
-              onClick={() => {
-                setFilter("all");
-                setQuery("");
-              }}
-            >
+            <Link to="/categories">
               {t("Все категории")}
               <Icon name="arrow" />
-            </a>
+            </Link>
           </div>
           <div className="home-category-grid">
             {categories.map(([title, text, group]) => (
@@ -100,6 +94,7 @@ function HomePage() {
           onAdd={add}
           query={query}
         />
+        <RentalFeature />
         <section
           className="home-container home-section home-project-section"
           aria-labelledby="projects-title"

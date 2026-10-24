@@ -1,5 +1,7 @@
 import { useLanguage } from "../../../i18n/useLanguage.js";
 import { useState } from "react";
+import { useSession } from "../../../api/useSession.js";
+import ApiOrders from "../../../components/seller/ApiOrders.jsx";
 
 const orders = [
   {
@@ -54,6 +56,7 @@ const orders = [
 
 export default function OrdersPage() {
   const { t } = useLanguage();
+  const {user} = useSession();
 
   const [filter, setFilter] = useState("Все");
   const [query, setQuery] = useState("");
@@ -70,6 +73,7 @@ export default function OrdersPage() {
     return true;
   });
 
+  if(user) return <ApiOrders />;
   return (
     <div className="bg-[#F4F5F7] flex-1 min-w-0 w-full">
       <div className="text-[11px] text-gray-400 mb-2 hidden md:block">

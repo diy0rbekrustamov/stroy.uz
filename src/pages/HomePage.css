@@ -271,17 +271,7 @@
   width: 100%;
   height: auto;
 }
-/* The exported artwork contains a caption that is intentionally hidden. */
-.home-hero-art::after {
-  content: "";
-  position: absolute;
-  left: 34.6%;
-  top: 83%;
-  width: 53.5%;
-  height: 7%;
-  background: #192b38;
-  border-radius: 6px;
-}
+
 .home-ticker {
   display: flex;
   justify-content: center;

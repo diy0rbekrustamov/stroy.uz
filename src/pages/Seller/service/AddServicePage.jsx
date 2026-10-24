@@ -1,6 +1,9 @@
 import { useLanguage } from "../../../i18n/useLanguage.js";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { api } from "../../../api/client.js";
+import { uploadImage } from "../../../api/upload.js";
 
 const serviceCategories = [
   "Ремонт квартир",
@@ -20,6 +23,9 @@ const daysOptions = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 export default function AddServicePage() {
   const { t } = useLanguage();
   const [step, setStep] = useState("service");
+  const [submissionMessage, setSubmissionMessage] = useState("");
+  const [saving, setSaving] = useState(false);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -60,10 +66,42 @@ export default function AddServicePage() {
     } catch {}
   }, [setValue]);
 
-  const onSubmit = (data) => {
-    console.log("SERVICE DATA:", data);
-    alert(t("Услуга сохранена!"));
+  const saveService = async (data, published) => {
+    if (saving) return;
+    setSaving(true);
+    setSubmissionMessage("");
+    try {
+      const image = await uploadImage(data.photos[0]);
+      await api("/seller/services", {
+        method: "POST",
+        body: {
+          name: data.serviceName,
+          description: data.description,
+          category: data.category,
+          price: Number(data.price),
+          stock: 0,
+          unit: data.unit,
+          city:
+            {
+              Tashkent: "Ташкент",
+              Samarkand: "Самарканд",
+              Bukhara: "Бухара",
+              Andijan: "Андижан",
+              Fergana: "Фергана",
+            }[data.city] || data.city,
+          image,
+          published,
+        },
+      });
+      window.dispatchEvent(new Event("stroy-catalog"));
+      navigate("/seller/services");
+    } catch (error) {
+      setSubmissionMessage(error.message);
+    } finally {
+      setSaving(false);
+    }
   };
+  const onSubmit = (data) => saveService(data, true);
 
   const handlePhotoChange = (e) => {
     const files = Array.from(e.target.files).slice(0, 8);
@@ -80,6 +118,9 @@ export default function AddServicePage() {
 
   return (
     <main className="flex-1 min-w-0 w-full max-w-">
+      <p role="status" className="text-sm text-amber-900 p-3">
+        {t(submissionMessage)}
+      </p>
       <div className="text- text-gray-400 mb-1 hidden md:block">
         {t("Мои услуги")}
       </div>
@@ -150,7 +191,7 @@ export default function AddServicePage() {
               <option value="">{t("Выберите категорию ∨")}</option>
               {serviceCategories.map((c) => (
                 <option key={c} value={c}>
-                  {c}
+                  {t(c)}
                 </option>
               ))}
             </select>
@@ -234,7 +275,7 @@ export default function AddServicePage() {
                 </option>
                 {priceTypes.map((p) => (
                   <option key={p} value={p}>
-                    {p}
+                    {t(p)}
                   </option>
                 ))}
               </select>
@@ -255,7 +296,7 @@ export default function AddServicePage() {
                 <option value="">{t("Выберите единицу ∨")}</option>
                 {unitOptions.map((u) => (
                   <option key={u} value={u}>
-                    {u}
+                    {t(u)}
                   </option>
                 ))}
               </select>
@@ -316,7 +357,7 @@ export default function AddServicePage() {
                 <option value="">{t("Выберите город ∨")}</option>
                 {cityOptions.map((c) => (
                   <option key={c} value={c}>
-                    {c}
+                    {t(c)}
                   </option>
                 ))}
               </select>
@@ -351,7 +392,7 @@ export default function AddServicePage() {
                   onClick={() => toggleDay(day)}
                   className={`px-3 py-1.5 rounded-full text- border ${workDays.includes(day) ? "bg-[#1C2E42] text-white border-[#1C2E42]" : "bg-white text-gray-600 border-gray-200"}`}
                 >
-                  {day}
+                  {t(day)}
                 </button>
               ))}
             </div>
@@ -486,7 +527,7 @@ export default function AddServicePage() {
             </button>
             <button
               type="button"
-              onClick={() => handleSubmit(onSubmit)()}
+              onClick={() => handleSubmit((data) => saveService(data, false))()}
               className="bg-white border text-xs py-3 rounded-lg"
             >
               {t("Сохранить черновик →")}

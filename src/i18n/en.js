@@ -558,6 +558,279 @@ JPG, PNG, WebP - до 10 МБ, до 8 фото|JPG, PNG, WebP — up to 10 MB, u
 Восстановление пока недоступно: сервис отправки писем ещё не подключён.|Password recovery is not available yet: the email service has not been connected.
 При восстановлении ответ не должен раскрывать, существует ли аккаунт с указанным email.|Recovery responses must not reveal whether an account exists for the email address.
 Сервис восстановления ещё не запущен. Письма пока не отправляются.|The recovery service is not live yet. Emails are not being sent.
+Введите телефон в формате +998 XX XXX XX XX|Enter a phone number in the format +998 XX XXX XX XX
+Пароли должны совпадать|Passwords must match
+Регистрация пока недоступна: сервис авторизации ещё не подключён.|Registration is not available yet: the authentication service has not been connected.
+Все услуги|All services
+Отделочные работы|Finishing work
+Строительные работы|Construction work
+Монтаж и ремонт|Installation and repairs
+Заливка фундамента|Foundation pouring
+Кладка кирпича|Bricklaying
+Монтаж электропроводки|Electrical wiring installation
+Установка сантехники|Plumbing installation
+Монтаж кровли|Roof installation
+Укладка напольного покрытия|Flooring installation
+Ташкент|Tashkent
+Самарканд|Samarkand
+м³|m³
+точка|point
+Доступно для заказа|Available for booking
+Временно недоступно|Temporarily unavailable
+Объём работ|Work quantity
+Предварительная стоимость|Estimated cost
+Укажите объём от 0,01 до 100 000|Enter a quantity between 0.01 and 100,000
+Это демонстрационная услуга. Итоговую цену согласуют после оценки работ. Отправка заявок пока недоступна.|This is a demo service. The final price is agreed after assessing the work. Requests cannot be submitted yet.
+Услуги для вашего проекта|Services for your project
+Строительство, отделка и ремонт — выберите нужные работы.|Construction, finishing and repairs — choose the work you need.
+Демо-каталог: услуги, цены и доступность показаны для примера.|Demo catalog: services, prices and availability are illustrative.
+Категории услуг|Service categories
+Фильтры услуг|Service filters
+Город|City
+Все города|All cities
+Только доступные|Available only
+Каталог услуг|Service catalog
+Поиск услуг|Search services
+Найти|Search
+Найдено|Found
+Подробнее|View details
+Услуги не найдены|No services found
+Измените поиск или фильтры.|Change your search or filters.
+Страницы услуг|Service pages
+Услуга не найдена|Service not found
+В каталог услуг|Back to services
+Что входит в работу|What the work includes
+Подготовку, объём работ и материалы согласуют до начала. Материалы и доставка рассчитываются отдельно.|Preparation, scope and materials are agreed before work begins. Materials and delivery are priced separately.
+Исполнитель — демо|Demo provider
+Это пример профиля, а не подтверждённая компания. Контакты и отзывы исполнителя пока не подключены.|This is an example profile, not a verified company. Provider contacts and reviews are not available yet.
+Как устроена заявка|How requests work
+Опишите объект и объём работ.|Describe the site and scope of work.
+Согласуйте материалы, сроки и итоговую стоимость.|Agree on materials, dates and the final price.
+Подтвердите условия перед началом работ.|Confirm the terms before work starts.
+Запросить смету|Request an estimate
+Отправка заявок пока недоступна. Данные не отправлены; сервис ещё не подключён.|Requests cannot be sent yet. Your data has not been sent; the service is not connected.
+Город и адрес объекта *|City and site address *
+Желаемая дата|Preferred date
+Задача *|Job description *
+Согласен на обработку данных для заявки|I consent to data processing for this request
+Отправить заявку|Send request
+Рассчитать стоимость|Calculate cost
+Оформление заказа|Checkout
+Оформление заказов пока недоступно: сервис ещё не подключён. Товары сохранены в корзине.|Checkout is not available yet: the service is not connected. Your items remain in the cart.
+Сохранение пока недоступно: сервис продавца ещё не подключён. Данные не отправлены.|Saving is not available yet: the seller service is not connected. Your data has not been sent.
+Электрика|Electrical
+Перфоратор|Rotary hammer
+Дрель|Drill
+Шуруповерт|Power screwdriver
+Болгарка (УШМ)|Angle grinder
+Лобзик|Jigsaw
+Сварочный аппарат|Welding machine
+Кирпич|Brick
+Арматура|Rebar
+Кабель|Cable
+Розетка|Socket
+Автомат|Circuit breaker
+Только инструмент|Tool only
+С кейсом|With case
+С аккумулятором и зарядкой|With battery and charger
+2 аккумулятора + кейс|2 batteries + case
+Полный комплект|Complete kit
+Сверление|Drilling
+Сверление с ударом|Hammer drilling
+Долбление|Chiselling
+Сверление / Удар / Долбление|Drilling / Hammer / Chiselling
+Черный|Black
+Синий|Blue
+Красный|Red
+Зеленый|Green
+Желтый|Yellow
+Оранжевый|Orange
+До 120 символов|Up to 120 characters
+Выберите категорию|Select a category
+Добавьте хотя бы одно фото|Add at least one photo
+Введите описание|Enter a description
+Минимум 20 символов|At least 20 characters
+Выберите тип|Select a type
+Сначала выберите категорию|Select a category first
+Выберите комплектацию ∨|Select kit contents ∨
+Выберите режимы ∨|Select modes ∨
+Выберите цвет ∨|Select a color ∨
+Название, напр. Вес|Name, e.g. Weight
+Значение, напр. 2.5 кг|Value, e.g. 2.5 kg
+Выберите единицу|Select a unit
+шт|pcs
+комплект|kit
+Выберите город|Select a city
+Введите условия|Enter terms
+Подтвердите проверку данных|Confirm the information is correct
+Ремонт квартир|Apartment renovation
+Кровельные работы|Roofing
+Сварочные работы|Welding
+Грузоперевозки|Freight transport
+Уборка|Cleaning
+от|from
+за объём|by quantity
+по смете|by estimate
+фиксированная|fixed
+м.п.|linear m
+час|hour
+день|day
+объект|site
+Пн|Mon
+Вт|Tue
+Ср|Wed
+Чт|Thu
+Пт|Fri
+Сб|Sat
+Вс|Sun
+Помогите покупателю понять работу и запросить смету.|Help the customer understand your work and request an estimate.
+ДЕМО • Услуга и исполнитель иллюстративны. Поля * обязательны.|DEMO • Service and provider are illustrative. Fields marked * are required.
+Услуга|Service
+Доступность|Availability
+01 / О вашей работе|01 / About your work
+Введите название услуги|Enter a service name
+Укажите конкретную работу, без рекламных обещаний|Specify the work without promotional claims
+Фотографии работ *|Work photos *
+Добавьте фото работ|Add work photos
+Добавьте фото|Add a photo
+Описание услуги *|Service description *
+Введите состав работ|Enter the scope of work
+Минимум 30 символов|At least 30 characters
+Введите состав работ, ограничения и что оплачивается отдельно|Describe scope, limitations and separately priced items
+02 / Основа расчёта|02 / Pricing basis
+Тип цены *|Price type *
+Выберите тип цены|Select a price type
+Выберите: от / за объём / по смете ∨|Select: from / by quantity / by estimate ∨
+Единица расчёта *|Pricing unit *
+Ориентировочная цена, сум *|Estimated price, UZS *
+Введите сумму|Enter an amount
+Оценка, а не гарантия итоговой стоимости|An estimate, not a guaranteed final price
+Что влияет на смету *|What affects the estimate *
+Введите условия и дополнительные расходы|Enter terms and additional costs
+03 / Где и когда вы работаете|03 / Where and when you work
+Зона обслуживания *|Service area *
+Введите зону|Enter an area
+Введите районы или радиус|Enter districts or a radius
+Дни работы *|Working days *
+Выберите дни|Select days
+Начало|Start
+Окончание|End
+Дата выезда по согласованию, не мгновенная бронь.|Visit date is agreed separately; this is not an instant booking.
+04 / Контакты для заявок|04 / Request contacts
+Имя или название исполнителя *|Provider name *
+Введите название исполнителя|Enter a provider name
+Введите телефон|Enter a phone number
+Заменить действительным номером перед запуском|Replace with a valid number before launch
+Подтвердите право на фотографии|Confirm your rights to the photos
+Подтверждаю право на фотографии и корректность информации об услуге|I confirm my rights to the photos and the accuracy of service information
+Опубликовать услугу →|Publish service →
+Черновик не виден в каталоге. Для публикации нужны обязательные поля, фото и действующие контакты.|Drafts are not visible in the catalog. Publishing requires all required fields, photos and valid contacts.
+Войдите в аккаунт, чтобы продолжить.|Sign in to continue.
+Неверный email или пароль.|Incorrect email or password.
+Этот email уже используется.|This email is already in use.
+Для этого действия нужен аккаунт продавца.|A seller account is required.
+Проверьте заполнение полей.|Check the form fields.
+Недостаточно товара в наличии. Обновите корзину.|Insufficient stock. Refresh your cart.
+Почтовый сервис ещё не настроен.|The email service is not configured yet.
+Ссылка недействительна или срок её действия истёк.|The link is invalid or has expired.
+Запись не найдена.|Record not found.
+Сессия изменилась. Обновите страницу.|Your session has changed. Reload the page.
+Это изменение статуса недоступно.|This status change is not allowed.
+Слишком много попыток. Повторите позже.|Too many attempts. Try again later.
+Сервис временно недоступен. Повторите позже.|The service is temporarily unavailable. Try again later.
+Не удалось загрузить изображение. Используйте JPG, PNG или WebP до 5 МБ.|Image upload failed. Use JPG, PNG or WebP up to 5 MB.
+Загрузка…|Loading…
+Выйти|Sign out
+Мои заказы|My orders
+Пока пусто|Nothing here yet
+Мои заявки|My requests
+Подтверждаю состав заказа и контактные данные.|I confirm the order items and contact details.
+Стоимость доставки согласуется отдельно. Онлайн-оплата не выполняется.|Delivery costs are agreed separately. No online payment is taken.
+Подтвердить заказ|Confirm order
+Если аккаунт существует, инструкция по восстановлению будет отправлена на email.|If the account exists, recovery instructions will be emailed.
+Заявка сохранена. Номер:|Request saved. Reference:
+Итоговую цену и сроки согласуйте с исполнителем до начала работ.|Agree on the final price and dates with the provider before work starts.
+Новый пароль|New password
+Пароль изменён. Войдите с новым паролем.|Password changed. Sign in with your new password.
+Сохранить пароль|Save password
+Изменения сохранены.|Changes saved.
+Статус|Status
+Черновики|Drafts
+Название|Name
+Фото|Photo
+Сохранить|Save
+new|New
+accepted|Accepted
+shipped|Shipped
+completed|Completed
+cancelled|Cancelled
+Принят|Accepted
+Отправлен|Shipped
+Отменён|Cancelled
+Принять|Accept
+Завершить|Complete
+Отменить|Cancel
+Андижан|Andijan
+Фергана|Fergana
+Страница не найдена|Page not found
+Проверьте адрес или вернитесь в каталог.|Check the address or return to the catalog.
+Не удалось открыть страницу|Unable to open this page
+Проверьте подключение и повторите попытку.|Check your connection and try again.
+Повторить|Try again
+Сейчас показан демонстрационный каталог. Подключение к серверу недоступно.|Showing the demo catalog. The server is currently unavailable.
+Изображение недоступно|Image unavailable
+Техника уже забронирована на эти даты. Выберите другой период.|Equipment is already booked for these dates. Choose another period.
+Период меньше минимального срока аренды.|The period is shorter than the minimum rental duration.
+Проверьте даты аренды.|Check the rental dates.
+Заявки на демонстрационную технику не принимаются.|Requests for demo equipment are not accepted.
+Автокраны|Mobile cranes
+Самосвалы / КамАЗы|Dump trucks / KamAZ
+Экскаваторы|Excavators
+Автокран · 25 т|Mobile crane · 25 t
+25 т|25 t
+сутки|day
+Самосвал · 20 т|Dump truck · 20 t
+20 т|20 t
+Гусеничный экскаватор · 20 т|Tracked excavator · 20 t
+Техника не найдена|Equipment not found
+Аренда техники|Equipment rental
+Демонстрационная техника: изображения и цены приведены для примера. Заявки на неё не принимаются.|Demo equipment: images and prices are illustrative. Requests are not accepted.
+Условия аренды|Rental details
+С оператором|With operator
+Без оператора|Without operator
+Доставка обсуждается отдельно|Delivery is agreed separately
+Самовывоз / подача по согласованию|Collection / transport by agreement
+Минимум суток|Minimum days
+До подтверждения согласуйте|Agree before confirming
+Рабочие часы в сутки, топливо, подачу и возврат, залог и ответственность за повреждения согласуйте с владельцем. Расчёт на сайте предварительный.|Agree daily working hours, fuel, delivery and return, deposit and damage responsibility with the owner. Website estimates are provisional.
+Заявка на аренду|Rental request
+Начало аренды|Rental start
+Окончание аренды|Rental end
+Суток|Days
+Предварительно|Estimated total
+Даты включительно. До 365 суток, с учётом минимального срока аренды.|Dates are inclusive. Up to 365 days, subject to the minimum rental period.
+Имя|Name
+Телефон|Phone
+Адрес объекта|Job site address
+Задача|Job description
+Подтверждаю контактные данные для заявки.|I confirm the contact details for this request.
+Отправка…|Sending…
+Отправка заявки не резервирует технику и не списывает деньги. Дождитесь подтверждения владельца.|Sending a request does not reserve equipment or charge you. Wait for the owner's confirmation.
+Заявка сохранена.|Request saved.
+Краны, самосвалы и экскаваторы для вашего объекта.|Cranes, dump trucks and excavators for your job site.
+Тип техники|Equipment type
+Вся техника|All equipment
+Поиск техники|Search equipment
+Попробуйте изменить фильтры.|Try changing the filters.
+Как арендовать технику|How to rent equipment
+Выберите машину и даты, отправьте заявку. Владелец подтвердит доступность и итоговую стоимость. Отправка заявки не является оплатой или бронированием.|Choose equipment and dates, then send a request. The owner confirms availability and the final price. A request is not a payment or reservation.
+Сдать технику в аренду|List equipment for rent
+Моя техника|My equipment
+Добавить технику|Add equipment
+Одна карточка — одна машина. Указывайте реальную цену за сутки и условия работы.|One listing per machine. Enter the actual daily rate and working conditions.
+Цена за сутки, сум|Daily rate, UZS
+Доступна подача техники|Equipment transport available
+Сохранение…|Saving…
 `;
 
 export const en = Object.fromEntries(

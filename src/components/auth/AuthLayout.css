@@ -52,16 +52,7 @@
   height: auto;
   display: block;
 }
-.auth-art:after {
-  content: "";
-  position: absolute;
-  left: 34.6%;
-  top: 83%;
-  width: 53.5%;
-  height: 7%;
-  background: #192b38;
-  border-radius: 6px;
-}
+
 .auth-panel {
   min-width: 0;
   padding: 36px;
@@ -117,6 +108,19 @@
 .auth-field {
   display: grid;
   gap: 7px;
+}
+.auth-field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.auth-role-description {
+  margin-top: 16px;
+}
+@media (max-width: 999px) {
+  .auth-field-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 .auth-field > label {
   font-size: 12px;
@@ -207,6 +211,7 @@
   margin: 0;
 }
 .auth-info {
+  overflow-wrap: anywhere;
   padding: 16px;
   border-radius: 7px;
   background: #f5f6f7;

@@ -1,4 +1,4 @@
-import { catalogProducts as products } from "../data/catalogData.js";
+import { useCatalog } from "../api/useCatalog.js";
 import { useLanguage } from "../i18n/useLanguage.js";
 import { Link } from "react-router";
 import { formatPrice } from "../components/home/homeData.js";
@@ -6,6 +6,7 @@ import { useShop } from "../context/ShopContext.jsx";
 import { useState } from "react";
 
 export default function CartPage() {
+  const { items: products } = useCatalog();
   const { t } = useLanguage();
   const { cart, changeQuantity } = useShop();
   const [view, setView] = useState("list"); // list | grid

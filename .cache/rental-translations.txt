@@ -1,0 +1,52 @@
+Техника уже забронирована на эти даты. Выберите другой период.|Equipment is already booked for these dates. Choose another period.|Texnika bu sanalarda band. Boshqa muddatni tanlang.
+Период меньше минимального срока аренды.|The period is shorter than the minimum rental duration.|Muddat minimal ijara muddatidan qisqa.
+Проверьте даты аренды.|Check the rental dates.|Ijara sanalarini tekshiring.
+Заявки на демонстрационную технику не принимаются.|Requests for demo equipment are not accepted.|Namoyish texnikasi uchun arizalar qabul qilinmaydi.
+Автокраны|Mobile cranes|Avtokranlar
+Самосвалы / КамАЗы|Dump trucks / KamAZ|Samosvallar / KamAZlar
+Экскаваторы|Excavators|Ekskavatorlar
+Автокран · 25 т|Mobile crane · 25 t|Avtokran · 25 t
+25 т|25 t|25 t
+сутки|day|sutka
+Самосвал · 20 т|Dump truck · 20 t|Samosval · 20 t
+20 т|20 t|20 t
+Гусеничный экскаватор · 20 т|Tracked excavator · 20 t|Gusenitsali ekskavator · 20 t
+Техника не найдена|Equipment not found|Texnika topilmadi
+Аренда техники|Equipment rental|Texnika ijarasi
+Демонстрационная техника: изображения и цены приведены для примера. Заявки на неё не принимаются.|Demo equipment: images and prices are illustrative. Requests are not accepted.|Namoyish texnikasi: rasmlar va narxlar misol uchun. Arizalar qabul qilinmaydi.
+Условия аренды|Rental details|Ijara shartlari
+С оператором|With operator|Operator bilan
+Без оператора|Without operator|Operatorsiz
+Доставка обсуждается отдельно|Delivery is agreed separately|Yetkazib berish alohida kelishiladi
+Самовывоз / подача по согласованию|Collection / transport by agreement|Olib ketish / yetkazish kelishuv asosida
+Минимум суток|Minimum days|Minimal sutkalar
+До подтверждения согласуйте|Agree before confirming|Tasdiqlashdan oldin kelishing
+Рабочие часы в сутки, топливо, подачу и возврат, залог и ответственность за повреждения согласуйте с владельцем. Расчёт на сайте предварительный.|Agree daily working hours, fuel, delivery and return, deposit and damage responsibility with the owner. Website estimates are provisional.|Kunlik ish soati, yoqilg‘i, yetkazish va qaytarish, garov va zarar uchun javobgarlikni egasi bilan kelishing. Saytdagi hisob taxminiy.
+Заявка на аренду|Rental request|Ijara arizasi
+Начало аренды|Rental start|Ijara boshlanishi
+Окончание аренды|Rental end|Ijara tugashi
+Суток|Days|Sutka
+Предварительно|Estimated total|Taxminiy jami
+Даты включительно. До 365 суток, с учётом минимального срока аренды.|Dates are inclusive. Up to 365 days, subject to the minimum rental period.|Ikkala sana ham hisobga olinadi. Minimal muddatga rioya qilgan holda 365 sutkagacha.
+Имя|Name|Ism
+Телефон|Phone|Telefon
+Адрес объекта|Job site address|Obyekt manzili
+Задача|Job description|Vazifa
+Подтверждаю контактные данные для заявки.|I confirm the contact details for this request.|Ariza uchun aloqa ma’lumotlarini tasdiqlayman.
+Отправка…|Sending…|Yuborilmoqda…
+Отправка заявки не резервирует технику и не списывает деньги. Дождитесь подтверждения владельца.|Sending a request does not reserve equipment or charge you. Wait for the owner's confirmation.|Ariza yuborish texnikani band qilmaydi va pul yechmaydi. Egasining tasdig‘ini kuting.
+Заявка сохранена.|Request saved.|Ariza saqlandi.
+Краны, самосвалы и экскаваторы для вашего объекта.|Cranes, dump trucks and excavators for your job site.|Obyektingiz uchun kranlar, samosvallar va ekskavatorlar.
+Тип техники|Equipment type|Texnika turi
+Вся техника|All equipment|Barcha texnika
+Поиск техники|Search equipment|Texnika qidirish
+Попробуйте изменить фильтры.|Try changing the filters.|Filtrlarni o‘zgartirib ko‘ring.
+Как арендовать технику|How to rent equipment|Texnikani qanday ijaraga olish mumkin
+Выберите машину и даты, отправьте заявку. Владелец подтвердит доступность и итоговую стоимость. Отправка заявки не является оплатой или бронированием.|Choose equipment and dates, then send a request. The owner confirms availability and the final price. A request is not a payment or reservation.|Texnika va sanalarni tanlab ariza yuboring. Egasi mavjudlik va yakuniy narxni tasdiqlaydi. Ariza to‘lov yoki band qilish hisoblanmaydi.
+Сдать технику в аренду|List equipment for rent|Texnikani ijaraga berish
+Моя техника|My equipment|Mening texnikam
+Добавить технику|Add equipment|Texnika qo‘shish
+Одна карточка — одна машина. Указывайте реальную цену за сутки и условия работы.|One listing per machine. Enter the actual daily rate and working conditions.|Har bir texnika uchun alohida e’lon. Haqiqiy kunlik narx va ish shartlarini kiriting.
+Цена за сутки, сум|Daily rate, UZS|Sutkalik narx, so‘m
+Доступна подача техники|Equipment transport available|Texnikani yetkazish mavjud
+Сохранение…|Saving…|Saqlanmoqda…

@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router";
 import { useLanguage } from "../../../i18n/useLanguage.js";
 import { useState } from "react";
+import { matchesProduct } from "../../../i18n/translate.js";
+import { useSession } from "../../../api/useSession.js";
+import ApiListings from "../../../components/seller/ApiListings.jsx";
 
 const products = [
   {
@@ -43,9 +46,18 @@ const products = [
 
 export default function ProductsPage() {
   const { t } = useLanguage();
+  const {user} = useSession();
   const [filter, setFilter] = useState("all");
   const [productName, setProductName] = useState("");
   const navigate = useNavigate();
+  const filtered = products.filter(
+    (item) =>
+      (filter === "all" ||
+        (filter === "pub"
+          ? item.status === "Опубликован"
+          : item.status === "Черновик")) &&
+      matchesProduct({ ...item, category: "", details: item.sku }, product),
+  );
   const navigateToAddProduct = () => {
     localStorage.setItem(
       "productName",
@@ -55,6 +67,7 @@ export default function ProductsPage() {
     navigate("add-product");
   };
 
+  if(user) return <ApiListings kind="products" />;
   return (
     <>
       <main className="flex-1 min-w-0 w-full">
@@ -148,7 +161,7 @@ export default function ProductsPage() {
             <div>{t("Остаток")}</div>
             <div>{t("Статус / действие")}</div>
           </div>
-          {products.map((p) => (
+          {filtered.map((p) => (
             <div
               key={p.id}
               className="grid grid-cols-[2fr_1fr_1fr_1.5fr] gap-4 px-4 py-3 border-t items-center text-[13px]"
@@ -183,7 +196,7 @@ export default function ProductsPage() {
 
         {/* CARDS - Mobile */}
         <div className="md:hidden space-y-3">
-          {products.map((p) => (
+          {filtered.map((p) => (
             <div
               key={p.id}
               className="bg-white rounded-xl border p-3 flex gap-3"
