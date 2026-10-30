@@ -1,0 +1,16 @@
+{
+  "canvas": {
+    "width": 1265,
+    "height": 1244
+  },
+  "backToFront": [
+    "concrete-middle",
+    "concrete-top",
+    "brick",
+    "concrete-bottom",
+    "glass",
+    "steel",
+    "wood"
+  ],
+  "note": "AI reconstructed layers; final positioning and interleaving require visual tuning."
+}
