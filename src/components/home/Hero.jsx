@@ -25,7 +25,11 @@ export default function Hero() {
           </p>
           <div className="home-hero-actions">
             <Button className="home-button" to="/catalog">
+<<<<<<< HEAD
               {t("Открыть каталоq")}
+=======
+              {t("Открыть каталог")}
+>>>>>>> 71e7d489a58ded0d1a0b3bd6cbd265e7b113eacf
               <Icon name="arrow" />
             </Button>
             <Button variant="outline" className="home-button home-button-light" to="/#business">
