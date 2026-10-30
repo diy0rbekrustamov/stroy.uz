@@ -1,0 +1,160 @@
+.rental-page {
+  padding-bottom: 64px;
+}
+.rental-filter-toggle { display:none; }
+.rental-page .market-category-pills button[aria-pressed="true"] { background:#202d3a; color:white; font-weight:600; }
+.rental-page .market-category-pills button { cursor:pointer; }
+.rental-eyebrow {
+  font-size: 11px;
+  color: #8a611f;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+.rental-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: end;
+  padding: 24px;
+  margin: 28px 0;
+  border: 1px solid #e9e6e9;
+  border-radius: 12px;
+  background: white;
+}
+.rental-toolbar label {
+  flex: 1 1 170px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+}
+.rental-toolbar :is(input:not([type="checkbox"]), select) {
+  min-height: 44px;
+  border: 1px solid #d9dce0;
+  border-radius: 6px;
+  padding: 10px;
+  width: 100%;
+  min-width: 0;
+  background: white;
+}
+.rental-toolbar .rental-checkbox {
+  flex-direction: row;
+  min-height: 44px;
+  align-items: center;
+}
+.rental-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.rental-card {
+  border: 1px solid #e9e6e9;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.rental-card > a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.rental-card > a {
+  display: block;
+  overflow: hidden;
+}
+
+.rental-card img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: contain;
+  background: #f6f5f3;
+  transition: transform 0.4s ease;
+}
+
+.rental-card:hover img {
+  transform: scale(1.08);
+}
+.rental-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 12px;
+  padding: 24px;
+}
+.rental-card-body h2 {
+  font-size: 21px;
+  line-height: 1.3;
+}
+.rental-card-body h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+.rental-card-body p {
+  color: #617080;
+  font-size: 13px;
+}
+.rental-card-body strong {
+  margin-top: auto;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+.rental-demo {
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #fff2d9;
+  font-size: 11px;
+}
+.rental-explainer {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100vw - 32px) !important;
+  max-width: none !important;
+  box-sizing: border-box;
+  margin-top: 48px;
+  padding: 32px;
+  border-radius: 12px;
+  background: #202d3a;
+  color: white;
+}
+
+.rental-explainer p {
+  max-width: 760px;
+  line-height: 1.65;
+  margin: 16px 0 24px;
+}
+.rental-dates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.rental-summary {
+  background: #fff5e3;
+  padding: 16px;
+  border-radius: 8px;
+  line-height: 1.6;
+}
+@media (max-width: 1000px) {
+  .rental-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .rental-filter-toggle { display:flex; justify-content:space-between; align-items:center; width:100%; min-height:48px; padding:12px 16px; margin:24px 0 16px; border:0; border-radius:8px; background:#202d3a; color:white; font:inherit; cursor:pointer; }
+  .rental-toolbar[data-open="false"] { display:none; }
+  .rental-grid {
+    grid-template-columns: 1fr;
+  }
+  .rental-toolbar {
+    padding: 16px;
+  }
+  .rental-toolbar label {
+    flex-basis: 100%;
+  }
+  .rental-dates {
+    grid-template-columns: 1fr;
+  }
+  .rental-explainer {
+    padding: 24px;
+  }
+}
