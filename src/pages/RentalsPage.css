@@ -137,29 +137,20 @@
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  width: 100vw !important;
+  width: calc(100vw - 32px) !important;
   max-width: none !important;
   box-sizing: border-box;
   margin-top: 48px;
-  padding: 48px 24px;
-  border-radius: 0;
+  padding: 32px;
+  border-radius: 12px;
   background: #202d3a;
   color: white;
-}
-
-.rental-explainer h2 {
-  text-align: center;
 }
 
 .rental-explainer p {
   max-width: 760px;
   line-height: 1.65;
-  margin: 16px auto 24px;
-  text-align: center;
-}
-
-.rental-explainer a {
-  display: inline-block;
+  margin: 16px 0 24px;
 }
 
 /* RENTAL DETAILS */
@@ -222,7 +213,7 @@
   }
 
   .rental-explainer {
-    padding: 32px 20px;
+    padding: 24px;
   }
 }
 
