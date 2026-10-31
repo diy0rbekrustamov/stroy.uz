@@ -1,4 +1,6 @@
+
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useLanguage } from "../../i18n/useLanguage.js";
 import { useSession } from "../../api/useSession.js";
 import { api } from "../../api/client.js";
@@ -13,6 +15,27 @@ export default function SellerRentalsPage() {
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
   const [version, setVersion] = useState(0);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      name: "",
+      equipmentType: "crane",
+      capacity: "",
+      city: "",
+      price: "",
+      minDays: 1,
+      description: "",
+      operatorIncluded: false,
+      deliveryAvailable: false,
+      published: false,
+    },
+  });
+
   if (!user)
     return (
       <section className="auth-panel">
@@ -20,6 +43,7 @@ export default function SellerRentalsPage() {
         <Button to="/login">{t("Войти")}</Button>
       </section>
     );
+
   return (
     <div style={{ width: "100%", minWidth: 0 }}>
       <section className="auth-panel" id="rental-create">
@@ -29,39 +53,41 @@ export default function SellerRentalsPage() {
             "Одна карточка — одна машина. Указывайте реальную цену за сутки и условия работы.",
           )}
         </p>
+
         <form
           className="auth-form"
-          onSubmit={async (event) => {
-            event.preventDefault();
+          onSubmit={handleSubmit(async (data) => {
             if (busy) return;
-            const form = event.currentTarget;
-            const data = new FormData(form);
+
             setBusy(true);
             setMessage("");
+
             try {
-              const equipmentType = data.get("equipmentType");
-              const file = data.get("image");
-              const image = file?.size ? await uploadImage(file) : "";
+              const equipmentType = data.equipmentType;
+              const file = data.image?.[0];
+              const image = file ? await uploadImage(file) : "";
+
               await api("/seller/rentals", {
                 method: "POST",
                 body: {
-                  name: data.get("name"),
+                  name: data.name,
                   equipmentType,
                   category: equipmentTypes[equipmentType],
                   categoryId: equipmentType,
-                  description: data.get("description"),
-                  capacity: data.get("capacity"),
-                  city: data.get("city"),
-                  price: Number(data.get("price")),
-                  minDays: Number(data.get("minDays")),
+                  description: data.description,
+                  capacity: data.capacity,
+                  city: data.city,
+                  price: data.price,
+                  minDays: data.minDays,
                   unit: "сутки",
-                  operatorIncluded: data.has("operatorIncluded"),
-                  deliveryAvailable: data.has("deliveryAvailable"),
+                  operatorIncluded: data.operatorIncluded,
+                  deliveryAvailable: data.deliveryAvailable,
                   image,
-                  published: data.has("published"),
+                  published: data.published,
                 },
               });
-              form.reset();
+
+              reset();
               setVersion((value) => value + 1);
               window.dispatchEvent(new Event("stroy-catalog"));
               setMessage("Изменения сохранены.");
@@ -70,15 +96,28 @@ export default function SellerRentalsPage() {
             } finally {
               setBusy(false);
             }
-          }}
+          })}
         >
           <label className="auth-field">
             {t("Название")}
-            <input name="name" required maxLength="150" />
+            <input
+              {...register("name", {
+                required: "Введите название техники",
+                maxLength: {
+                  value: 150,
+                  message: "Максимум 150 символов",
+                },
+              })}
+              maxLength="150"
+            />
+            {errors.name && (
+              <p role="alert">{errors.name.message}</p>
+            )}
           </label>
+
           <label className="auth-field">
             {t("Тип техники")}
-            <select name="equipmentType">
+            <select {...register("equipmentType", { required: true })}>
               {Object.entries(equipmentTypes).map(([id, label]) => (
                 <option value={id} key={id}>
                   {t(label)}
@@ -86,67 +125,132 @@ export default function SellerRentalsPage() {
               ))}
             </select>
           </label>
+
           <label className="auth-field">
             {t("Характеристики")}
-            <input name="capacity" required maxLength="100" />
+            <input
+              {...register("capacity", {
+                required: "Укажите характеристики",
+                maxLength: {
+                  value: 100,
+                  message: "Максимум 100 символов",
+                },
+              })}
+            />
+            {errors.capacity && (
+              <p role="alert">{errors.capacity.message}</p>
+            )}
           </label>
+
           <label className="auth-field">
             {t("Город")}
-            <input name="city" required maxLength="100" />
+            <input
+              {...register("city", {
+                required: "Укажите город",
+                maxLength: {
+                  value: 100,
+                  message: "Максимум 100 символов",
+                },
+              })}
+            />
+            {errors.city && (
+              <p role="alert">{errors.city.message}</p>
+            )}
           </label>
+
           <label className="auth-field">
             {t("Цена за сутки, сум")}
             <input
-              name="price"
               type="number"
-              required
+              {...register("price", {
+                required: "Укажите цену",
+                valueAsNumber: true,
+                min: {
+                  value: 1,
+                  message: "Цена должна быть больше 0",
+                },
+                max: 1000000000,
+              })}
               min="1"
               max="1000000000"
               step="1"
             />
+            {errors.price && (
+              <p role="alert">{errors.price.message}</p>
+            )}
           </label>
+
           <label className="auth-field">
             {t("Минимум суток")}
             <input
-              name="minDays"
               type="number"
-              required
+              {...register("minDays", {
+                required: "Укажите минимальный срок",
+                valueAsNumber: true,
+                min: {
+                  value: 1,
+                  message: "Минимум 1 сутки",
+                },
+                max: 365,
+              })}
               min="1"
               max="365"
               step="1"
-              defaultValue="1"
             />
+            {errors.minDays && (
+              <p role="alert">{errors.minDays.message}</p>
+            )}
           </label>
+
           <label className="auth-field">
             {t("Описание")}
-            <textarea name="description" maxLength="4000" rows="4" />
+            <textarea
+              {...register("description", {
+                maxLength: {
+                  value: 4000,
+                  message: "Максимум 4000 символов",
+                },
+              })}
+              maxLength="4000"
+              rows="4"
+            />
+            {errors.description && (
+              <p role="alert">{errors.description.message}</p>
+            )}
           </label>
+
           <label className="auth-field">
             {t("Фото")}
             <input
-              name="image"
               type="file"
               accept="image/png,image/jpeg,image/webp"
+              {...register("image")}
             />
           </label>
+
           <label className="auth-checkbox">
-            <input type="checkbox" name="operatorIncluded" />
+            <input type="checkbox" {...register("operatorIncluded")} />
             {t("С оператором")}
           </label>
+
           <label className="auth-checkbox">
-            <input type="checkbox" name="deliveryAvailable" />
+            <input type="checkbox" {...register("deliveryAvailable")} />
             {t("Доступна подача техники")}
           </label>
+
           <label className="auth-checkbox">
-            <input type="checkbox" name="published" />
+            <input type="checkbox" {...register("published")} />
             {t("Опубликовать")}
           </label>
+
           <Button type="submit" disabled={busy}>
             {t(busy ? "Сохранение…" : "Сохранить")}
           </Button>
+
           <p role="status">{t(message)}</p>
         </form>
       </section>
+
       <ApiListings kind="rentals" key={version} />
     </div>
   );
