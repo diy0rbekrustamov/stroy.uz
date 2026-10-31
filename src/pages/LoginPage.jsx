@@ -86,7 +86,7 @@ export default function LoginPage() {
         }}
       >
         <div className="auth-field">
-          <label htmlFor="login-email">Email *</label>
+          <label htmlFor="login-email">{t("Электронная почта *")}</label>
           <input
             id="login-email"
             name="email"

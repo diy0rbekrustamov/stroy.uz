@@ -843,6 +843,9 @@ cancelled|Cancelled
 Разместить объявление|Create a listing
 Заполните данные объявления. Поля * обязательны.|Enter the listing details. Fields marked * are required.
 Демонстрационные товары нельзя оформить. Выберите предложения продавцов.|Demo products cannot be ordered. Choose seller listings.
+Электронная почта *|Email address *
+STROY UZ / БИЗНЕС|STROY UZ / BUSINESS
+STROY UZ / АРЕНДА|STROY UZ / RENTAL
 `;
 
 export const en = Object.fromEntries(

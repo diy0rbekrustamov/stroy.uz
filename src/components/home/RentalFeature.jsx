@@ -15,7 +15,7 @@ export default function RentalFeature() {
     >
       <div className="home-section-heading">
         <div>
-          <p className="home-section-label">STROY UZ / RENTAL</p>
+          <p className="home-section-label">{t("STROY UZ / АРЕНДА")}</p>
           <h2 id="rental-title">{t("Аренда техники")}</h2>
         </div>
         <Link to="/rentals">

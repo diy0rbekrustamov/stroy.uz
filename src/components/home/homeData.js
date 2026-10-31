@@ -111,5 +111,5 @@ export const articles = [
     text: "Подбирайте инструмент под задачи и частоту использования. Обратите внимание на мощность, совместимость аккумуляторов, комплектацию и доступность обслуживания.",
   },
 ];
-export const formatPrice = (price) =>
-  new Intl.NumberFormat("ru-RU").format(price);
+export const formatPrice = (price, language = "ru") =>
+  new Intl.NumberFormat(language).format(price);

@@ -17,7 +17,7 @@ const serviceCategories = [
 ];
 const priceTypes = ["от", "за объём", "по смете", "фиксированная"];
 const unitOptions = ["м²", "м.п.", "шт", "час", "день", "объект", "точка"];
-const cityOptions = ["Tashkent", "Samarkand", "Bukhara", "Andijan", "Fergana"];
+const cityOptions = { Tashkent: "Ташкент", Samarkand: "Самарканд", Bukhara: "Бухара", Andijan: "Андижан", Fergana: "Фергана" };
 const daysOptions = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
 export default function AddServicePage() {
@@ -167,14 +167,14 @@ export default function AddServicePage() {
             </label>
             <input
               {...register("serviceName", {
-                required: t("Введите название услуги"),
+                required: "Введите название услуги",
               })}
               placeholder={t("Введите название услуги")}
               className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
             />
             {errors.serviceName && (
               <p className="text- text-red-500 mt-1">
-                {errors.serviceName.message}
+                {t(errors.serviceName.message)}
               </p>
             )}
             <p className="text- text-gray-400 mt-1">
@@ -185,19 +185,19 @@ export default function AddServicePage() {
           <div className="border border-gray-100 rounded-lg p-3 mb-3">
             <label className="text- font-semibold">{t("Категория *")}</label>
             <select
-              {...register("category", { required: t("Выберите категорию") })}
+              {...register("category", { required: "Выберите категорию" })}
               className="w-full text-sm mt-1 outline-none bg-white text-gray-800"
             >
               <option value="">{t("Выберите категорию ∨")}</option>
               {serviceCategories.map((c) => (
                 <option key={c} value={c}>
-                  {t(c)}
+                  {t(label)}
                 </option>
               ))}
             </select>
             {errors.category && (
               <p className="text- text-red-500 mt-1">
-                {errors.category.message}
+                {t(errors.category.message)}
               </p>
             )}
           </div>
@@ -209,7 +209,7 @@ export default function AddServicePage() {
               {t("Перетащите фото или выберите файлы")}
             </p>
             <p className="text- text-gray-400 mt-1">
-              JPG, PNG, WebP - до 10 МБ, до 8 фото
+              {t("JPG, PNG, WebP - до 10 МБ, до 8 фото")}
             </p>
             <input
               type="file"
@@ -228,12 +228,12 @@ export default function AddServicePage() {
             <input
               type="hidden"
               {...register("photos", {
-                required: t("Добавьте фото работ"),
+                required: "Добавьте фото работ",
                 validate: (v) => v.length > 0 || t("Добавьте фото"),
               })}
             />
             {errors.photos && (
-              <p className="text- text-red-500 mt-2">{errors.photos.message}</p>
+              <p className="text- text-red-500 mt-2">{t(errors.photos.message)}</p>
             )}
           </div>
 
@@ -243,8 +243,8 @@ export default function AddServicePage() {
             </label>
             <textarea
               {...register("description", {
-                required: t("Введите состав работ"),
-                minLength: { value: 30, message: t("Минимум 30 символов") },
+                required: "Введите состав работ",
+                minLength: { value: 30, message: "Минимум 30 символов" },
               })}
               placeholder={t(
                 "Введите состав работ, ограничения и что оплачивается отдельно",
@@ -254,7 +254,7 @@ export default function AddServicePage() {
             />
             {errors.description && (
               <p className="text- text-red-500 mt-1">
-                {errors.description.message}
+                {t(errors.description.message)}
               </p>
             )}
           </div>
@@ -267,7 +267,7 @@ export default function AddServicePage() {
             <div className="border border-gray-100 rounded-lg p-3">
               <label className="text- font-semibold">{t("Тип цены *")}</label>
               <select
-                {...register("priceType", { required: t("Выберите тип цены") })}
+                {...register("priceType", { required: "Выберите тип цены" })}
                 className="w-full text-sm mt-1 outline-none bg-white text-gray-800"
               >
                 <option value="">
@@ -281,7 +281,7 @@ export default function AddServicePage() {
               </select>
               {errors.priceType && (
                 <p className="text- text-red-500 mt-1">
-                  {errors.priceType.message}
+                  {t(errors.priceType.message)}
                 </p>
               )}
             </div>
@@ -290,7 +290,7 @@ export default function AddServicePage() {
                 {t("Единица расчёта *")}
               </label>
               <select
-                {...register("unit", { required: t("Выберите единицу") })}
+                {...register("unit", { required: "Выберите единицу" })}
                 className="w-full text-sm mt-1 outline-none bg-white text-gray-800"
               >
                 <option value="">{t("Выберите единицу ∨")}</option>
@@ -301,7 +301,7 @@ export default function AddServicePage() {
                 ))}
               </select>
               {errors.unit && (
-                <p className="text- text-red-500 mt-1">{errors.unit.message}</p>
+                <p className="text- text-red-500 mt-1">{t(errors.unit.message)}</p>
               )}
             </div>
           </div>
@@ -312,12 +312,12 @@ export default function AddServicePage() {
             </label>
             <input
               type="number"
-              {...register("price", { required: t("Введите сумму") })}
+              {...register("price", { required: "Введите сумму" })}
               placeholder={t("Введите сумму")}
               className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
             />
             {errors.price && (
-              <p className="text- text-red-500 mt-1">{errors.price.message}</p>
+              <p className="text- text-red-500 mt-1">{t(errors.price.message)}</p>
             )}
             <p className="text- text-gray-400 mt-1">
               {t("Оценка, а не гарантия итоговой стоимости")}
@@ -329,14 +329,14 @@ export default function AddServicePage() {
               {t("Что влияет на смету *")}
             </label>
             <textarea
-              {...register("priceFactors", { required: t("Введите условия") })}
+              {...register("priceFactors", { required: "Введите условия" })}
               placeholder={t("Введите условия и дополнительные расходы")}
               className="w-full text-sm mt-1 outline-none resize-none placeholder:text-gray-400"
               rows={2}
             />
             {errors.priceFactors && (
               <p className="text- text-red-500 mt-1">
-                {errors.priceFactors.message}
+                {t(errors.priceFactors.message)}
               </p>
             )}
           </div>
@@ -351,18 +351,18 @@ export default function AddServicePage() {
             <div className="border border-gray-100 rounded-lg p-3">
               <label className="text- font-semibold">{t("Город *")}</label>
               <select
-                {...register("city", { required: t("Выберите город") })}
+                {...register("city", { required: "Выберите город" })}
                 className="w-full text-sm mt-1 outline-none bg-white text-gray-800"
               >
                 <option value="">{t("Выберите город ∨")}</option>
-                {cityOptions.map((c) => (
+                {Object.entries(cityOptions).map(([c, label]) => (
                   <option key={c} value={c}>
-                    {t(c)}
+                    {t(label)}
                   </option>
                 ))}
               </select>
               {errors.city && (
-                <p className="text- text-red-500 mt-1">{errors.city.message}</p>
+                <p className="text- text-red-500 mt-1">{t(errors.city.message)}</p>
               )}
             </div>
             <div className="border border-gray-100 rounded-lg p-3">
@@ -370,13 +370,13 @@ export default function AddServicePage() {
                 {t("Зона обслуживания *")}
               </label>
               <input
-                {...register("serviceZone", { required: t("Введите зону") })}
+                {...register("serviceZone", { required: "Введите зону" })}
                 placeholder={t("Введите районы или радиус")}
                 className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
               />
               {errors.serviceZone && (
                 <p className="text- text-red-500 mt-1">
-                  {errors.serviceZone.message}
+                  {t(errors.serviceZone.message)}
                 </p>
               )}
             </div>
@@ -399,13 +399,13 @@ export default function AddServicePage() {
             <input
               type="hidden"
               {...register("workDays", {
-                required: t("Выберите дни"),
-                validate: (v) => v.length > 0 || t("Выберите дни"),
+                required: "Выберите дни",
+                validate: (v) => v.length > 0 || "Выберите дни",
               })}
             />
             {errors.workDays && (
               <p className="text- text-red-500 mt-1">
-                {errors.workDays.message}
+                {t(errors.workDays.message)}
               </p>
             )}
           </div>
@@ -445,14 +445,14 @@ export default function AddServicePage() {
             </label>
             <input
               {...register("executorName", {
-                required: t("Введите название исполнителя"),
+                required: "Введите название исполнителя",
               })}
               placeholder={t("Введите название исполнителя")}
               className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
             />
             {errors.executorName && (
               <p className="text- text-red-500 mt-1">
-                {errors.executorName.message}
+                {t(errors.executorName.message)}
               </p>
             )}
           </div>
@@ -461,7 +461,7 @@ export default function AddServicePage() {
               <label className="text- font-semibold">{t("Телефон *")}</label>
               <input
                 {...register("phone", {
-                  required: t("Введите телефон"),
+                  required: "Введите телефон",
                   pattern: {
                     value: /^\+998\d{9}$/,
                     message: "+998 XX XXX XX XX",
@@ -473,7 +473,7 @@ export default function AddServicePage() {
               />
               {errors.phone && (
                 <p className="text- text-red-500 mt-1">
-                  {errors.phone.message}
+                  {t(errors.phone.message)}
                 </p>
               )}
               <p className="text- text-gray-400 mt-1">
@@ -481,11 +481,11 @@ export default function AddServicePage() {
               </p>
             </div>
             <div className="border border-gray-100 rounded-lg p-3">
-              <label className="text- font-semibold">{t("Email *")}</label>
+              <label className="text- font-semibold">{t("Электронная почта *")}</label>
               <input
                 type="email"
                 {...register("email", {
-                  required: t("Введите email"),
+                  required: "Введите email",
                   pattern: { value: /^\S+@\S+$/i, message: "Invalid email" },
                 })}
                 placeholder={t("Введите email")}
@@ -493,7 +493,7 @@ export default function AddServicePage() {
               />
               {errors.email && (
                 <p className="text- text-red-500 mt-1">
-                  {errors.email.message}
+                  {t(errors.email.message)}
                 </p>
               )}
             </div>
@@ -507,7 +507,7 @@ export default function AddServicePage() {
             <input
               type="checkbox"
               {...register("confirm", {
-                required: t("Подтвердите право на фотографии"),
+                required: "Подтвердите право на фотографии",
               })}
               className="mt-0.5"
             />
@@ -516,7 +516,7 @@ export default function AddServicePage() {
             )}
           </label>
           {errors.confirm && (
-            <p className="text- text-red-500 mb-3">{errors.confirm.message}</p>
+            <p className="text- text-red-500 mb-3">{t(errors.confirm.message)}</p>
           )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <button

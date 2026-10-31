@@ -843,6 +843,9 @@ cancelled|Bekor qilindi
 Разместить объявление|E’lon joylash
 Заполните данные объявления. Поля * обязательны.|E’lon ma’lumotlarini kiriting. * belgili maydonlar majburiy.
 Демонстрационные товары нельзя оформить. Выберите предложения продавцов.|Namoyish tovarlariga buyurtma berib bo‘lmaydi. Sotuvchilar takliflarini tanlang.
+Электронная почта *|Elektron pochta *
+STROY UZ / БИЗНЕС|STROY UZ / BIZNES
+STROY UZ / АРЕНДА|STROY UZ / IJARA
 `;
 
 export const uz = Object.fromEntries(

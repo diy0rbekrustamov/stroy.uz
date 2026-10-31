@@ -6,6 +6,39 @@ import { normalizeSearch, translate, matchesProduct, productCount } from "../src
 import { en } from "../src/i18n/en.js";
 import { uz } from "../src/i18n/uz.js";
 
+// Dictionary coverage alone cannot catch copy that bypasses t() in JSX.
+test("Visible Russian JSX and native text attributes use localization", () => {
+  const uncovered = [];
+  for (const file of fs.readdirSync("src", { recursive: true }).filter((file) => file.endsWith(".jsx"))) {
+    function visit(node) {
+      if (!node || typeof node !== "object") return;
+      if (node.type === "JSXText" && /[А-Яа-яЁё]/.test(node.value))
+        uncovered.push(file + ": " + node.value.trim());
+      if (node.type === "JSXOpeningElement" && /^[a-z]/.test(node.name?.name || ""))
+        for (const attr of node.attributes || [])
+          if (["placeholder", "title", "aria-label", "alt"].includes(attr.name?.name) &&
+              attr.value?.type === "Literal" && /[А-Яа-яЁё]/.test(attr.value.value))
+            uncovered.push(file + ": " + attr.value.value);
+      for (const value of Object.values(node))
+        if (value && typeof value === "object")
+          (Array.isArray(value) ? value : [value]).forEach(visit);
+    }
+    visit(parseSync(file, fs.readFileSync(`src/${file}`, "utf8")).program);
+  }
+  assert.deepEqual(uncovered, []);
+});
+
+test("Dynamic announcements, cities and form labels translate completely", () => {
+  for (const language of ["uz", "en"])
+    for (const source of [
+      "Электронная почта *", "Ташкент", "Самарканд", "Бухара", "Андижан", "Фергана",
+      "JPG, PNG, WebP - до 10 МБ, до 8 фото",
+      "Цемент М400 · 50 кг добавлен в корзину (2 шт.)",
+      "Открыть товар: Кирпич керамический",
+      "Увеличить изображение: Дрель-шуруповёрт 18V",
+    ]) assert.doesNotMatch(translate(source, language), /[А-Яа-яЁё]/, source + " / " + language);
+});
+
 test("Russian source and non-text values remain unchanged", () => {
   assert.equal(translate("Корзина (2)", "ru"), "Корзина (2)");
   assert.equal(translate(2, "uz"), 2);

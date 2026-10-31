@@ -45,7 +45,7 @@ export default function RentalsPage() {
           {t("Главная")} ←
         </Link>
         <header className="market-catalog-heading">
-          <p className="rental-eyebrow">STROY UZ / RENTAL</p>
+          <p className="rental-eyebrow">{t("STROY UZ / АРЕНДА")}</p>
           <h1>{t("Аренда техники")}</h1>
           <p>{t("Краны, самосвалы и экскаваторы для вашего объекта.")}</p>
         </header>

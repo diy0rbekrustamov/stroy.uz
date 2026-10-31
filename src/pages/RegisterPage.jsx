@@ -165,7 +165,7 @@ export default function RegisterPage() {
           )}
         <div className="auth-field-row">
           {field("phone", "Телефон *", "+998 XX XXX XX XX", "tel", "tel")}
-          {field("email", "Email *", "Введите email", "email", "email")}
+          {field("email", "Электронная почта *", "Введите email", "email", "email")}
         </div>
         {field(
           "password",

@@ -56,7 +56,7 @@ export default function ResetPasswordPage() {
         }}
       >
         <div className="auth-field">
-          <label htmlFor="reset-email">Email *</label>
+          <label htmlFor="reset-email">{t("Электронная почта *")}</label>
           <input
             id="reset-email"
             name="email"

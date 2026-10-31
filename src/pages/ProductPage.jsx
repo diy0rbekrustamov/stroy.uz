@@ -110,7 +110,7 @@ export default function ProductPage() {
 }
 
 function ProductDetail({ product, products }) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const detail = productDetails[product.id] || {
     title: product.name,
     eyebrow: product.category,
@@ -239,7 +239,7 @@ function ProductDetail({ product, products }) {
             </div>
             <div className="product-buy-card">
               <div className="product-price">
-                <strong>{t(formatPrice(product.price))}</strong>
+                <strong>{t(formatPrice(product.price, language))}</strong>
                 <span>
                   {t("сум / ")}
                   {t(product.unit)}
@@ -345,8 +345,8 @@ function ProductDetail({ product, products }) {
                       {[
                         [
                           "Цена, сум",
-                          formatPrice(product.price),
-                          formatPrice(comparison.price),
+                          formatPrice(product.price, language),
+                          formatPrice(comparison.price, language),
                         ],
                         [
                           "Категория",
