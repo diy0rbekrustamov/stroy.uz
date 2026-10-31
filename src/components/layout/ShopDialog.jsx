@@ -9,7 +9,7 @@ import "./ShopDialog.css";
 export default function ShopDialog() {
   const {items:products} = useCatalog();
   const panel=useRef(null);
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const {
     dialog,
@@ -85,7 +85,7 @@ export default function ShopDialog() {
                         {t(product.name)}
                       </Link>
                       <strong>
-                        {t(formatPrice(product.price))}
+                        {t(formatPrice(product.price, language))}
                         {t(" сум")}
                       </strong>
                       {t(
@@ -123,7 +123,7 @@ export default function ShopDialog() {
                   <div className="shop-modal-total">
                     <span>{t("Итого")}</span>
                     <strong>
-                      {t(formatPrice(total))}
+                      {t(formatPrice(total, language))}
                       {t(" сум")}
                     </strong>
                   </div>

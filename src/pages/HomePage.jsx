@@ -140,7 +140,7 @@ function HomePage() {
         >
           <div className="home-business">
             <div>
-              <p className="home-eyebrow">STROY UZ / BUSINESS</p>
+              <p className="home-eyebrow">{t("STROY UZ / БИЗНЕС")}</p>
               <h2 id="business-title">
                 {t("Большой проект.")}
                 <br />

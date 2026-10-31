@@ -166,7 +166,7 @@ test("Shared layout renders team pages with one shop context and RU/UZ/EN", asyn
     }
     for (const language of ["ru", "uz", "en"]) {
       const cart = render("/cart", language);
-      assert.match(cart, /1\s*780\s*000/);
+      assert.ok(cart.includes(new Intl.NumberFormat(language).format(1780000)), language);
       assert.match(
         cart,
         language === "ru"
@@ -234,7 +234,7 @@ test("Shared layout renders team pages with one shop context and RU/UZ/EN", asyn
           );
       }
     }
-    assert.match(render("/cart", "en", { rebar: 2 }), /77\s*000/);
+    assert.ok(render("/cart", "en", { rebar: 2 }).includes(new Intl.NumberFormat("en").format(77000)));
     assert.match(render("/catalog?q=insulation", "en"), /Insulation/);
     const results = render("/?q=g%27isht#products", "uz");
     assert.match(results, /Keramik g‘isht/);

@@ -45,7 +45,7 @@ export default function ApiOrders() {
         ...requests.map((item) => ({ ...item, kind: "requests" })),
       ].map((item) => (
         <article className="auth-info" key={item.id} style={{ marginTop: 16 }}>
-          <h2>{item.name}</h2>
+          <h2>{t(item.name)}</h2>
           <p>
             #{item.id.slice(0, 8)} · {t(statusLabel(item.status))}
           </p>

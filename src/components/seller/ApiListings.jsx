@@ -96,7 +96,7 @@ export default function ApiListings({ kind }) {
       {!filtered.length && <p>{t("Пока пусто")}</p>}
       {filtered.map((item) => (
         <article className="auth-info" key={item.id} style={{ marginTop: 16 }}>
-          <h2>{item.name}</h2>
+          <h2>{t(item.name)}</h2>
           <p>
             {item.price} {t("сум")} / {t(item.unit)} ·{" "}
             {t(item.published ? "Опубликован" : "Черновик")} · {t("Остаток")}:{" "}

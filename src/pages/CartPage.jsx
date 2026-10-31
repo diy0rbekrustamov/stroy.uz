@@ -8,7 +8,7 @@ import { useState } from "react";
 
 export default function CartPage() {
   const { items: products, loading, error } = useCatalog();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { cart, changeQuantity } = useShop();
   const [view, setView] = useState("list"); // list | grid
 
@@ -132,11 +132,11 @@ export default function CartPage() {
                       🗑️
                     </button>
                     <div className="font-bold text-[14px] mt-auto">
-                      {formatPrice(product.price)}
+                      {formatPrice(product.price, language)}
                       {t("сум")}
                     </div>
                     <div className="text-[11px] text-[#8A94A0]">
-                      {formatPrice(product.price)}
+                      {formatPrice(product.price, language)}
                       {t(" сум /")} {t(product.unit || "шт.")}
                     </div>
                   </div>
@@ -190,7 +190,7 @@ export default function CartPage() {
                   </p>
 
                   <p className="home-product-price">
-                    <strong>{formatPrice(product.price)}</strong>
+                    <strong>{formatPrice(product.price, language)}</strong>
                     <span>
                       {t("сум / ")}
                       {t(product.unit)}
@@ -242,7 +242,7 @@ export default function CartPage() {
                 {totalQty})
               </span>
               <span className="font-semibold text-[#111]">
-                {formatPrice(total)}
+                {formatPrice(total, language)}
                 {t("сум")}
               </span>
             </div>
@@ -256,7 +256,7 @@ export default function CartPage() {
           <div className="mt-6 pt-4 border-t border-[#EDEEF0] flex justify-between items-center">
             <span className="font-bold text-[14px]">{t("Итого")}</span>
             <span className="font-extrabold text-[20px] tracking-tight">
-              {formatPrice(total)}
+              {formatPrice(total, language)}
               {t("сум")}
             </span>
           </div>

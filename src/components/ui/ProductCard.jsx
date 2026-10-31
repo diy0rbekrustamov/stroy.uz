@@ -12,7 +12,7 @@ export default function ProductCard({
   onAdd,
   headingLevel = 3,
 }) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const Heading = `h${headingLevel}`;
   const available = product.inStock !== false;
   return (
@@ -55,11 +55,11 @@ export default function ProductCard({
       <div className="ui-product-card__price">
         {product.oldPrice > product.price && (
           <del>
-            {formatPrice(product.oldPrice)} {t("сум")}
+            {formatPrice(product.oldPrice, language)} {t("сум")}
           </del>
         )}
         <div>
-          <strong>{formatPrice(product.price)}</strong>
+          <strong>{formatPrice(product.price, language)}</strong>
           <span>
             {t("сум / ")}
             {t(product.unit)}

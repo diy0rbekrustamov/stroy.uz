@@ -6,7 +6,7 @@ import { useLanguage } from "../i18n/useLanguage.js";
 import Button from "../components/ui/Button.jsx";
 import { statusLabel } from "../api/status.js";
 export default function AccountPage() {
-  const { t } = useLanguage(),
+  const { t, language } = useLanguage(),
     { user, loading } = useSession(),
     navigate = useNavigate();
   const [orders, setOrders] = useState([]),
@@ -56,7 +56,7 @@ export default function AccountPage() {
           <section className="auth-info" key={order.id}>
             <strong>#{order.id.slice(0, 8)}</strong>
             <p>
-              {new Date(order.created_at).toLocaleDateString()} · {order.total}{" "}
+              {new Date(order.created_at).toLocaleDateString(language)} · {new Intl.NumberFormat(language).format(order.total)}{" "}
               {t("сум")}
             </p>
             <ul>

@@ -209,15 +209,15 @@ export default function AddProductPage() {
               </label>
               <input
                 {...register("productName", {
-                  required: t("Введите название"),
-                  maxLength: { value: 120, message: t("До 120 символов") },
+                  required: "Введите название",
+                  maxLength: { value: 120, message: "До 120 символов" },
                 })}
                 placeholder={t("Введите название товара")}
                 className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
               />
               {errors.productName && (
                 <p className="text- text-red-500 mt-1">
-                  {errors.productName.message}
+                  {t(errors.productName.message)}
                 </p>
               )}
               <p className="text- text-gray-400 mt-1">
@@ -232,7 +232,7 @@ export default function AddProductPage() {
                 </label>
                 <select
                   {...register("category", {
-                    required: t("Выберите категорию"),
+                    required: "Выберите категорию",
                   })}
                   className="w-full text-sm mt-1 outline-none bg-white text-gray-800"
                 >
@@ -245,7 +245,7 @@ export default function AddProductPage() {
                 </select>
                 {errors.category && (
                   <p className="text- text-red-500 mt-1">
-                    {errors.category.message}
+                    {t(errors.category.message)}
                   </p>
                 )}
               </div>
@@ -285,14 +285,14 @@ export default function AddProductPage() {
               <input
                 type="hidden"
                 {...register("photos", {
-                  required: t("Добавьте хотя бы одно фото"),
+                  required: "Добавьте хотя бы одно фото",
                   validate: (v) =>
-                    v.length > 0 || t("Добавьте хотя бы одно фото"),
+                    v.length > 0 || "Добавьте хотя бы одно фото",
                 })}
               />
               {errors.photos && (
                 <p className="text- text-red-500 mt-2">
-                  {errors.photos.message}
+                  {t(errors.photos.message)}
                 </p>
               )}
             </div>
@@ -300,8 +300,8 @@ export default function AddProductPage() {
               <label className="text-">{t("Описание *")}</label>
               <textarea
                 {...register("description", {
-                  required: t("Введите описание"),
-                  minLength: { value: 20, message: t("Минимум 20 символов") },
+                  required: "Введите описание",
+                  minLength: { value: 20, message: "Минимум 20 символов" },
                 })}
                 placeholder={t("Введите назначение товара...")}
                 className="w-full text-sm mt-1 outline-none resize-none placeholder:text-gray-400"
@@ -309,7 +309,7 @@ export default function AddProductPage() {
               />
               {errors.description && (
                 <p className="text- text-red-500 mt-1">
-                  {errors.description.message}
+                  {t(errors.description.message)}
                 </p>
               )}
             </div>
@@ -322,7 +322,7 @@ export default function AddProductPage() {
               <div className="border border-gray-100 rounded-lg p-3">
                 <label className="text- font-semibold">{t("Тип *")}</label>
                 <select
-                  {...register("type", { required: t("Выберите тип") })}
+                  {...register("type", { required: "Выберите тип" })}
                   className="w-full text-sm mt-1 outline-none bg-white text-gray-800"
                 >
                   <option value="">{t("Выберите тип ∨")}</option>
@@ -338,7 +338,7 @@ export default function AddProductPage() {
                 </select>
                 {errors.type && (
                   <p className="text- text-red-500 mt-1">
-                    {errors.type.message}
+                    {t(errors.type.message)}
                   </p>
                 )}
               </div>
@@ -347,7 +347,7 @@ export default function AddProductPage() {
                 <input
                   list="voltages"
                   {...register("voltage", {
-                    required: t("Введите напряжение"),
+                    required: "Введите напряжение",
                   })}
                   placeholder={t("Введите напряжение")}
                   className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
@@ -359,7 +359,7 @@ export default function AddProductPage() {
                 </datalist>
                 {errors.voltage && (
                   <p className="text- text-red-500 mt-1">
-                    {errors.voltage.message}
+                    {t(errors.voltage.message)}
                   </p>
                 )}
               </div>
@@ -369,7 +369,7 @@ export default function AddProductPage() {
                 </label>
                 <select
                   {...register("equipment", {
-                    required: t("Введите комплектацию"),
+                    required: "Введите комплектацию",
                   })}
                   className="w-full text-sm mt-1 outline-none bg-white text-gray-800"
                 >
@@ -382,7 +382,7 @@ export default function AddProductPage() {
                 </select>
                 {errors.equipment && (
                   <p className="text- text-red-500 mt-1">
-                    {errors.equipment.message}
+                    {t(errors.equipment.message)}
                   </p>
                 )}
               </div>
@@ -467,15 +467,15 @@ export default function AddProductPage() {
                 <input
                   type="number"
                   {...register("price", {
-                    required: t("Введите цену"),
-                    min: { value: 1, message: t("Часто больше нуля") },
+                    required: "Введите цену",
+                    min: { value: 1, message: "Часто больше нуля" },
                   })}
                   placeholder={t("Введите цену")}
                   className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
                 />
                 {errors.price && (
                   <p className="text- text-red-500 mt-1">
-                    {errors.price.message}
+                    {t(errors.price.message)}
                   </p>
                 )}
                 {!errors.price && (
@@ -487,7 +487,7 @@ export default function AddProductPage() {
               <div className="border border-gray-100 rounded-lg p-3">
                 <label className="text-">{t("Единица продажи *")}</label>
                 <select
-                  {...register("unit", { required: t("Выберите единицу") })}
+                  {...register("unit", { required: "Выберите единицу" })}
                   className="w-full text-sm mt-1 outline-none bg-white text-gray-800"
                 >
                   <option value="">{t("Выберите единицу ∨")}</option>
@@ -496,7 +496,7 @@ export default function AddProductPage() {
                 </select>
                 {errors.unit && (
                   <p className="text- text-red-500 mt-1">
-                    {errors.unit.message}
+                    {t(errors.unit.message)}
                   </p>
                 )}
               </div>
@@ -504,13 +504,13 @@ export default function AddProductPage() {
                 <label className="text-">{t("Остаток *")}</label>
                 <input
                   type="number"
-                  {...register("stock", { required: t("Введите количество") })}
+                  {...register("stock", { required: "Введите количество" })}
                   placeholder={t("Введите количество")}
                   className="w-full text-sm mt-1 outline-none placeholder:text-gray-400"
                 />
                 {errors.stock && (
                   <p className="text- text-red-500 mt-1">
-                    {errors.stock.message}
+                    {t(errors.stock.message)}
                   </p>
                 )}
               </div>
@@ -541,15 +541,15 @@ export default function AddProductPage() {
                 {t("Город склада *")}
               </label>
               <select
-                {...register("city", { required: t("Выберите город") })}
+                {...register("city", { required: "Выберите город" })}
                 className="w-full text-sm mt-1 outline-none bg-white text-gray-800"
               >
                 <option value="">{t("Выберите город ∨")}</option>
-                <option value="Tashkent">Tashkent</option>
-                <option value="Samarkand">Samarkand</option>
+                <option value="Tashkent">{t("Ташкент")}</option>
+                <option value="Samarkand">{t("Самарканд")}</option>
               </select>
               {errors.city && (
-                <p className="text- text-red-500 mt-1">{errors.city.message}</p>
+                <p className="text- text-red-500 mt-1">{t(errors.city.message)}</p>
               )}
             </div>
             <div className="flex flex-col gap-2 mb-3">
@@ -568,7 +568,7 @@ export default function AddProductPage() {
               </label>
               <textarea
                 {...register("deliveryConditions", {
-                  required: t("Введите условия"),
+                  required: "Введите условия",
                 })}
                 placeholder={t(
                   "Введите сроки, зону доставки и условия самовывоза",
@@ -577,7 +577,7 @@ export default function AddProductPage() {
               />
               {errors.deliveryConditions && (
                 <p className="text- text-red-500 mt-1">
-                  {errors.deliveryConditions.message}
+                  {t(errors.deliveryConditions.message)}
                 </p>
               )}
             </div>
@@ -590,7 +590,7 @@ export default function AddProductPage() {
               <input
                 type="checkbox"
                 {...register("confirm", {
-                  required: t("Подтвердите проверку данных"),
+                  required: "Подтвердите проверку данных",
                 })}
                 className="mt-0.5"
               />
@@ -600,7 +600,7 @@ export default function AddProductPage() {
             </label>
             {errors.confirm && (
               <p className="text- text-red-500 mb-3">
-                {errors.confirm.message}
+                {t(errors.confirm.message)}
               </p>
             )}
             <div className="grid grid-cols-2 gap-3">
