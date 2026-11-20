@@ -19,7 +19,7 @@ test("Delivery stores coordinates, isolates buyers/sellers and accepts only fres
   };
   try {
     const buyer = await register("buyer"), stranger = await register("buyer"), seller = await register("seller"), otherSeller = await register("seller");
-    const product = await call("POST","/api/seller/products",{name:"Blocks",category:"Materials",categoryId:"bricks",unit:"pc",price:100,stock:20,published:true},seller);
+    const product = await call("POST","/api/seller/products",{name:"Blocks",city:"Bukhara",category:"Materials",categoryId:"bricks",unit:"pc",price:100,stock:20,published:true},seller);
     assert.equal(product.status,201);
     const body = {idempotencyKey:randomUUID(),address:"Bukhara site 12",phone:"+998901234567",consent:true,delivery:{point:{lat:39.77,lng:64.42},note:"Gate 2"},items:[{id:product.data.item.id,quantity:2}]};
     assert.equal((await call("POST","/api/orders",{...body,delivery:{point:{lat:999,lng:0}}},buyer)).status,400);

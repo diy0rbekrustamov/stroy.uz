@@ -6,6 +6,7 @@ import "./delivery.css";
 
 export default function DeliveryMap({ point, vehicle, onChange }) {
   const { t } = useLanguage();
+  const destinationLabel = t("Место доставки"), vehicleLabel = t("Машина");
   const container = useRef(null), instance = useRef(null), change = useRef(onChange);
   const [ready, setReady] = useState(false), [error, setError] = useState("");
   useEffect(() => { change.current = onChange; }, [onChange]);
@@ -32,8 +33,8 @@ export default function DeliveryMap({ point, vehicle, onChange }) {
     const { L, map, layers } = instance.current;
     layers.clearLayers();
     const points = [];
-    for (const [location, label, className] of [[point, t("Место доставки"), "destination"], [vehicle, t("Машина"), "vehicle"]]) {
-      if (!location) continue;
+    for (const [location, label, className] of [[point, destinationLabel, "destination"], [vehicle, vehicleLabel, "vehicle"]]) {
+      if (!location || !Number.isFinite(location.lat) || !Number.isFinite(location.lng) || Math.abs(location.lat) > 85 || Math.abs(location.lng) > 180) continue;
       const coords = [location.lat, location.lng];
       points.push(coords);
       const marker = L.marker(coords, { title: label, icon: L.divIcon({ className: `delivery-marker ${className}`, html: className === "destination" ? "●" : "↗", iconSize: [34,34], iconAnchor: [17,34] }) });
@@ -41,7 +42,7 @@ export default function DeliveryMap({ point, vehicle, onChange }) {
     }
     if (points.length === 2) map.fitBounds(points, { padding: [50,50], maxZoom: 16, animate: false });
     else if (points.length) map.setView(points[0], Math.max(map.getZoom(), 14), { animate: false });
-  }, [ready, point, vehicle, t]);
+  }, [ready, point, vehicle, destinationLabel, vehicleLabel]);
   return <div className="delivery-map-wrap">
     <div ref={container} className="delivery-map" role="region" aria-label={t("Карта доставки")} />
     <div className="delivery-map-tools">
