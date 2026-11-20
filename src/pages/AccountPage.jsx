@@ -55,6 +55,7 @@ export default function AccountPage() {
         {orders.map((order) => (
           <section className="auth-info" key={order.id}>
             <strong>#{order.id.slice(0, 8)}</strong>
+            <Button to={`/orders/${order.id}/delivery`} variant="secondary">{t("Отследить доставку")}</Button>
             <p>
               {new Date(order.created_at).toLocaleDateString(language)} · {new Intl.NumberFormat(language).format(order.total)}{" "}
               {t("сум")}

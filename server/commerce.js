@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
 import { phone, text, fail } from "./validation.js";
+import { deliveryAddress } from "./delivery.js";
 
 export function commerceRoutes(app, { db }) {
   app.post(
@@ -12,6 +13,7 @@ export function commerceRoutes(app, { db }) {
           idempotencyKey: z.uuid(),
           address: text(300),
           phone,
+          delivery: deliveryAddress.optional(),
           consent: z.literal(true),
           items: z
             .array(
@@ -57,7 +59,7 @@ export function commerceRoutes(app, { db }) {
         );
         const result = (
           await tx.query(
-            "INSERT INTO orders(id,buyer_id,idempotency_key,address,phone,total) VALUES($1,$2,$3,$4,$5,$6) RETURNING *",
+            "INSERT INTO orders(id,buyer_id,idempotency_key,address,phone,total,delivery) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *",
             [
               randomUUID(),
               request.account.id,
@@ -65,6 +67,7 @@ export function commerceRoutes(app, { db }) {
               data.address,
               data.phone,
               total,
+              JSON.stringify(data.delivery || {}),
             ],
           )
         ).rows[0];
@@ -115,7 +118,7 @@ export function commerceRoutes(app, { db }) {
       return {
         items: (
           await db.query(
-            "SELECT i.*,o.address,o.phone,o.created_at FROM order_items i JOIN orders o ON o.id=i.order_id WHERE i.seller_id=$1 ORDER BY o.created_at DESC LIMIT 100",
+            "SELECT i.*,o.address,o.phone,o.created_at,o.delivery FROM order_items i JOIN orders o ON o.id=i.order_id WHERE i.seller_id=$1 ORDER BY o.created_at DESC LIMIT 100",
             [request.account.id],
           )
         ).rows,

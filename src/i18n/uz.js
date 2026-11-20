@@ -846,6 +846,75 @@ cancelled|Bekor qilindi
 Электронная почта *|Elektron pochta *
 STROY UZ / БИЗНЕС|STROY UZ / BIZNES
 STROY UZ / АРЕНДА|STROY UZ / IJARA
+Отследить доставку|Yetkazib berishni kuzatish
+STROY UZ / ДОСТАВКА|STROY UZ / YETKAZIB BERISH
+Куда доставить ваш заказ?|Buyurtmangizni qayerga yetkazamiz?
+Укажите адрес и отметьте удобный въезд на объект.|Manzilni kiriting va obyektga qulay kirish joyini belgilang.
+Город, улица, номер дома|Shahar, ko‘cha, uy raqami
+Комментарий для водителя|Haydovchi uchun izoh
+Ориентир, ворота, подъезд или ограничения для грузовика|Mo‘ljal, darvoza, kirish joyi yoki yuk mashinasi uchun cheklovlar
+Ваш заказ|Buyurtmangiz
+Товар недоступен|Mahsulot mavjud emas
+Предложения разных продавцов могут приехать отдельно.|Turli sotuvchilarning mahsulotlari alohida yetkazilishi mumkin.
+В корзине есть демо или недоступные товары. Измените состав заказа.|Savatingizda namoyish yoki mavjud bo‘lmagan mahsulotlar bor. Buyurtmani o‘zgartiring.
+Сохраняем заказ…|Buyurtma saqlanmoqda…
+Ссылка недействительна или доставка ещё не отправлена.|Havola yaroqsiz yoki buyurtma hali jo‘natilmagan.
+Не удалось передать координаты. Проверьте интернет.|Joylashuv yuborilmadi. Internetni tekshiring.
+Передача координат остановлена.|Joylashuvni yuborish to‘xtatildi.
+Геолокация недоступна. Проверьте разрешения браузера.|Joylashuv aniqlanmadi. Brauzer ruxsatlarini tekshiring.
+На связи с получателем|Qabul qiluvchi bilan aloqada
+Передавайте местоположение только во время доставки. Не закрывайте эту страницу: в фоне браузер может остановить передачу.|Joylashuvni faqat yetkazish vaqtida yuboring. Sahifani yopmang: brauzer fonda yuborishni to‘xtatishi mumkin.
+Место доставки|Yetkazish manzili
+Нажимая кнопку, вы разрешаете показывать вашу геопозицию покупателю этого заказа.|Tugmani bosib, ushbu buyurtma xaridoriga joylashuvingizni ko‘rsatishga ruxsat berasiz.
+Остановить передачу|Yuborishni to‘xtatish
+Передавать моё местоположение|Joylashuvimni yuborish
+Дождитесь, пока продавец отметит заказ отправленным, затем обновите страницу.|Sotuvchi buyurtmani jo‘natilgan deb belgilaguncha kuting, so‘ng sahifani yangilang.
+Последнее обновление|Oxirgi yangilanish
+Передача координат включена|Joylashuvni yuborish yoqilgan
+Передача координат выключена|Joylashuvni yuborish o‘chirilgan
+Доставка вашего заказа|Buyurtmangizni yetkazish
+Статусы заказа и местоположение доставки в одном месте.|Buyurtma holati va yetkazish joylashuvi bir joyda.
+Доставка заказа|Buyurtmani yetkazish
+Координаты обновляются|Joylashuv yangilanmoqda
+Последняя известная позиция|Oxirgi ma’lum joylashuv
+Водитель ещё не передаёт координаты|Haydovchi hali joylashuvini yubormayapti
+Позиция появится после отправки заказа и включения геолокации водителем. Время прибытия уточняйте у продавца.|Buyurtma jo‘natilib, haydovchi joylashuvni yuborishni yoqqach nuqta ko‘rinadi. Yetib kelish vaqtini sotuvchidan aniqlang.
+Отправления|Jo‘natmalar
+Карта недоступна. Можно указать координаты вручную.|Xarita ochilmadi. Koordinatalarni qo‘lda kiritishingiz mumkin.
+Машина|Mashina
+Карта доставки|Yetkazish xaritasi
+Увеличить карту|Xaritani kattalashtirish
+Уменьшить карту|Xaritani kichraytirish
+Выбрать центр карты|Xarita markazini tanlash
+Нажмите на карте у въезда на объект|Xaritada obyektga kirish joyini bosing
+Геолокация недоступна. Выберите точку на карте.|Joylashuv aniqlanmadi. Xaritada nuqta tanlang.
+Определяем местоположение…|Joylashuv aniqlanmoqda…
+Проверьте точку на карте перед заказом.|Buyurtma berishdan oldin xaritadagi nuqtani tekshiring.
+Точка на карте|Xaritadagi nuqta
+Помогите водителю найти нужный въезд|Haydovchiga kerakli kirish joyini topishda yordam bering
+Моё местоположение|Mening joylashuvim
+Точка пока не выбрана|Nuqta hali tanlanmagan
+Указать координаты вручную|Koordinatalarni qo‘lda kiritish
+Широта|Kenglik
+Долгота|Uzunlik
+Ссылка водителя отключена.|Haydovchi havolasi o‘chirildi.
+Ссылка действует 24 часа. Передайте её только водителю.|Havola 24 soat amal qiladi. Uni faqat haydovchiga bering.
+Отслеживание доставки|Yetkazishni kuzatish
+Водитель открывает ссылку на своём телефоне и включает передачу координат после отправки заказа.|Haydovchi havolani telefonida ochadi va buyurtma jo‘natilgach joylashuvni yuborishni yoqadi.
+Создать ссылку водителю|Haydovchi uchun havola yaratish
+Отключить ссылку|Havolani o‘chirish
+Ссылка водителю|Haydovchi havolasi
+Точка доставки|Yetkazish nuqtasi
+Введите название техники|Texnika nomini kiriting
+Максимум 150 символов|Ko‘pi bilan 150 belgi
+Укажите характеристики|Xususiyatlarini kiriting
+Максимум 100 символов|Ko‘pi bilan 100 belgi
+Укажите город|Shaharni kiriting
+Укажите цену|Narxni kiriting
+Цена должна быть больше 0|Narx 0 dan katta bo‘lishi kerak
+Укажите минимальный срок|Eng kam muddatni kiriting
+Минимум 1 сутки|Kamida 1 sutka
+Максимум 4000 символов|Ko‘pi bilan 4000 belgi
 `;
 
 export const uz = Object.fromEntries(

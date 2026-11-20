@@ -846,6 +846,75 @@ cancelled|Cancelled
 Электронная почта *|Email address *
 STROY UZ / БИЗНЕС|STROY UZ / BUSINESS
 STROY UZ / АРЕНДА|STROY UZ / RENTAL
+Отследить доставку|Track delivery
+STROY UZ / ДОСТАВКА|STROY UZ / DELIVERY
+Куда доставить ваш заказ?|Where should we deliver your order?
+Укажите адрес и отметьте удобный въезд на объект.|Enter the address and mark the best entrance to your site.
+Город, улица, номер дома|City, street, building number
+Комментарий для водителя|Note for the driver
+Ориентир, ворота, подъезд или ограничения для грузовика|Landmark, gate, entrance or truck access restrictions
+Ваш заказ|Your order
+Товар недоступен|Product unavailable
+Предложения разных продавцов могут приехать отдельно.|Items from different sellers may arrive separately.
+В корзине есть демо или недоступные товары. Измените состав заказа.|Your cart contains demo or unavailable products. Update your order.
+Сохраняем заказ…|Saving your order…
+Ссылка недействительна или доставка ещё не отправлена.|This link is invalid or the delivery has not been dispatched.
+Не удалось передать координаты. Проверьте интернет.|Could not send location. Check your connection.
+Передача координат остановлена.|Location sharing stopped.
+Геолокация недоступна. Проверьте разрешения браузера.|Location unavailable. Check browser permissions.
+На связи с получателем|Stay connected with the recipient
+Передавайте местоположение только во время доставки. Не закрывайте эту страницу: в фоне браузер может остановить передачу.|Share location only during delivery. Keep this page open: your browser may stop sharing in the background.
+Место доставки|Delivery destination
+Нажимая кнопку, вы разрешаете показывать вашу геопозицию покупателю этого заказа.|By pressing the button, you allow this order’s buyer to see your location.
+Остановить передачу|Stop sharing
+Передавать моё местоположение|Share my location
+Дождитесь, пока продавец отметит заказ отправленным, затем обновите страницу.|Wait for the seller to mark the order as shipped, then refresh this page.
+Последнее обновление|Last updated
+Передача координат включена|Location sharing is on
+Передача координат выключена|Location sharing is off
+Доставка вашего заказа|Your order’s delivery
+Статусы заказа и местоположение доставки в одном месте.|Order status and delivery location, in one place.
+Доставка заказа|Order delivery
+Координаты обновляются|Location is updating
+Последняя известная позиция|Last known location
+Водитель ещё не передаёт координаты|The driver is not sharing location yet
+Позиция появится после отправки заказа и включения геолокации водителем. Время прибытия уточняйте у продавца.|Location appears once the order is shipped and the driver starts sharing. Ask the seller about arrival time.
+Отправления|Shipments
+Карта недоступна. Можно указать координаты вручную.|Map unavailable. You can enter coordinates manually.
+Машина|Vehicle
+Карта доставки|Delivery map
+Увеличить карту|Zoom in
+Уменьшить карту|Zoom out
+Выбрать центр карты|Select the map centre
+Нажмите на карте у въезда на объект|Tap the site entrance on the map
+Геолокация недоступна. Выберите точку на карте.|Location unavailable. Choose a point on the map.
+Определяем местоположение…|Finding your location…
+Проверьте точку на карте перед заказом.|Check the map pin before placing your order.
+Точка на карте|Map pin
+Помогите водителю найти нужный въезд|Help your driver find the right entrance
+Моё местоположение|My location
+Точка пока не выбрана|No location selected yet
+Указать координаты вручную|Enter coordinates manually
+Широта|Latitude
+Долгота|Longitude
+Ссылка водителя отключена.|Driver link revoked.
+Ссылка действует 24 часа. Передайте её только водителю.|The link lasts 24 hours. Share it only with the driver.
+Отслеживание доставки|Delivery tracking
+Водитель открывает ссылку на своём телефоне и включает передачу координат после отправки заказа.|The driver opens the link on their phone and starts location sharing after dispatch.
+Создать ссылку водителю|Create driver link
+Отключить ссылку|Revoke link
+Ссылка водителю|Driver link
+Точка доставки|Delivery point
+Введите название техники|Enter equipment name
+Максимум 150 символов|Up to 150 characters
+Укажите характеристики|Enter specifications
+Максимум 100 символов|Up to 100 characters
+Укажите город|Enter a city
+Укажите цену|Enter a price
+Цена должна быть больше 0|Price must be greater than 0
+Укажите минимальный срок|Enter the minimum duration
+Минимум 1 сутки|At least 1 day
+Максимум 4000 символов|Up to 4000 characters
 `;
 
 export const en = Object.fromEntries(

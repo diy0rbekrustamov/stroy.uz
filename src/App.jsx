@@ -26,6 +26,8 @@ const router = createBrowserRouter([
     element: <Layout />,
     errorElement: <RouteFailure />,
     children: [
+      { path: "orders/:orderId/delivery", element: page(() => import("./pages/OrderDeliveryPage.jsx")) },
+      { path: "delivery/driver", element: page(() => import("./pages/DriverDeliveryPage.jsx")) },
       {
         path: "rentals",
         element: page(() => import("./pages/RentalsPage.jsx")),

@@ -3,6 +3,7 @@ import { api } from "../../api/client.js";
 import { useLanguage } from "../../i18n/useLanguage.js";
 import Button from "../ui/Button.jsx";
 import { statusLabel, statusAction } from "../../api/status.js";
+import DriverLink from "../delivery/DriverLink.jsx";
 export default function ApiOrders() {
   const { t } = useLanguage(),
     [orders, setOrders] = useState([]),
@@ -46,6 +47,11 @@ export default function ApiOrders() {
       ].map((item) => (
         <article className="auth-info" key={item.id} style={{ marginTop: 16 }}>
           <h2>{t(item.name)}</h2>
+          {item.kind === "orders" && <>
+            {item.delivery?.point && <p>{t("Точка доставки")}: {item.delivery.point.lat}, {item.delivery.point.lng}</p>}
+            {item.delivery?.note && <p>{item.delivery.note}</p>}
+            <DriverLink item={item}/>
+          </>}
           <p>
             #{item.id.slice(0, 8)} · {t(statusLabel(item.status))}
           </p>
