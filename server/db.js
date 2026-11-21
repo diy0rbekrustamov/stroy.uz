@@ -49,7 +49,7 @@ export async function connectDatabase(env = process.env) {
 export async function migrate(db) {
   const sql = (
     await Promise.all(
-      ["001_initial.sql", "002_rentals.sql"].map((name) =>
+      ["001_initial.sql", "002_rentals.sql", "003_catalog_indexes.sql"].map((name) =>
         readFile(new URL("./migrations/" + name, import.meta.url), "utf8"),
       ),
     )

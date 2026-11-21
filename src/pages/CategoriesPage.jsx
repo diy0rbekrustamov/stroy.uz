@@ -1,4 +1,5 @@
 import { productCount } from "../i18n/translate.js";
+import { useProductFacets } from "../api/useCatalog.js";
 import { useLanguage } from "../i18n/useLanguage.js";
 import { useEffect } from "react";
 import { Link } from "react-router";
@@ -13,6 +14,7 @@ import "./CatalogPage.css";
 
 export default function CategoriesPage() {
   const { t, language } = useLanguage();
+  const facets = useProductFacets();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -39,9 +41,9 @@ export default function CategoriesPage() {
         </div>
         <div className="market-categories-grid">
           {catalogCategories.map((category, index) => {
-            const count = catalogProducts.filter(
-              (product) => product.categoryId === category.id,
-            ).length;
+            const count = facets?.categories
+              ? (facets.categories[category.id] || 0)
+              : catalogProducts.filter((product) => product.categoryId === category.id).length;
             return (
               <Link
                 className="market-category-tile"

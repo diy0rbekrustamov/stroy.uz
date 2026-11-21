@@ -1,3 +1,20 @@
+## Локальный запуск одним терминалом
+
+```sh
+npm ci
+npm run dev
+```
+
+После запуска: http://127.0.0.1:5173, `/register`, `/login`.
+Фильтрация `/api/products` выполняется на сервере; поддерживаются `q`,
+`category`, `brand`, `min`, `max`, `stock=1`, `sort=popular|price-asc|price-desc|name`,
+`page`, `limit`. Ответ: `items`, `total`, `page`, `pages`, `pageSize`.
+Метаданные категорий и брендов: `/api/catalog/facets`.
+Состояние фильтров хранится в URL `/catalog`, а не в cookies или localStorage.
+PGlite сохраняет пользователей на диск в `.data/postgres`; пароль хранится
+только в виде защищённого хэша. Сессии — в httpOnly cookies.
+Для отдельного старта Vite используйте `npm run dev:web`.
+
 # STROY UZ API
 
 Node.js 24 LTS, Fastify, PostgreSQL. Frontend and API share one origin.

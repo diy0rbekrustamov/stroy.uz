@@ -831,6 +831,15 @@ cancelled|Bekor qilindi
 Цена за сутки, сум|Sutkalik narx, so‘m
 Доступна подача техники|Texnikani yetkazish mavjud
 Сохранение…|Saqlanmoqda…
+Каталог|Katalog
+Подберите материалы под свой проект|Loyihangiz uchun materiallarni tanlang
+Выбрано фильтров|Tanlangan filtrlar
+Быстрый выбор цены|Narxni tez tanlash
+Любая цена|Istalgan narx
+До 100 тыс.|100 minggacha
+До 500 тыс.|500 minggacha
+Без товаров под заказ|Faqat ombordagi mahsulotlar
+Показать товары|Mahsulotlarni ko‘rsatish
 `;
 
 export const uz = Object.fromEntries(

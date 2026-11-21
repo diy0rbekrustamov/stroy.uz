@@ -1,6 +1,7 @@
 import { matchesProduct, translate } from "../i18n/translate.js";
 
 export const CATALOG_PAGE_SIZE = 6;
+export const CATALOG_PAGE_SIZES = [6, 12, 24];
 export const catalogSorts = ["popular", "price-asc", "price-desc", "name"];
 
 export function readCatalogFilters(params) {
@@ -31,7 +32,10 @@ export function readCatalogFilters(params) {
     sort: catalogSorts.includes(params.get("sort"))
       ? params.get("sort")
       : "popular",
-    page: Math.max(1, Math.floor(Number(params.get("page")) || 1)),
+    page: Math.min(100000, Math.max(1, Math.floor(Number(params.get("page")) || 1))),
+    limit: CATALOG_PAGE_SIZES.includes(Number(params.get("limit")))
+      ? Number(params.get("limit"))
+      : CATALOG_PAGE_SIZE,
   };
 }
 
@@ -57,8 +61,8 @@ export function filterCatalogProducts(products, filters, language) {
   return matching;
 }
 
-export function paginateCatalog(products, requestedPage) {
-  const pages = Math.max(1, Math.ceil(products.length / CATALOG_PAGE_SIZE));
+export function paginateCatalog(products, requestedPage, pageSize = CATALOG_PAGE_SIZE) {
+  const pages = Math.max(1, Math.ceil(products.length / pageSize));
   const page = Math.min(
     pages,
     Number.isFinite(requestedPage) ? Math.max(1, Math.floor(requestedPage)) : 1,
@@ -67,8 +71,8 @@ export function paginateCatalog(products, requestedPage) {
     page,
     pages,
     products: products.slice(
-      (page - 1) * CATALOG_PAGE_SIZE,
-      page * CATALOG_PAGE_SIZE,
+      (page - 1) * pageSize,
+      page * pageSize,
     ),
   };
 }

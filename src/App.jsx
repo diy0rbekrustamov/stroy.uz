@@ -1,143 +1,98 @@
-import { ShopProvider } from "./context/ShopContext.jsx";
-import LanguageProvider from "./i18n/LanguageProvider.jsx";
-import Layout from "./components/layout/Layout.jsx";
-import LayoutSeller from "./components/seller/Layout.jsx";
-import HomePage from "./pages/HomePage.jsx";
-import { createBrowserRouter, RouterProvider } from "react-router";
-import { lazy, Suspense } from "react";
-import {
-  PageLoading,
-  PageNotFound,
-  RouteFailure,
-} from "./components/ui/PageState.jsx";
+import React,{useEffect,useMemo,useState} from 'react'
+import Canvas3D from './Canvas3D.jsx'
+import Icon from './Icons.jsx'
+import {categories,products,projects,money} from './data.js'
 
-const page = (loader) => {
-  const Component = lazy(loader);
-  return (
-    <Suspense fallback={<PageLoading />}>
-      <Component />
-    </Suspense>
-  );
-};
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    errorElement: <RouteFailure />,
-    children: [
-      {
-        path: "rentals",
-        element: page(() => import("./pages/RentalsPage.jsx")),
-      },
-      {
-        path: "rentals/:rentalId",
-        element: page(() => import("./pages/RentalPage.jsx")),
-      },
-      { path: "cart", element: page(() => import("./pages/CartPage.jsx")) },
-      {
-        path: "checkout",
-        element: page(() => import("./pages/CheckoutPage.jsx")),
-      },
-      {
-        path: "account",
-        element: page(() => import("./pages/AccountPage.jsx")),
-      },
-      {
-        path: "services",
-        element: page(() => import("./pages/ServicesPage.jsx")),
-      },
-      {
-        path: "services/:serviceId",
-        element: page(() => import("./pages/ServicePage.jsx")),
-      },
-      {
-        path: "product/:productId",
-        element: page(() => import("./pages/ProductPage.jsx")),
-      },
-      {
-        path: "product",
-        element: page(() => import("./pages/ProductPage.jsx")),
-      },
-      {
-        index: true,
-        element: <HomePage />,
-      },
-      { path: "*", element: <PageNotFound /> },
-      {
-        path: "register",
-        element: page(() => import("./pages/RegisterPage.jsx")),
-      },
-      {
-        path: "catalog",
-        element: page(() => import("./pages/CatalogPage.jsx")),
-      },
-      {
-        path: "categories",
-        element: page(() => import("./pages/CategoriesPage.jsx")),
-      },
-      {
-        path: "login",
-        element: page(() => import("./pages/LoginPage.jsx")),
-      },
-      {
-        path: "reset-password",
-        element: page(() => import("./pages/ResetPasswordPage.jsx")),
-      },
-      {
-        path: "favorites",
-        element: page(() => import("./pages/FavoritesPage.jsx")),
-      },
-      {
-        path: "seller",
-        element: <LayoutSeller />,
-        children: [
-          {
-            path: "rentals",
-            element: page(() => import("./pages/Seller/RentalsPage.jsx")),
-          },
-          {
-            index: true,
-            element: page(
-              () => import("./pages/Seller/product/ProductsPage.jsx"),
-            ),
-          },
-          {
-            path: "add-product",
-            element: page(
-              () => import("./pages/Seller/product/AddProductPage.jsx"),
-            ),
-          },
-          {
-            path: "services",
-            element: page(
-              () => import("./pages/Seller/service/ServicesPage.jsx"),
-            ),
-          },
-          {
-            path: "add-service",
-            element: page(
-              () => import("./pages/Seller/service/AddServicePage.jsx"),
-            ),
-          },
-          {
-            path: "orders",
-            element: page(() => import("./pages/Seller/order/OrdersPage.jsx")),
-          },
-        ],
-      },
-    ],
-  },
-]);
-
-function App() {
-  return (
-    <LanguageProvider>
-      <ShopProvider>
-        <RouterProvider router={router} />
-      </ShopProvider>
-    </LanguageProvider>
-  );
+const save=(k,v)=>{try{localStorage.setItem('stroyuz-3d-'+k,JSON.stringify(v))}catch{}}
+const restore=(k,v)=>{try{return JSON.parse(localStorage.getItem('stroyuz-3d-'+k))??v}catch{return v}}
+function usePersist(k,initial){const [v,setV]=useState(()=>restore(k,initial));useEffect(()=>save(k,v),[k,v]);return[v,setV]}
+function Brand({go,dark=false}){return <a href="/" onClick={e=>{e.preventDefault();go('/')}} className={'brand '+(dark?'brand-light':'')} aria-label="STROY UZ — на главную"><img src="/assets/logo.png" alt=""/><strong>STROY<span>UZ</span></strong><small>СТРОИМ БУДУЩЕЕ</small></a>}
+function Lnk({go,to,children,className='',onClick,...rest}){return <a href={to} className={className} onClick={e=>{e.preventDefault();if(onClick)onClick();go(to)}} {...rest}>{children}</a>}
+function SectionTop({eyebrow,title,link,go,light=false,number}){return <div className={'section-top '+(light?'section-top-light':'')}><div><div className="section-eyebrow"><span>{number||'//'}</span> {eyebrow}</div><h2>{title}</h2></div>{link&&<Lnk go={go} to={link.to} className="text-link">{link.title}<Icon name="arrowUp" size={17}/></Lnk>}</div>}
+function ProductCard({item,go,add,favs,toggle,index=0}){return <article className="product-card reveal" style={{'--delay':`${Math.min(index,5)*75}ms`}} onMouseMove={e=>{const r=e.currentTarget.getBoundingClientRect();e.currentTarget.style.setProperty('--rx',`${((e.clientY-r.top)/r.height*2-1)*-3}deg`);e.currentTarget.style.setProperty('--ry',`${((e.clientX-r.left)/r.width*2-1)*5}deg`)}} onMouseLeave={e=>{e.currentTarget.style.setProperty('--rx','0deg');e.currentTarget.style.setProperty('--ry','0deg')}}>
+  <div className="pc-visual">
+   <div className="pc-badge">{item.badge}</div>
+   <button className={'icon-button pc-heart '+(favs.includes(item.id)?'is-active':'')} onClick={()=>toggle(item.id)} aria-label={favs.includes(item.id)?'Убрать из избранного':'Добавить в избранное'}><Icon name="heart" size={21}/></button>
+   <Lnk to={'/product/'+item.id} go={go} className="pc-image-link" aria-label={'Подробнее: '+item.name}><img loading="lazy" src={item.image} alt={item.name}/></Lnk>
+   <span className="pc-index">{String(index+1).padStart(2,'0')} / MATERIALS</span>
+  </div>
+  <div className="pc-details"><div className="pc-category">{item.type}</div><Lnk go={go} to={'/product/'+item.id} className="pc-name">{item.name}</Lnk><div className="pc-desc">{item.desc}</div>
+   <div className="pc-bottom"><div className="pc-prices">{item.oldPrice&&<del>{money(item.oldPrice)} сум</del>}<strong>{money(item.price)} <span>сум / {item.unit}</span></strong></div><button className="pc-add" onClick={()=>add(item.id)} aria-label={'Добавить '+item.name+' в корзину'}><Icon name="plus" size={23}/></button></div>
+   <div className="pc-stock"><span/> В наличии</div>
+  </div>
+ </article>}
+function CategoryTile({item,go,index}){return <Lnk go={go} to={'/catalog?category='+item.id} className="category-tile reveal" style={{'--delay':`${index*60}ms`}}><div className="cat-suptitle"><span>{item.num}</span><Icon name="arrowUp" size={17}/></div><div className="cat-symbol"><Icon name={item.icon} size={56} strokeWidth={1.22}/></div><div className="cat-copy"><h3>{item.name}</h3><p>{item.sub}</p></div><span className="cat-bottom-line"/></Lnk>}
+function Home({go,add,favs,toggle,openInquiry}){
+ const [activeTab,setActiveTab]=useState('Все'),[mode,setMode]=useState(0),[faq,setFaq]=useState(0)
+ const featured=useMemo(()=>products.filter(p=>p.featured&&(activeTab==='Все'||(activeTab==='Для стройки'&&['cement','bricks','metal'].includes(p.category))||(activeTab==='Для ремонта'&&['finish','tools','plumbing'].includes(p.category))||(activeTab==='Инструменты'&&p.category==='tools'))),[activeTab])
+ return <main>
+  <section className="hero" id="home">
+   <div className="hero-grain" aria-hidden="true"/><div className="hero-grid" aria-hidden="true"/>
+   <div className="hero-copy"><div className="hero-eyebrow"><span className="pulse-dot"/> МАТЕРИАЛЫ ДЛЯ БОЛЬШИХ ИДЕЙ <span className="hero-eyeline">/ UZBEKISTAN</span></div>
+    <h1><span className="hero-h1-light">ВСЁ ДЛЯ</span><span>БОЛЬШОЙ</span><span className="hero-h1-accent">СТРОЙКИ<span className="hero-period">.</span></span></h1>
+    <p className="hero-lead">От первого кирпича до финального штриха. Материалы, инструменты и снабжение для тех, кто создаёт настоящее.</p>
+    <div className="hero-actions"><Lnk to="/catalog" go={go} className="btn btn-orange">Перейти в каталог <Icon name="arrowUp" size={20}/></Lnk><Lnk to="/wholesale" go={go} className="btn btn-outline">Для бизнеса <Icon name="arrow" size={20}/></Lnk></div>
+    <div className="hero-footnote"><Icon name="truck" size={18}/> Доставка по Узбекистану <span className="footnote-separator"/> Опт и розница</div>
+   </div>
+   <div className="hero-visual"><div className="scene-halo"/><Canvas3D mode={mode}/><div className="scene-controls"><span>КРУТИТЕ МЫШЬЮ / ОБЪЕКТ 001</span><div className="scene-dots">{[0,1,2].map(i=><button key={i} className={mode===i?'active':''} onClick={()=>setMode(i)} aria-label={`Повернуть 3D-модель: вид ${i+1}`}/>)}</div></div></div>
+   <div className="hero-footer-bar"><div className="hero-idx">001 <span>/</span> MATERIAL EXPERIENCE</div><div className="hero-marquee">STROY UZ <span>✳</span> СТРОИТЕЛЬСТВО БЕЗ КОМПРОМИССОВ <span>✳</span> STROY UZ</div><a className="hero-scroll" href="#categories" onClick={e=>{e.preventDefault();document.getElementById('categories')?.scrollIntoView({behavior:'smooth'})}}>ЛИСТАЙТЕ ВНИЗ <span>↓</span></a></div>
+  </section>
+  <div className="trust-strip"><div><Icon name="shield" size={24}/> Для профессионалов и дома</div><span className="trust-rule"/><div><Icon name="truck" size={26}/> Доставка по Узбекистану</div><span className="trust-rule"/><div><Icon name="package" size={24}/> Оптовые и розничные заказы</div></div>
+  <section className="section categories-section" id="categories"><div className="container"><SectionTop go={go} eyebrow="НАВИГАЦИЯ ПО МАТЕРИАЛАМ" number="01 /" title={<>Всё для твоего <em>проекта.</em></>} link={{title:'Все категории',to:'/categories'}}/><div className="categories-grid">{categories.map((c,i)=><CategoryTile key={c.id} item={c} index={i} go={go}/>)}</div></div></section>
+  <div className="statement-band" aria-hidden="true"><div>СТРОЙ. СОЗДАВАЙ. <span>ПРЕВОСХОДИ.</span> ✳ STROY UZ ✳</div></div>
+  <section className="section products-section" id="products"><div className="container"><SectionTop go={go} eyebrow="ВЫБОР ДЛЯ ВАШЕГО ПРОЕКТА" number="02 /" title={<>Материалы, которые <em>работают.</em></>} link={{title:'Весь каталог',to:'/catalog'}} light/><div className="tab-row">{['Все','Для стройки','Для ремонта','Инструменты'].map(t=><button key={t} className={'pill-tab '+(activeTab===t?'active':'')} onClick={()=>setActiveTab(t)}>{t}</button>)}<span className="tab-count">{featured.length.toString().padStart(2,'0')} ПОЗИЦИИ</span></div><div className="product-grid">{featured.map((p,i)=><ProductCard key={p.id} item={p} index={i} go={go} add={add} favs={favs} toggle={toggle}/>)}</div>{!featured.length&&<p className="no-results">В этой подборке пока нет товаров. <Lnk to="/catalog" go={go}>Посмотреть каталог</Lnk></p>}</div></section>
+  <section className="immersive-section" id="solutions"><div className="immersive-image"><img src="/assets/project-build.png" alt="Строительные работы" loading="lazy"/><div className="immersive-img-label"><span>01 / READY TO BUILD</span><Icon name="arrowUp"/></div></div><div className="immersive-copy"><span className="section-eyebrow"><span>03 /</span> ВСЁ ПРОДУМАНО</span><h2>МАТЕРИАЛЫ.<br/>РЕШЕНИЯ.<br/><em>РЕЗУЛЬТАТ.</em></h2><p>Никаких случайных покупок. Подбирайте то, что действительно нужно вашему проекту — от армирования основания до последних деталей интерьера.</p><div className="immersive-stats"><div><strong>06</strong><span>ОСНОВНЫХ<br/>НАПРАВЛЕНИЙ</span></div><div><strong>01</strong><span>МЕСТО ДЛЯ<br/>ВСЕХ ЗАКУПОК</span></div></div><Lnk to="/categories" go={go} className="btn btn-dark">Исследовать категории <Icon name="arrowUp" size={19}/></Lnk></div></section>
+  <section className="section workflow-section"><div className="container"><SectionTop go={go} eyebrow="УДОБНО НА КАЖДОМ ЭТАПЕ" number="04 /" title={<>От идеи <em>до объекта.</em></>}/><div className="workflow-grid">{[{n:'01',icon:'search',title:'Находите',description:'Ищите нужные материалы, сравнивайте варианты и выбирайте подходящие решения.'},{n:'02',icon:'bag',title:'Собирайте',description:'Добавляйте товары в корзину, формируйте список закупки под конкретный объект.'},{n:'03',icon:'truck',title:'Планируйте',description:'Подготовьте запрос на поставку, уточните объём и условия доставки.'}].map((step,i)=><div className="workflow-card reveal" style={{'--delay':`${i*100}ms`}} key={step.n}><div className="workflow-top"><span>{step.n} / 03</span><Icon name={step.icon} size={29} strokeWidth={1.3}/></div><div className="workflow-line"/><h3>{step.title}<span>.</span></h3><p>{step.description}</p></div>)}</div></div></section>
+  <section className="business-banner"><div className="business-noise"/><div className="business-line-art" aria-hidden="true"><i/><i/><i/></div><div className="container business-content"><div className="business-left"><div className="section-eyebrow"><span>05 /</span> STROY UZ BUSINESS</div><h2>КРУПНЫЕ<br/>ПЛАНЫ?<br/><em>НАШ МАСШТАБ.</em></h2><p>Комплектация строительных объектов. Оптовые закупки материалов. Один список — меньше сложностей.</p><button className="btn btn-orange" onClick={openInquiry}>Обсудить поставку <Icon name="arrowUp" size={20}/></button></div><div className="business-right"><div className="business-frame"><span>SUPPLY / 01</span><Icon name="cube" size={116} strokeWidth={.7}/><div className="frame-info"><b>STROY<br/>UZ.</b><small>ОПТОВЫЕ РЕШЕНИЯ<br/>ДЛЯ БИЗНЕСА</small></div></div></div></div></section>
+  <section className="section projects-section"><div className="container"><SectionTop go={go} eyebrow="ВДОХНОВЛЕНИЕ В ДЕТАЛЯХ" number="06 /" title={<>Каждая стройка — <em>история.</em></>}/><div className="projects-grid">{projects.map((p,i)=><Lnk to={i===2?'/catalog?category=tools':'/catalog'} go={go} key={p.id} className="project-card reveal" style={{'--delay':`${i*100}ms`}}><img loading="lazy" src={p.image} alt={p.title}/><div className="project-shade"/><div className="project-id">{p.id} / STROY UZ</div><div className="project-text"><span>{p.type}</span><h3>{p.title}</h3></div><div className="project-arrow"><Icon name="arrowUp" size={19}/></div></Lnk>)}</div></div></section>
+  <section className="section faq-section"><div className="container faq-layout"><div><span className="section-eyebrow"><span>07 /</span> ОТВЕЧАЕМ НА ВОПРОСЫ</span><h2>Всё просто.<br/><em>И по делу.</em></h2><p>Процесс закупки должен быть таким же понятным, как хороший чертёж.</p></div><div className="faq-items">{[{q:'Вы доставляете материалы по Узбекистану?',a:'Да, можно сформировать запрос на доставку по Узбекистану. Конкретные сроки, стоимость и доступность необходимо согласовать при оформлении.'},{q:'Можно купить материалы оптом?',a:'Да. Перейдите в раздел «Для бизнеса», укажите виды материалов и предполагаемый объём. Вы сможете сформировать заявку для передачи менеджеру.'},{q:'Как работает корзина?',a:'Выберите товары и нужное количество. Корзина сохраняется в этом браузере. Затем можно подготовить список закупки и скопировать его для оформления.'},{q:'Есть ли у товаров актуальные цены?',a:'Сейчас на сайте используются демонстрационные цены и ассортимент. Перед реальными закупками подтвердите наличие и стоимость у поставщика.'}].map(({q,a},i)=><div className={'faq-item '+(faq===i?'open':'')} key={q}><button onClick={()=>setFaq(faq===i?-1:i)} aria-expanded={faq===i}><span>{String(i+1).padStart(2,'0')}</span>{q}<Icon name={faq===i?'minus':'plus'} size={20}/></button><div className="faq-answer">{a}</div></div>)}</div></div></section>
+ </main>
 }
-
-export default App;
+function Catalog({go,add,favs,toggle,route}){
+ const params=new URLSearchParams(route.split('?')[1]||''),[category,setCategory]=useState(params.get('category')||'all'),[query,setQuery]=useState(params.get('q')||''),[sort,setSort]=useState('featured'),[maxPrice,setMaxPrice]=useState(''),[onlyStock,setOnlyStock]=useState(false),[mobileFilters,setMobileFilters]=useState(false)
+ useEffect(()=>{const params=new URLSearchParams(route.split('?')[1]||'');setCategory(params.get('category')||'all');setQuery(params.get('q')||'')},[route])
+ const filtered=useMemo(()=>{let res=products.filter(p=>(category==='all'||p.category===category)&&(!query||[p.name,p.type,p.desc,p.tag].join(' ').toLowerCase().includes(query.toLowerCase()))&&(!onlyStock||p.stock)&&(!maxPrice||p.price<=Number(maxPrice)));if(sort==='low')res.sort((a,b)=>a.price-b.price);if(sort==='high')res.sort((a,b)=>b.price-a.price);return res},[category,query,onlyStock,maxPrice,sort])
+ const choose=id=>{setCategory(id);go('/catalog'+(id==='all'?'':'?category='+id),false);setMobileFilters(false)}
+ return <main className="inner-page"><div className="container"><div className="breadcrumbs"><Lnk to="/" go={go}>Главная</Lnk><Icon name="chevron" size={14}/><span>Каталог товаров</span></div><div className="page-intro"><div className="section-eyebrow"><span>01 /</span> STROY UZ MARKETPLACE</div><h1>Каталог <em>материалов.</em></h1><p>Всё, что нужно для строительства и ремонта — в одном месте.</p></div><div className="catalog-toolbar"><div className="catalog-search"><Icon name="search" size={19}/><input aria-label="Поиск по каталогу" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Название, материал или инструмент"/>{query&&<button onClick={()=>setQuery('')} aria-label="Очистить поиск"><Icon name="x" size={16}/></button>}</div><button className="filter-mobile-button" onClick={()=>setMobileFilters(!mobileFilters)}><Icon name="filter"/> Фильтры</button><span className="catalog-count">НАЙДЕНО: {filtered.length.toString().padStart(2,'0')}</span><select aria-label="Сортировка" value={sort} onChange={e=>setSort(e.target.value)}><option value="featured">По популярности</option><option value="low">Сначала дешевле</option><option value="high">Сначала дороже</option></select></div><div className="catalog-layout"><aside className={'catalog-sidebar '+(mobileFilters?'mobile-open':'')}><div className="sidebar-title">КАТЕГОРИИ <Icon name="filter" size={17}/></div>{[{id:'all',name:'Все товары'},...categories].map(c=><button onClick={()=>choose(c.id)} className={'sidebar-link '+(category===c.id?'chosen':'')} key={c.id}><span>{c.name}</span><Icon name="arrow" size={16}/></button>)}<div className="sidebar-divider"/><label className="sidebar-label">МАКСИМАЛЬНАЯ ЦЕНА, СУМ</label><input type="number" min="0" value={maxPrice} onChange={e=>setMaxPrice(e.target.value)} placeholder="Например, 300000" className="sidebar-input"/><label className="sidebar-check"><input type="checkbox" checked={onlyStock} onChange={e=>setOnlyStock(e.target.checked)}/> Только в наличии</label><button className="reset-filters" onClick={()=>{choose('all');setMaxPrice('');setOnlyStock(false);setQuery('');setSort('featured')}}>Сбросить фильтры <Icon name="x" size={14}/></button></aside><div className="catalog-results"><div className="catalog-chips">{[{id:'all',name:'Все'},...categories].map(c=><button key={c.id} onClick={()=>choose(c.id)} className={'pill-tab '+(c.id===category?'active':'')}>{c.name}</button>)}</div>{filtered.length?<div className="product-grid catalog-product-grid">{filtered.map((p,i)=><ProductCard key={p.id} item={p} index={i} go={go} add={add} favs={favs} toggle={toggle}/>)}</div>:<div className="empty-state"><Icon name="search" size={48}/><h3>Товары не найдены</h3><p>Попробуйте изменить категорию или параметры поиска.</p><button className="btn btn-dark" onClick={()=>{choose('all');setQuery('');setMaxPrice('')}}>Показать все товары <Icon name="arrow"/></button></div>}</div></div></div></main>
+}
+function CategoriesPage({go}){return <main className="inner-page"><div className="container"><div className="breadcrumbs"><Lnk to="/" go={go}>Главная</Lnk><Icon name="chevron" size={14}/><span>Все категории</span></div><div className="page-intro"><div className="section-eyebrow"><span>01 /</span> МАТЕРИАЛЫ ДЛЯ ВСЕГО</div><h1>Выберите <em>направление.</em></h1><p>От самых основ до завершения проекта — найдите свой раздел.</p></div><div className="categories-grid all-categories-grid">{categories.map((c,i)=><CategoryTile key={c.id} item={c} go={go} index={i}/>)}</div><div className="categories-bottom"><span>НЕ ЗНАЕТЕ, ЧТО НУЖНО?</span><Lnk go={go} to="/catalog" className="btn btn-dark">Смотреть все товары <Icon name="arrow"/></Lnk></div></div></main>}
+function ProductPage({id,go,add,favs,toggle}){
+ const p=products.find(x=>x.id===id),[qty,setQty]=useState(1),[tab,setTab]=useState('Характеристики'),[large,setLarge]=useState(false)
+ useEffect(()=>{setQty(1);setTab('Характеристики')},[id])
+ if(!p)return <div className="container empty-state"><h2>Товар не найден</h2><Lnk go={go} to="/catalog" className="btn btn-dark">В каталог <Icon name="arrow"/></Lnk></div>
+ const cat=categories.find(c=>c.id===p.category)
+ const recommended=products.filter(x=>x.id!==p.id).slice(0,4)
+ return <main className="inner-page product-page"><div className="container"><div className="breadcrumbs"><Lnk to="/" go={go}>Главная</Lnk><Icon name="chevron" size={14}/><Lnk to="/catalog" go={go}>Каталог</Lnk><Icon name="chevron" size={14}/><Lnk to={'/catalog?category='+p.category} go={go}>{cat?.name}</Lnk><Icon name="chevron" size={14}/><span>{p.name}</span></div><div className="product-hero"><div><div className="product-feature-image"><span className="product-sticker">{p.badge}</span><img onClick={()=>setLarge(true)} src={p.image} alt={p.name} title="Нажмите для увеличения"/><button className="product-zoom" onClick={()=>setLarge(true)}><Icon name="search" size={18}/> Увеличить</button></div><div className="product-thumb"><img src={p.image} alt="Миниатюра товара"/><span>01 / ОСНОВНОЙ ВИД</span></div></div><div className="product-info"><div className="section-eyebrow"><span>PRODUCT /</span> {p.type.toUpperCase()}</div><h1>{p.name}</h1><p className="product-desc-line">{p.desc}</p><div className="product-chips"><span>{p.tag}</span><span>ДЛЯ СТРОЙКИ</span><span>В НАЛИЧИИ</span></div><div className="product-purchase"><span className="price-caption">СТОИМОСТЬ / ЕДИНИЦА</span><div className="price-main">{money(p.price)} <span>сум / {p.unit}</span></div>{p.oldPrice&&<del>{money(p.oldPrice)} сум</del>}<div className="available"><span/> В наличии</div><div className="product-actions"><div className="qty-counter"><button onClick={()=>setQty(q=>Math.max(1,q-1))} aria-label="Уменьшить количество"><Icon name="minus"/></button><strong>{qty}</strong><button onClick={()=>setQty(q=>Math.min(999,q+1))} aria-label="Увеличить количество"><Icon name="plus"/></button></div><button className="btn btn-orange product-buy" onClick={()=>add(p.id,qty)}>Добавить в корзину <Icon name="arrow" size={19}/></button></div><button className={'wishlist-inline '+(favs.includes(p.id)?'active':'')} onClick={()=>toggle(p.id)}><Icon name="heart" size={20}/>{favs.includes(p.id)?'В избранном':'В избранное'}</button><p className="price-disclaimer">Цена и ассортимент демонстрационные — уточняйте перед закупкой.</p></div><div className="delivery-block"><Icon name="truck" size={24}/><div><strong>Доставка по Узбекистану</strong><p>Условия, стоимость и сроки уточняются при оформлении заказа.</p></div></div></div></div><div className="product-details-section"><div className="product-tabs">{['Описание','Характеристики','Доставка','Отзывы'].map(t=><button key={t} className={tab===t?'active':''} onClick={()=>setTab(t)}>{t}</button>)}</div><div className="details-panel"><div><span className="section-eyebrow"><span>DETAILS /</span> {p.type.toUpperCase()}</span><h2>{tab==='Отзывы'?'Ваш опыт важен.':tab==='Доставка'?'Точно к вашему объекту.':'Выбирайте с уверенностью.'}</h2><p>{tab==='Доставка'?'Условия доставки и доступность самовывоза согласовываются при оформлении.':tab==='Отзывы'?'Отзывы пользователей пока не добавлены.':`Качественные ${p.type.toLowerCase()} для больших задач. ${p.desc}. Выбирайте нужное количество и добавляйте в корзину.`}</p></div><div className="details-table">{(tab==='Характеристики'?[['Наименование',p.name],['Категория',cat?.name],['Описание',p.desc],['Единица продажи',p.unit],['Доступность','В наличии']]:tab==='Доставка'?[['География','Узбекистан'],['Стоимость','Уточняется при оформлении'],['Варианты','По согласованию']]:tab==='Отзывы'?[['Статус','Пока нет отзывов'],['Оценки','—']]:[['Товар',p.name],['Назначение',p.tag],['Подкатегория',p.type]]).map(([k,v])=><div key={k}><span>{k}</span><strong>{v}</strong></div>)}</div></div></div><div className="similar-section"><SectionTop go={go} eyebrow="МОЖЕТ ПОНАДОБИТЬСЯ" number="//" title={<>Дополните <em>заказ.</em></>} link={{title:'Все товары',to:'/catalog'}}/><div className="product-grid">{recommended.map((item,i)=><ProductCard key={item.id} item={item} index={i} go={go} add={add} toggle={toggle} favs={favs}/>)}</div></div></div>{large&&<div className="overlay" onMouseDown={()=>setLarge(false)}><div className="image-lightbox" onMouseDown={e=>e.stopPropagation()}><button className="modal-close" onClick={()=>setLarge(false)} aria-label="Закрыть"><Icon name="x"/></button><img src={p.image} alt={p.name}/></div></div>}</main>
+}
+function SavedPage({go,items,type,add,toggle,favs,cart,update}){
+ const isFav=type==='favorites',list=isFav?products.filter(p=>favs.includes(p.id)):products.filter(p=>cart[p.id]>0)
+ return <main className="inner-page saved-page"><div className="container"><div className="breadcrumbs"><Lnk go={go} to="/">Главная</Lnk><Icon name="chevron" size={14}/><span>{isFav?'Избранное':'Корзина'}</span></div><div className="page-intro"><div className="section-eyebrow"><span>STROY UZ /</span> {isFav?'МОИ ТОВАРЫ':'ВАШ ЗАКАЗ'}</div><h1>{isFav?'Избранные':'Ваша'} <em>{isFav?'товары.':'корзина.'}</em></h1><p>{isFav?'Сохраняйте то, что может пригодиться вашему проекту.':'Контролируйте количество и подготовьте запрос на закупку.'}</p></div>{list.length?(isFav?<div className="product-grid saved-products">{list.map((p,i)=><ProductCard key={p.id} item={p} index={i} go={go} add={add} toggle={toggle} favs={favs}/>)}</div>:<div className="cart-main"><div className="cart-lines">{list.map(p=><div className="cart-line" key={p.id}><img src={p.image} alt={p.name}/><div><Lnk to={'/product/'+p.id} go={go} className="cart-line-name">{p.name}</Lnk><span>{p.desc}</span><strong>{money(p.price)} сум / {p.unit}</strong></div><div className="qty-counter"><button onClick={()=>update(p.id,-1)}><Icon name="minus" size={17}/></button><strong>{cart[p.id]}</strong><button onClick={()=>update(p.id,1)}><Icon name="plus" size={17}/></button></div><button className="cart-remove" onClick={()=>update(p.id,-cart[p.id])} aria-label="Удалить товар"><Icon name="trash" size={20}/></button></div>)}</div><div className="cart-summary"><span>ВАШ СПИСОК</span><h3>Итого</h3><div className="summary-price">{money(list.reduce((n,p)=>n+p.price*cart[p.id],0))} <small>сум</small></div><p>Сумма предварительная. Цены и доставка требуют подтверждения.</p><button className="btn btn-orange" onClick={()=>{const lines=list.map(p=>`${p.name} — ${cart[p.id]} ${p.unit} × ${money(p.price)} сум`).join('\n');navigator.clipboard?.writeText('STROY UZ — запрос на закупку\n'+lines).then(()=>alert('Список закупки скопирован. Отправьте его менеджеру для уточнения заказа.'),()=>alert('Не удалось скопировать автоматически.'))}}>Скопировать список закупки <Icon name="send" size={18}/></button><Lnk to="/catalog" go={go} className="summary-back">Продолжить покупки <Icon name="arrow" size={18}/></Lnk></div></div>):<div className="empty-state"><Icon name={isFav?'heart':'bag'} size={53} strokeWidth={1.2}/><h3>{isFav?'Пока ничего не сохранено':'Ваша корзина пуста'}</h3><p>{isFav?'Добавляйте понравившиеся товары, нажимая на сердечко.':'Выберите материалы — они появятся здесь.'}</p><Lnk to="/catalog" go={go} className="btn btn-dark">Перейти в каталог <Icon name="arrow" size={19}/></Lnk></div>}</div></main>
+}
+function Wholesale({go,submitInquiry}){return <main className="inner-page wholesale-page"><div className="container"><div className="breadcrumbs"><Lnk to="/" go={go}>Главная</Lnk><Icon name="chevron" size={14}/><span>Для бизнеса</span></div><div className="wholesale-hero"><div><div className="section-eyebrow"><span>STROY UZ /</span> BUSINESS</div><h1>ЗАКУПКИ<br/>БОЛЬШОГО<br/><em>МАСШТАБА.</em></h1><p>Собирайте материалы для стройки в одном месте. Формируйте заявку и согласовывайте условия под ваш объект.</p><button onClick={submitInquiry} className="btn btn-orange">Подготовить заявку <Icon name="arrowUp" size={20}/></button></div><div className="wholesale-visual"><img src="/assets/business.png" alt="Бизнес и снабжение строительных объектов"/></div></div><div className="wholesale-benefits">{[{icon:'package',title:'Любые масштабы',text:'От небольшого объекта до комплексного списка закупок.'},{icon:'shield',title:'Ясный процесс',text:'Структурированный запрос для согласования материалов.'},{icon:'truck',title:'Гибкая логистика',text:'Условия доставки обсуждаются индивидуально.'}].map(x=><div key={x.title}><Icon name={x.icon} size={28}/><h3>{x.title}</h3><p>{x.text}</p></div>)}</div></div></main>}
+function Footer({go,openInquiry}){return <footer className="footer"><div className="container"><div className="footer-top"><div className="footer-brand"><Brand go={go} dark/><p>Материалы для больших идей.<br/>От фундамента до последнего штриха.</p><div className="footer-mini">БУХАРА <span>↗</span> УЗБЕКИСТАН</div></div><div className="footer-links"><div><h4>МАГАЗИН</h4><Lnk to="/catalog" go={go}>Каталог товаров</Lnk><Lnk to="/categories" go={go}>Категории</Lnk><Lnk to="/favorites" go={go}>Избранное</Lnk><Lnk to="/cart" go={go}>Корзина</Lnk></div><div><h4>НАПРАВЛЕНИЯ</h4><Lnk to="/catalog?category=cement" go={go}>Стройматериалы</Lnk><Lnk to="/catalog?category=tools" go={go}>Инструменты</Lnk><Lnk to="/catalog?category=finish" go={go}>Отделка</Lnk><Lnk to="/catalog?category=plumbing" go={go}>Сантехника</Lnk></div><div><h4>ДЛЯ БИЗНЕСА</h4><Lnk to="/wholesale" go={go}>Оптовые закупки</Lnk><button onClick={openInquiry}>Запросить предложение</button><Lnk to="/" go={go}>О компании</Lnk></div></div></div><div className="footer-giant" aria-hidden="true">STROY<span>UZ</span><b>®</b></div><div className="footer-bottom"><span>© 2026 STROY UZ. ДЕМО-КОНЦЕПЦИЯ ИНТЕРНЕТ-МАГАЗИНА.</span><span>СОЗДАНО ДЛЯ ТЕХ, КТО СТРОИТ <span className="footer-star">✳</span></span><a href="#top" onClick={e=>{e.preventDefault();window.scrollTo({top:0,behavior:'smooth'})}}>НАВЕРХ ↑</a></div></div></footer>}
+function Drawer({type,close,cart,favs,go,update,toggle}){const ids=type==='cart'?Object.keys(cart).filter(id=>cart[id]>0):favs,list=products.filter(p=>ids.includes(p.id));return <div className="overlay drawer-overlay" onMouseDown={close}><aside className="drawer" onMouseDown={e=>e.stopPropagation()}><div className="drawer-header"><div><span>STROY UZ / МОЁ</span><h2>{type==='cart'?'Корзина':'Избранное'} <small>({ids.length})</small></h2></div><button onClick={close} aria-label="Закрыть"><Icon name="x" size={24}/></button></div><div className="drawer-list">{list.length?list.map(p=><div className="drawer-item" key={p.id}><img src={p.image} alt={p.name}/><div><strong>{p.name}</strong><span>{money(p.price)} сум</span>{type==='cart'?<div className="drawer-qty"><button onClick={()=>update(p.id,-1)}>−</button>{cart[p.id]}<button onClick={()=>update(p.id,1)}>+</button></div>:<button className="drawer-remove" onClick={()=>toggle(p.id)}>Убрать из избранного</button>}</div></div>):<div className="drawer-empty"><Icon name={type==='cart'?'bag':'heart'} size={45}/><p>{type==='cart'?'Корзина пока пуста':'Вы ещё не добавили товары'}</p></div>}</div><div className="drawer-foot">{type==='cart'&&<div className="drawer-total">Предварительный итог <strong>{money(list.reduce((a,p)=>a+p.price*cart[p.id],0))} сум</strong></div>}<button className="btn btn-orange" onClick={()=>{close();go(type==='cart'?'/cart':'/favorites')}}>{type==='cart'?'Открыть корзину':'Открыть избранное'} <Icon name="arrow" size={20}/></button><button className="drawer-continue" onClick={close}>Продолжить покупки</button></div></aside></div>}
+function InquiryModal({close}){const [name,setName]=useState(''),[phone,setPhone]=useState(''),[details,setDetails]=useState(''),[prepared,setPrepared]=useState(false),[copied,setCopied]=useState(false);const text=`ЗАПРОС STROY UZ\nКонтакт: ${name}\nТелефон: ${phone}\nМатериалы / объёмы: ${details}`;return <div className="overlay modal-overlay" onMouseDown={close}><div className="inquiry-modal" onMouseDown={e=>e.stopPropagation()}><div className="modal-heading"><span>STROY UZ / ДЛЯ БИЗНЕСА</span><button onClick={close} aria-label="Закрыть форму"><Icon name="x" size={23}/></button></div><h2>{prepared?'ЗАЯВКА ГОТОВА.':'ДАВАЙТЕ СТРОИТЬ ВМЕСТЕ.'}</h2>{!prepared?<><p>Опишите задачу. Мы подготовим текст запроса, который можно передать вашему менеджеру или поставщику.</p><form onSubmit={e=>{e.preventDefault();setPrepared(true)}}><label>ВАШЕ ИМЯ<input value={name} onChange={e=>setName(e.target.value)} placeholder="Как к вам обращаться" required/></label><label>ТЕЛЕФОН<input value={phone} onChange={e=>setPhone(e.target.value)} placeholder="+998 90 000 00 00" required/></label><label>ЧТО НУЖНО ПОСТАВИТЬ?<textarea value={details} onChange={e=>setDetails(e.target.value)} rows="4" placeholder="Материалы, примерный объём, адрес объекта" required/></label><button className="btn btn-orange" type="submit">Сформировать заявку <Icon name="arrow" size={19}/></button></form></>:<><p className="prepared-text">Заявка сформирована локально. Она не отправлена на сервер — скопируйте текст и передайте поставщику.</p><pre className="inquiry-preview">{text}</pre><button className="btn btn-orange" onClick={async()=>{try{await navigator.clipboard.writeText(text);setCopied(true)}catch{setCopied(false)}}}>{copied?'Скопировано!':'Скопировать заявку'} <Icon name={copied?'check':'package'} size={18}/></button></>}</div></div>}
+function NotFound({go}){return <main className="inner-page"><div className="container empty-state"><span className="notfound">404</span><h2>Кажется, здесь ещё не построено.</h2><Lnk go={go} to="/" className="btn btn-dark">На главную <Icon name="arrow"/></Lnk></div></main>}
+export default function App(){
+ const [route,setRoute]=useState(()=>window.location.pathname+window.location.search),[cart,setCart]=usePersist('cart',{}),[favs,setFavs]=usePersist('favs',[]),[drawer,setDrawer]=useState(null),[inquiry,setInquiry]=useState(false),[mobile,setMobile]=useState(false),[headerSearch,setHeaderSearch]=useState(''),[searchOpen,setSearchOpen]=useState(false),[toast,setToast]=useState(''),[scrolled,setScrolled]=useState(false),[mobileSearch,setMobileSearch]=useState(false)
+ const path=route.split('?')[0]
+ const go=(to,scroll=true)=>{if(window.location.pathname+window.location.search!==to)history.pushState({},'',to);setRoute(to);setMobile(false);setSearchOpen(false);setMobileSearch(false);setDrawer(null);if(scroll)window.scrollTo({top:0,behavior:'instant'})}
+ useEffect(()=>{const pop=()=>{setRoute(window.location.pathname+window.location.search);setDrawer(null)};const sc=()=>setScrolled(window.scrollY>45);window.addEventListener('popstate',pop);window.addEventListener('scroll',sc,{passive:true});sc();return()=>{window.removeEventListener('popstate',pop);window.removeEventListener('scroll',sc)}},[])
+ useEffect(()=>{const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.06});const observe=()=>document.querySelectorAll('.reveal:not(.visible)').forEach(el=>io.observe(el));const mo=new MutationObserver(observe);mo.observe(document.body,{subtree:true,childList:true});const t=setTimeout(observe,50);return()=>{clearTimeout(t);mo.disconnect();io.disconnect()}},[route])
+ useEffect(()=>{document.body.style.overflow=drawer||inquiry?'hidden':'';return()=>{document.body.style.overflow=''}},[drawer,inquiry])
+ useEffect(()=>{if(!toast)return;const t=setTimeout(()=>setToast(''),2800);return()=>clearTimeout(t)},[toast])
+ const add=(id,n=1)=>{setCart(p=>({...p,[id]:(p[id]||0)+n}));setToast('Товар добавлен в корзину');}
+ const update=(id,n)=>setCart(p=>{const next={...p,[id]:Math.max(0,(p[id]||0)+n)};if(next[id]===0)delete next[id];return next})
+ const toggle=id=>{setFavs(p=>p.includes(id)?p.filter(x=>x!==id):[...p,id]);setToast(favs.includes(id)?'Удалено из избранного':'Добавлено в избранное')}
+ const cartCount=Object.values(cart).reduce((s,x)=>s+x,0)
+ const matches=headerSearch.trim()?products.filter(p=>p.name.toLowerCase().includes(headerSearch.toLowerCase())||p.type.toLowerCase().includes(headerSearch.toLowerCase())).slice(0,5):[]
+ const submitSearch=e=>{e.preventDefault();if(headerSearch.trim()){go('/catalog?q='+encodeURIComponent(headerSearch.trim()));setHeaderSearch('')}}
+ return <div className="app" id="top"><div className="top-line"><div className="container"><div><Icon name="location" size={13}/> Бухара <span className="muted-top">· Доставка по Узбекистану</span></div><div className="top-line-right"><span>ОПТ И РОЗНИЦА</span><span className="top-split">/</span><span>STROY UZ · 2026</span></div></div></div>
+  <header className={'site-header '+(scrolled?'header-scrolled':'')}><div className="container header-main"><Brand go={go}/><form className={"header-search "+(mobileSearch?"is-mobile-open":"")} onSubmit={submitSearch}><button type="button" className="mobile-search-trigger" aria-label="Открыть поиск" onClick={()=>setMobileSearch(v=>!v)}><Icon name="search" size={19}/></button><Icon className="desktop-search-icon" name="search" size={19}/><input id="stroy-header-search" placeholder="Найти материалы, инструмент или бренд..." value={headerSearch} onChange={e=>{setHeaderSearch(e.target.value);setSearchOpen(true)}} onFocus={()=>setSearchOpen(true)} aria-label="Поиск товаров"/><button type="submit" aria-label="Найти"><Icon name="arrow" size={18}/></button>{searchOpen&&matches.length>0&&<div className="header-search-results">{matches.map(p=><button key={p.id} type="button" onClick={()=>{go('/product/'+p.id);setHeaderSearch('')}}><img src={p.image} alt=""/><span>{p.name}<small>{money(p.price)} сум</small></span><Icon name="arrowUp" size={15}/></button>)}<button className="see-all-results" onClick={()=>go('/catalog?q='+encodeURIComponent(headerSearch))}>Все результаты <Icon name="arrow" size={16}/></button></div>}</form><div className="header-actions"><button onClick={()=>setDrawer('favorites')} className="header-icon" aria-label="Избранное"><span className="header-icon-wrap"><Icon name="heart" size={22}/>{favs.length>0&&<b>{favs.length}</b>}</span><small>Избранное</small></button><button onClick={()=>setDrawer('cart')} className="header-icon" aria-label="Корзина"><span className="header-icon-wrap"><Icon name="bag" size={22}/>{cartCount>0&&<b>{cartCount}</b>}</span><small>Корзина</small></button><button className="mobile-toggle" onClick={()=>setMobile(!mobile)} aria-label="Открыть меню"><Icon name={mobile?'x':'menu'} size={25}/></button></div></div><div className={'header-nav '+(mobile?'nav-open':'')}><div className="container"><Lnk go={go} to="/catalog" className="header-catalog"><Icon name="menu" size={17}/> Каталог товаров <Icon name="arrow" size={17}/></Lnk><nav aria-label="Главная навигация"><Lnk to="/categories" go={go}>Категории</Lnk><Lnk to="/catalog?category=cement" go={go}>Стройматериалы</Lnk><Lnk to="/catalog?category=tools" go={go}>Инструменты</Lnk><Lnk to="/catalog?category=finish" go={go}>Отделка</Lnk><Lnk to="/wholesale" go={go}>Для бизнеса</Lnk></nav><button className="header-request" onClick={()=>{setMobile(false);setInquiry(true)}}>Запросить поставку <Icon name="arrowUp" size={16}/></button></div></div></header>
+  {path==='/'?<Home go={go} add={add} favs={favs} toggle={toggle} openInquiry={()=>setInquiry(true)}/>:path==='/catalog'?<Catalog go={go} add={add} favs={favs} toggle={toggle} route={route}/>:path==='/categories'?<CategoriesPage go={go}/>:path.startsWith('/product/')?<ProductPage key={path} id={path.split('/')[2]} go={go} add={add} favs={favs} toggle={toggle}/>:path==='/cart'||path==='/favorites'?<SavedPage type={path.slice(1)} go={go} add={add} favs={favs} toggle={toggle} cart={cart} update={update}/>:path==='/wholesale'?<Wholesale go={go} submitInquiry={()=>setInquiry(true)}/>:<NotFound go={go}/>}
+  <Footer go={go} openInquiry={()=>setInquiry(true)}/>
+  {drawer&&<Drawer type={drawer} close={()=>setDrawer(null)} cart={cart} favs={favs} go={go} update={update} toggle={toggle}/>}
+  {inquiry&&<InquiryModal close={()=>setInquiry(false)}/>}
+  {toast&&<div role="status" className="toast"><Icon name="check" size={18}/>{toast}<button onClick={()=>setToast('')} aria-label="Закрыть уведомление"><Icon name="x" size={14}/></button></div>}
+ </div>
+}

@@ -831,6 +831,15 @@ cancelled|Cancelled
 Цена за сутки, сум|Daily rate, UZS
 Доступна подача техники|Equipment transport available
 Сохранение…|Saving…
+Каталог|Catalog
+Подберите материалы под свой проект|Find materials for your project
+Выбрано фильтров|Active filters
+Быстрый выбор цены|Quick price ranges
+Любая цена|Any price
+До 100 тыс.|Up to 100k
+До 500 тыс.|Up to 500k
+Без товаров под заказ|Exclude made-to-order items
+Показать товары|Show products
 `;
 
 export const en = Object.fromEntries(

@@ -1,58 +1,42 @@
-# STROY UZ
+# STROY UZ — 3D Construction Marketplace
 
-Маркетплейс строительных материалов. Стек: React 19, Vite 8, JavaScript/JSX, Tailwind CSS 4, Oxlint.
+Отдельный React-проект с премиальной главной страницей, интерактивной 3D-сценой и базовыми функциями маркетплейса строительных материалов.
 
-Сервер: Node.js + Fastify + PostgreSQL. [Запуск API, база, SMTP и эндпоинты](docs/api.md).
+## Запуск
 
-## Локальный запуск
+Требуется Node.js 20.19+ или 22.12+.
 
-Требуется Node.js 20.19+ или 22.12+ (для текущего Vite); используется npm и `package-lock.json`.
-
-```sh
-npm ci
+```bash
+npm install
 npm run dev
 ```
 
-Адрес сервера Vite выводится в терминале.
+Для production-сборки:
 
-- `npm run lint` — проверка Oxlint.
-- `npm run build` — production-сборка в `dist/`.
-- `npm run preview` — локальный просмотр готовой сборки.
+```bash
+npm run build
+npm run preview
+```
 
-Страница товара: `/product/drill` (также `/product/cement`, `/product/bricks`, `/product/paint`). Нажмите на изображение или название товара в каталоге, чтобы открыть карточку. Корзина и избранное сохраняются в браузере.
+## Страницы
 
-Страницы находятся в `src/pages/`, компоненты — в `src/components/`. [Архитектура главной страницы](docs/homepage.md).
+- `/` — главная: живой WebGL-объект из бетонных блоков, кирпичей, металлических балок и деревянных панелей, анимации, подборки, категории, FAQ.
+- `/catalog` — каталог с поиском, фильтрацией и сортировкой.
+- `/categories` — все категории.
+- `/catalog?category=tools` — фильтр по категории.
+- `/product/drill-18v` — карточка товара с количеством, изображением, характеристиками.
+- `/favorites` — избранное.
+- `/cart` — корзина, расчёт предварительной суммы и копирование запроса.
+- `/wholesale` — оптовые решения и подготовка заявки.
 
-Работайте в отдельной ветке и открывайте Pull Request. Не добавляйте зависимости и изменения общих конфигураций без согласования с командой.
+Корзина и избранное сохраняются в `localStorage`. ВебGL-сцена написана на нативном WebGL без сторонних 3D-пакетов, адаптируется под размер экрана и движение курсора, имеет fallback для устройств без WebGL и учитывает системную настройку снижения движения.
 
-Интерфейс поддерживает RU / UZ / EN. [Правила добавления переводов и проверки](docs/localization.md).
+## Важно перед запуском реального магазина
 
-[Общие кнопки, карточки товаров и адаптивность](docs/components.md).
+Цены и позиции взяты из демонстрационного проекта STROY UZ; они не являются подтверждёнными коммерческими предложениями. Форма оптового заказа **не** отправляет данные на сервер — формирует текст для копирования. Реальные платежи, остатки, логистика, личные кабинеты, обработка заказов и API должны быть подключены отдельно.
 
-## Исходный шаблон React + Vite
+## Активы
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Оригинальный логотип и изображения демонстрационных товаров/проектов сохранены из предыдущего проекта STROY UZ. Основная объёмная сцена генерируется кодом на WebGL, внешних 3D-файлов не требуется.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
-
-## Каталог и категории STROY UZ
-
-- `/catalog` — каталог товаров: категории, поиск, сортировка, диапазон цен, бренд, корзина, избранное.
-- `/categories` — все шесть категорий; карточка ведёт в каталог с выбранным фильтром.
-- `/catalog?category=tools` — пример ссылки на конкретную категорию.
-- `/catalog?q=цемент` — пример поиска из шапки.
-- Кнопки «Каталог товаров», «Открыть каталог» и «В каталог» ведут в `/catalog`, «Все категории» — в `/categories`.
-- Дополнительные пять позиций каталога и цены демонстрационные: реальные товары следует заменить данными поставщика.
-
-Запуск после распаковки: `npm install`, затем `npm run dev`.
+Стиль: светлый/тёмный графит, белый и оранжевый. Шрифты Manrope + Space Grotesk загружаются с Google Fonts с локальным fallback.
