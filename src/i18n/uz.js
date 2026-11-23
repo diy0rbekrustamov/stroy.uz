@@ -915,7 +915,65 @@ STROY UZ / ДОСТАВКА|STROY UZ / YETKAZIB BERISH
 Укажите минимальный срок|Eng kam muddatni kiriting
 Минимум 1 сутки|Kamida 1 sutka
 Максимум 4000 символов|Ko‘pi bilan 4000 belgi
-`;
+Каталог|Katalog
+Подберите материалы под свой проект|Loyihangiz uchun materiallarni tanlang
+Выбрано фильтров|Tanlangan filtrlar
+Быстрый выбор цены|Narxni tez tanlash
+Любая цена|Istalgan narx
+До 100 тыс.|100 minggacha
+До 500 тыс.|500 minggacha
+Без товаров под заказ|Faqat ombordagi mahsulotlar
+Показать товары|Mahsulotlarni ko‘rsatish
+Профиль и адрес|Profil va manzil
+В работе|Jarayonda
+Обновить|Yangilash
+Завершённые|Yakunlangan
+Измените фильтры или выберите предложение в каталоге.|Filtrlarni o‘zgartiring yoki katalogdan taklif tanlang.
+Адрес по умолчанию|Asosiy manzil
+Этот адрес будет подставлен при оформлении заказа.|Buyurtma berishda ushbu manzil avtomatik kiritiladi.
+Сохраняем…|Saqlanmoqda…
+Всего|Jami
+Обзор магазина|Do‘kon sharhi
+Новые заказы|Yangi buyurtmalar
+Требуют внимания|E’tibor talab etadi
+Товары без остатка|Tugagan mahsulotlar
+Добавить предложение|Taklif qo‘shish
+Поиск товаров, брендов, материалов|Mahsulot, brend va material qidirish
+Поиск по каталогу|Katalogdan qidirish
+На странице|Sahifada
+Загрузка товаров…|Mahsulotlar yuklanmoqda…
+Фотореалистичная композиция строительных материалов, которая собирается из отдельных элементов|Alohida qismlardan yig‘iladigan qurilish materiallari
+БЕТОН|BETON
+КЕРАМИКА|KERAMIKA
+СТАЛЬ|PO‘LAT
+Повторить сборку конструкции|Yig‘ilishni takrorlash
+ПОВТОРИТЬ СБОРКУ|YIG‘ILISHNI TAKRORLASH
+Цемент и смеси|Sement va aralashmalar
+Прочная основа любого проекта|Har bir loyiha uchun mustahkam asos
+Комфорт, который остаётся|Uzoq muddatli qulaylik
+Портландцемент · 50 кг|Portlandsement · 50 kg
+ХИТ ПРОДАЖ|ENG KO‘P SOTILGAN
+Для фундамента|Poydevor uchun
+Для стен|Devorlar uchun
+Арматура стальная Ø12|Po‘lat armatura Ø12
+Металлопрокат|Metall prokat
+Рифлёная · 12 мм · 6 м|Qovurg‘ali · 12 mm · 6 m
+Керамогранит Stone|Stone keramograniti
+Напольные покрытия|Pol qoplamalari
+Матовый · 60 × 60 см|Xira · 60 × 60 sm
+КОЛЛЕКЦИЯ|KOLLEKSIYA
+Труба PPR Ø25 мм|PPR quvur Ø25 mm
+Полипропилен · 4 м|Polipropilen · 4 m
+В НАЛИЧИИ|MAVJUD
+Утеплитель фасадный|Fasad izolyatsiyasi
+Изоляционные материалы|Izolyatsiya materiallari
+Плиты · 50 мм|Plitalar · 50 mm
+Фундамент начинается с качества|Poydevor sifatdan boshlanadi
+ЧАСТНОЕ СТРОИТЕЛЬСТВО|XUSUSIY QURILISH
+Пространство, в котором хочется жить|Yashashni istaydigan makon
+РЕМОНТ И ОТДЕЛКА|TA’MIR VA PARDOZ
+Инструмент для точной работы|Aniq ish uchun asboblar
+ОСНАЩЕНИЕ ОБЪЕКТОВ|OBYEKTLARNI JIHOZLASH`;
 
 export const uz = Object.fromEntries(
   entries

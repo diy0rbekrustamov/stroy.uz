@@ -13,7 +13,9 @@
     "test:api": "node --test server/tests/*.test.js",
     "build": "vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:local": "node scripts/dev-local.mjs",
+    "dev:web": "vite"
   },
   "dependencies": {
     "@fastify/cookie": "^11.1.3",

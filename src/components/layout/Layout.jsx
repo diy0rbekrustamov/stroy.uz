@@ -29,6 +29,11 @@ export default function Layout() {
     setAnnouncement(`${product.name} добавлен в корзину`);
   };
   useEffect(() => {
+    if (location.pathname === "/catalog") {
+      setQuery(new URLSearchParams(location.search).get("q") || "");
+    }
+  }, [location.pathname, location.search]);
+  useEffect(() => {
     const id = location.hash.slice(1);
     if (id) document.getElementById(id)?.scrollIntoView();
     else window.scrollTo(0, 0);

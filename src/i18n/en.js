@@ -915,7 +915,65 @@ STROY UZ / ДОСТАВКА|STROY UZ / DELIVERY
 Укажите минимальный срок|Enter the minimum duration
 Минимум 1 сутки|At least 1 day
 Максимум 4000 символов|Up to 4000 characters
-`;
+Каталог|Catalog
+Подберите материалы под свой проект|Find materials for your project
+Выбрано фильтров|Active filters
+Быстрый выбор цены|Quick price ranges
+Любая цена|Any price
+До 100 тыс.|Up to 100k
+До 500 тыс.|Up to 500k
+Без товаров под заказ|Exclude made-to-order items
+Показать товары|Show products
+Профиль и адрес|Profile and address
+В работе|In progress
+Обновить|Refresh
+Завершённые|Closed
+Измените фильтры или выберите предложение в каталоге.|Change filters or choose an offer from the catalog.
+Адрес по умолчанию|Default address
+Этот адрес будет подставлен при оформлении заказа.|This address will be filled in at checkout.
+Сохраняем…|Saving…
+Всего|Total
+Обзор магазина|Store overview
+Новые заказы|New orders
+Требуют внимания|Needs attention
+Товары без остатка|Out-of-stock products
+Добавить предложение|Add an offer
+Поиск товаров, брендов, материалов|Search products, brands, materials
+Поиск по каталогу|Search the catalog
+На странице|Per page
+Загрузка товаров…|Loading products…
+Фотореалистичная композиция строительных материалов, которая собирается из отдельных элементов|Building materials assembling from individual elements
+БЕТОН|CONCRETE
+КЕРАМИКА|CERAMIC
+СТАЛЬ|STEEL
+Повторить сборку конструкции|Replay assembly
+ПОВТОРИТЬ СБОРКУ|REPLAY ASSEMBLY
+Цемент и смеси|Cement and mixes
+Прочная основа любого проекта|A strong foundation for every project
+Комфорт, который остаётся|Comfort that lasts
+Портландцемент · 50 кг|Portland cement · 50 kg
+ХИТ ПРОДАЖ|BESTSELLER
+Для фундамента|For foundations
+Для стен|For walls
+Арматура стальная Ø12|Steel rebar Ø12
+Металлопрокат|Rolled metal
+Рифлёная · 12 мм · 6 м|Ribbed · 12 mm · 6 m
+Керамогранит Stone|Stone porcelain tile
+Напольные покрытия|Floor coverings
+Матовый · 60 × 60 см|Matte · 60 × 60 cm
+КОЛЛЕКЦИЯ|COLLECTION
+Труба PPR Ø25 мм|PPR pipe Ø25 mm
+Полипропилен · 4 м|Polypropylene · 4 m
+В НАЛИЧИИ|IN STOCK
+Утеплитель фасадный|Facade insulation
+Изоляционные материалы|Insulation materials
+Плиты · 50 мм|Boards · 50 mm
+Фундамент начинается с качества|A foundation starts with quality
+ЧАСТНОЕ СТРОИТЕЛЬСТВО|PRIVATE CONSTRUCTION
+Пространство, в котором хочется жить|A space to call home
+РЕМОНТ И ОТДЕЛКА|RENOVATION AND FINISHING
+Инструмент для точной работы|Tools for precise work
+ОСНАЩЕНИЕ ОБЪЕКТОВ|SITE EQUIPMENT`;
 
 export const en = Object.fromEntries(
   entries

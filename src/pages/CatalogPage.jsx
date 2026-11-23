@@ -1,9 +1,11 @@
-import { ListingState, DemoNotice } from "../components/ui/ListingState.jsx";
+import { demoItems } from "../data/demoCatalog.js";
+import { DemoNotice } from "../components/ui/ListingState.jsx";
 import { CatalogNotice } from "../components/ui/PageState.jsx";
 import ProductCard from "../components/ui/ProductCard.jsx";
-import { useCatalog } from "../api/useCatalog.js";
+import { useProductCatalog, useProductFacets } from "../api/useCatalog.js";
 import Button from "../components/ui/Button.jsx";
 import {
+  CATALOG_PAGE_SIZES,
   readCatalogFilters,
   filterCatalogProducts,
   paginateCatalog,
@@ -16,6 +18,8 @@ import Icon from "../components/home/Icon.jsx";
 import { catalogCategories } from "../data/catalogData.js";
 import { useShop } from "../context/ShopContext.jsx";
 import "./CatalogPage.css";
+
+const catalogProducts = demoItems("products");
 
 const sortOptions = [
   ["popular", "Популярное"],
@@ -36,145 +40,186 @@ export function CatalogBreadcrumbs({ last }) {
   );
 }
 
-function CatalogFilters({ filters, onApply, onReset, expanded, products }) {
-  const priceCeiling = Math.max(100000, Math.ceil(Math.max(0,...products.map(item=>item.price)) / 100000) * 100000);
+function CatalogFilters({ filters, onApply, onReset, expanded, brands, priceLimit }) {
+  const priceCeiling = 100000;
   const { t } = useLanguage();
+  const [category, setCategory] = useState(filters.category);
+  const [brand, setBrand] = useState(filters.brand);
+  const [onlyAvailable, setOnlyAvailable] = useState(filters.stock);
   const [minPrice, setMinPrice] = useState(filters.min ?? "");
   const [maxPrice, setMaxPrice] = useState(filters.max ?? "");
+  const rangeCeiling = Math.max(priceCeiling, priceLimit || 0, Number(maxPrice) || 0, 100000);
+  const minValue = Math.min(rangeCeiling, Math.max(0, Number(minPrice) || 0));
+  const maxValue = maxPrice === "" ? rangeCeiling : Math.min(rangeCeiling, Math.max(0, Number(maxPrice) || 0));
+  const numberFormat = new Intl.NumberFormat("ru-RU");
+  const selectedFilters = [
+    category !== "all",
+    brand !== "all",
+    minPrice !== "" || maxPrice !== "",
+    onlyAvailable,
+  ].filter(Boolean).length;
+  const applyFilters = (event) => {
+    event.preventDefault();
+    onApply({
+      category,
+      min: minPrice,
+      max: maxPrice,
+      brand,
+      stock: onlyAvailable ? "1" : "",
+    });
+  };
+
   return (
     <form
       id="catalog-filters"
-      className={`market-filters ${expanded ? "is-expanded" : ""}`}
+      className={`market-filters market-filters-premium ${expanded ? "is-expanded" : ""}`}
       aria-label={t("Фильтры каталога")}
-      onSubmit={(event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        onApply({
-          category: data.get("category"),
-          min: minPrice,
-          max: maxPrice,
-          brand: data.get("brand"),
-          stock: data.has("stock") ? "1" : "",
-        });
-      }}
+      onSubmit={applyFilters}
     >
-      <h2>{t("Фильтры")}</h2>
-      <fieldset className="market-filter-group market-category-options">
-        <legend>{t("Категории")}</legend>
-        {[{ id: "all", name: "Все товары" }, ...catalogCategories].map(
-          (item) => (
-            <label key={item.id}>
+      <div className="market-filter-head">
+        <div className="market-filter-heading-copy">
+          <span className="market-filter-eyebrow">STROY UZ / {t("Каталог")}</span>
+          <h2>{t("Фильтры")}</h2>
+          <p>{t("Подберите материалы под свой проект")}</p>
+        </div>
+        <span className="market-filter-count" aria-label={`${t("Выбрано фильтров")}: ${selectedFilters}`}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="2.4" fill="#fff"/><circle cx="16" cy="17" r="2.4" fill="#fff"/></svg>
+          {selectedFilters > 0 && <em>{selectedFilters}</em>}
+        </span>
+      </div>
+
+      <fieldset className="market-filter-section market-filter-categories">
+        <legend><span>{t("Категории")}</span><small>01</small></legend>
+        <div className="market-filter-category-list">
+          {[{ id: "all", name: "Все товары" }, ...catalogCategories].map((item) => (
+            <label key={item.id} className={`market-filter-category ${category === item.id ? "is-selected" : ""}`}>
               <input
                 type="radio"
                 name="category"
                 value={item.id}
-                defaultChecked={filters.category === item.id}
+                checked={category === item.id}
+                onChange={() => setCategory(item.id)}
               />
-              <span>{t(item.name)}</span>
+              <span className="market-filter-choice" aria-hidden="true" />
+              <span className="market-filter-category-name">{t(item.name)}</span>
+              <svg className="market-filter-choice-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
             </label>
-          ),
-        )}
+          ))}
+        </div>
       </fieldset>
-      <fieldset className="market-filter-group">
-        <legend>{t("Цена, сум")}</legend>
+
+      <fieldset className="market-filter-section market-filter-prices">
+        <legend><span>{t("Цена, сум")}</span><small>02</small></legend>
         <div className="market-price-controls">
+          <label className="market-price-field">
+            <span>{t("От")}</span>
+            <input
+              type="number"
+              min="0"
+              aria-label={t("Цена от")}
+              placeholder="0"
+              value={minPrice}
+              onChange={(event) => setMinPrice(event.target.value)}
+            />
+          </label>
+          <span className="market-price-separator" aria-hidden="true">—</span>
+          <label className="market-price-field">
+            <span>{t("До")}</span>
+            <input
+              type="number"
+              min="0"
+              aria-label={t("Цена до")}
+              placeholder={numberFormat.format(rangeCeiling)}
+              value={maxPrice}
+              onChange={(event) => setMaxPrice(event.target.value)}
+            />
+          </label>
+        </div>
+        <div className="market-price-track" style={{
+          "--range-start": `${minValue / rangeCeiling * 100}%`,
+          "--range-end": `${maxValue / rangeCeiling * 100}%`,
+        }}>
+          <div className="market-price-rail" aria-hidden="true"><div className="market-price-highlight" /></div>
           <input
-            type="number"
+            className="market-price-slider market-price-slider-min"
+            type="range"
             min="0"
-            max={maxPrice === "" ? undefined : maxPrice}
-            aria-label={t("Цена от")}
-            placeholder={t("От")}
-            value={minPrice}
-            onChange={(event) => setMinPrice(event.target.value)}
+            max={rangeCeiling}
+            step="1000"
+            value={Math.min(minValue, maxValue)}
+            aria-label={t("Минимальная цена")}
+            onChange={(event) => setMinPrice(String(Math.min(Number(event.target.value), maxValue)))}
           />
           <input
-            type="number"
-            min={minPrice || 0}
-            aria-label={t("Цена до")}
-            placeholder={t("До")}
-            value={maxPrice}
-            onChange={(event) => setMaxPrice(event.target.value)}
+            className="market-price-slider market-price-slider-max"
+            type="range"
+            min="0"
+            max={rangeCeiling}
+            step="1000"
+            value={Math.max(minValue, maxValue)}
+            aria-label={t("Максимальная цена")}
+            onChange={(event) => setMaxPrice(String(Math.max(Number(event.target.value), minValue)))}
           />
         </div>
-        <div className="market-range-controls">
-          <label>
-            {t("Минимальная цена")}
-            <input
-              type="range"
-              min="0"
-              max={priceCeiling}
-              step="1000"
-              value={Math.min(priceCeiling, Number(minPrice) || 0)}
-              onChange={(event) =>
-                setMinPrice(
-                  Math.min(
-                    Number(event.target.value),
-                    maxPrice === "" ? priceCeiling : Number(maxPrice),
-                  ),
-                )
-              }
-            />
-          </label>
-          <label>
-            {t("Максимальная цена")}
-            <input
-              type="range"
-              min="0"
-              max={priceCeiling}
-              step="1000"
-              value={Math.min(
-                priceCeiling,
-                maxPrice === "" ? priceCeiling : Number(maxPrice),
-              )}
-              onChange={(event) =>
-                setMaxPrice(
-                  Math.max(Number(event.target.value), Number(minPrice) || 0),
-                )
-              }
-            />
-          </label>
+        <div className="market-price-extents" aria-hidden="true">
+          <span>0</span><span>{numberFormat.format(rangeCeiling)}</span>
+        </div>
+        <div className="market-price-presets" aria-label={t("Быстрый выбор цены")}>
+          <button type="button" className={minPrice === "" && maxPrice === "" ? "is-selected" : ""} onClick={() => { setMinPrice(""); setMaxPrice(""); }}>{t("Любая цена")}</button>
+          <button type="button" className={minPrice === "" && Number(maxPrice) === 100000 ? "is-selected" : ""} onClick={() => { setMinPrice(""); setMaxPrice("100000"); }}>{t("До 100 тыс.")}</button>
+          <button type="button" className={minPrice === "" && Number(maxPrice) === 500000 ? "is-selected" : ""} onClick={() => { setMinPrice(""); setMaxPrice("500000"); }}>{t("До 500 тыс.")}</button>
         </div>
       </fieldset>
-      <fieldset className="market-filter-group">
-        <legend>{t("Бренд")}</legend>
-        <select
-          name="brand"
-          aria-label={t("Выбрать бренд")}
-          defaultValue={filters.brand}
-        >
-          <option value="all">{t("Все бренды")}</option>
-          {[...new Set(products.map((item) => item.brand).filter(Boolean))]
-            .sort()
-            .map((brand) => (
-              <option key={brand} value={brand}>
-                {brand}
-              </option>
-            ))}
-        </select>
+
+      <fieldset className="market-filter-section market-filter-brands">
+        <legend><span>{t("Бренд")}</span><small>03</small></legend>
+        <div className="market-filter-select-wrap">
+          <select name="brand" aria-label={t("Выбрать бренд")} value={brand} onChange={(event) => setBrand(event.target.value)}>
+            <option value="all">{t("Все бренды")}</option>
+            {brands.map((item) => <option key={item} value={item}>{item}</option>)}
+          </select>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
       </fieldset>
-      <label className="market-only-available">
-        <input type="checkbox" name="stock" defaultChecked={filters.stock} />
-        <span>{t("Только в наличии")}</span>
+
+      <label className="market-stock-switch-row">
+        <span className="market-stock-copy">
+          <strong>{t("Только в наличии")}</strong>
+          <small>{t("Без товаров под заказ")}</small>
+        </span>
+        <input type="checkbox" name="stock" checked={onlyAvailable} onChange={(event) => setOnlyAvailable(event.target.checked)} />
+        <span className="market-stock-toggle" aria-hidden="true"><i /></span>
       </label>
-      <button className="market-apply" type="submit">
-        {t("Применить")}
-        <Icon name="arrow" />
-      </button>
-      <button type="button" className="market-reset" onClick={onReset}>
-        {t("Сбросить фильтры")}
-      </button>
+
+      <div className="market-filter-actions">
+        <button className="market-apply" type="submit">
+          {t("Показать товары")}
+          <Icon name="arrow" />
+        </button>
+        <button type="button" className="market-reset" onClick={onReset}>
+          <span aria-hidden="true">↺</span>{t("Сбросить фильтры")}
+        </button>
+      </div>
     </form>
   );
 }
 
 export default function CatalogPage() {
-  const { items: catalogProducts, error, loading } = useCatalog();
   const { t, language } = useLanguage();
   const [params, setParams] = useSearchParams();
   const filters = readCatalogFilters(params);
-  const matching = filterCatalogProducts(catalogProducts, filters, language);
-  const pagination = paginateCatalog(matching, filters.page);
+  const remoteCatalog = useProductCatalog(filters);
+  const facets = useProductFacets();
+  const fallbackMatching = filterCatalogProducts(catalogProducts, filters, language);
+  const pagination = remoteCatalog.remote
+    ? { page: remoteCatalog.page, pages: remoteCatalog.pages, products: remoteCatalog.items }
+    : paginateCatalog(fallbackMatching, filters.page, filters.limit);
+  const total = remoteCatalog.remote ? remoteCatalog.total : fallbackMatching.length;
+  const [searchText, setSearchText] = useState(filters.search);
+  const { error, loading } = remoteCatalog;
+  const brands = facets?.brands || [...new Set(catalogProducts.map((item) => item.brand))].sort();
   const { favorites, toggleFavorite, addToCart } = useShop();
+  useEffect(() => setSearchText(filters.search), [filters.search]);
   const [notice, setNotice] = useState("");
   const [helpOpen, setHelpOpen] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -196,19 +241,26 @@ export default function CatalogPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [params]);
-  if (!loading && !error && !catalogProducts.length) return <div className="market-page market-container"><h1>{t("Материалы и инструменты")}</h1><ListingState empty/></div>;
-  if (loading || error) return <div className="market-page market-container"><h1>{t("Материалы и инструменты")}</h1><ListingState loading={loading} error={error}/></div>;
+  useEffect(() => {
+    if (remoteCatalog.remote && !remoteCatalog.loading &&
+        filters.page > remoteCatalog.pages) {
+      const next = new URLSearchParams(params);
+      if (remoteCatalog.pages === 1) next.delete("page");
+      else next.set("page", String(remoteCatalog.pages));
+      setParams(next, { replace: true });
+    }
+  }, [remoteCatalog.remote, remoteCatalog.loading, remoteCatalog.pages, filters.page, params, setParams]);
   return (
     <div className="market-page market-catalog">
       <div className="market-container">
         <CatalogBreadcrumbs last="Каталог товаров" />
-        <DemoNotice items={catalogProducts}/>
+        <DemoNotice items={pagination.products}/>
         <CatalogNotice error={error} loading={loading} />
         <header className="market-catalog-heading">
           <h1>{t("Материалы и инструменты")}</h1>
           <div className="market-catalog-heading-bottom">
             <p>{t("Для фундамента, ремонта и каждой задачи между ними.")}</p>
-            <span role="status">{productCount(matching.length, language)}</span>
+            <span role="status">{loading ? t("Загрузка…") : productCount(total, language)}</span>
           </div>
           <div
             className="market-category-pills market-heading-pills"
@@ -250,6 +302,8 @@ export default function CatalogPage() {
               key={params.toString()}
               filters={filters}
               expanded={filtersOpen}
+              brands={brands}
+              priceLimit={facets?.maxPrice}
               onApply={(changes) => {
                 update(changes);
                 setFiltersOpen(false);
@@ -261,8 +315,34 @@ export default function CatalogPage() {
             className="market-catalog-main"
             aria-label={t("Товары каталога")}
           >
+            <form
+              className="market-catalog-search"
+              role="search"
+              onSubmit={(event) => { event.preventDefault(); update({ q: searchText.trim() }); }}
+            >
+              <Icon name="search" />
+              <input
+                type="search"
+                value={searchText}
+                onChange={(event) => setSearchText(event.target.value)}
+                placeholder={t("Поиск товаров, брендов, материалов")}
+                aria-label={t("Поиск по каталогу")}
+              />
+              <button type="submit">{t("Найти")}</button>
+            </form>
             <div className="market-catalog-toolbar">
-              <span>{t("Подборка товаров")}</span>
+              <span>{t("Подборка товаров")}{loading && " · " + t("Загрузка…")}</span>
+              <div className="market-page-tools">
+              <div className="market-page-size">
+                <label htmlFor="market-page-size">{t("На странице")}</label>
+                <select
+                  id="market-page-size"
+                  value={filters.limit}
+                  onChange={(event) => update({ limit: event.target.value })}
+                >
+                  {CATALOG_PAGE_SIZES.map((size) => <option key={size} value={size}>{size}</option>)}
+                </select>
+              </div>
               <div className="market-sort">
                 <label htmlFor="market-sort-select">{t("Сортировка")}</label>
                 <select
@@ -277,6 +357,7 @@ export default function CatalogPage() {
                   ))}
                 </select>
               </div>
+              </div>
             </div>
             {filters.search && (
               <p className="market-search-note">
@@ -284,7 +365,9 @@ export default function CatalogPage() {
                 {filters.search}»
               </p>
             )}
-            {matching.length ? (
+            {loading ? (
+              <div className="market-catalog-loading" role="status">{t("Загрузка товаров…")}</div>
+            ) : total > 0 ? (
               <>
                 <div className="market-products-grid">
                   {pagination.products.map((product) => (
@@ -314,10 +397,13 @@ export default function CatalogPage() {
                     >
                       ←
                     </button>
-                    {Array.from(
-                      { length: pagination.pages },
-                      (_, index) => index + 1,
-                    ).map((page) => (
+                    {[1, pagination.page - 2, pagination.page - 1,
+                      pagination.page, pagination.page + 1, pagination.page + 2,
+                      pagination.pages]
+                      .filter((page, index, list) =>
+                        page >= 1 && page <= pagination.pages && list.indexOf(page) === index)
+                      .sort((a, b) => a - b)
+                      .map((page) => (
                       <button
                         type="button"
                         key={page}

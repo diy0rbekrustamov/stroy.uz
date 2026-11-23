@@ -1,0 +1,68 @@
+/* Photo-material 3D assembly; this stylesheet is scoped to the homepage scene. */
+.assembly-wrap { background: radial-gradient(ellipse at 55% 48%, #19323f 0%, #122634 63%, transparent 93%); }
+.assembly-scene {
+  position:absolute;
+  z-index:2;
+  left:50%; top:57%;
+  height:min(76%,650px);
+  aspect-ratio:902 / 908;
+  width:auto; max-width:100%;
+  transform:translate(-50%,-50%) perspective(1350px) rotateX(var(--pointer-x,0deg)) rotateY(calc(var(--view-y,0deg) + var(--pointer-y,0deg)));
+  transform-style:preserve-3d;
+  transition:transform .52s cubic-bezier(.2,.7,.15,1);
+  will-change:transform;
+  pointer-events:none;
+}
+.assembly-pieces{position:absolute;inset:0;transform-style:preserve-3d}
+.assembly-piece{
+  position:absolute;
+  display:block;
+  object-fit:fill;
+  user-select:none;
+  backface-visibility:visible;
+  pointer-events:none;
+  transform-origin:center center;
+  filter:drop-shadow(0 14px 13px #0002);
+  animation:material-arrives 2.0s cubic-bezier(.17,.68,.24,1.0) var(--assembly-delay,0ms) both;
+  will-change:transform,opacity,filter;
+}
+@keyframes material-arrives{
+  0% {transform:translate3d(var(--from-x),var(--from-y),var(--from-z)) rotateX(var(--from-rx)) rotateY(var(--from-ry)) scale(.78);filter:blur(8px) brightness(1.22);opacity:0}
+  14% {opacity:1}
+  78% {filter:blur(0) brightness(1);opacity:1}
+  100% {transform:translate3d(0,0,0) rotateX(0) rotateY(0) scale(1);filter:blur(0) brightness(1);opacity:1}
+}
+.assembly-photo{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:fill;z-index:15;
+  opacity:0;pointer-events:none;user-select:none;
+  transition:opacity .7s ease;
+  -webkit-mask-image:radial-gradient(ellipse 80% 82% at center,#000 74%,transparent 100%);
+  mask-image:radial-gradient(ellipse 80% 82% at center,#000 74%,transparent 100%);
+}
+.assembly-scene.is-complete:not(.is-interactive):not(.view-alt) .assembly-photo {opacity:1}
+.assembly-wrap .webgl-orbit{z-index:0}
+.assembly-wrap .model-tag,.assembly-wrap .model-coords,.assembly-wrap .model-crosshair{pointer-events:none}
+.assembly-replay{
+  position:absolute;left:9%;bottom:13%;z-index:12;
+  display:flex;gap:9px;align-items:center;
+  padding:11px 13px;
+  border:1px solid #62798780;
+  border-radius:2px;
+  background:#122b39ba;
+  color:#dae4e8;
+  font:700 9px 'Space Grotesk',sans-serif;
+  letter-spacing:1.2px;
+  cursor:pointer;
+  transition:border-color .2s,background .2s;
+}
+.assembly-replay span{font-size:19px;color:#ff9f0b;line-height:10px}
+.assembly-replay:hover{background:#1c3849;border-color:#ff9f0b}
+.assembly-replay:focus-visible{outline:2px solid #ff9f0b;outline-offset:3px}
+@media(max-width:760px){
+  .assembly-scene{height:min(96%,460px);top:48%}
+  .assembly-replay{bottom:8%;left:5%;font-size:7px;padding:9px}
+}
+@media(prefers-reduced-motion:reduce){
+  .assembly-piece{animation:none!important;opacity:1!important;transform:none!important;filter:none!important}
+  .assembly-scene{transition:none!important}
+}

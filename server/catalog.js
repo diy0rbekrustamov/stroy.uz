@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
 import { listing, rentalListing, fail } from "./validation.js";
+import { searchProducts, productFacets } from "./product-search.js";
 export const presentListing = (item) => ({
   ...item.data,
   sellerName: item.seller_name || "",
@@ -15,12 +16,17 @@ export const presentListing = (item) => ({
   published: item.published,
 });
 export function catalogRoutes(app, { db }) {
+  app.get("/api/catalog/facets", async () => productFacets(db));
   for (const [path, kind] of [
     ["products", "product"],
     ["services", "service"],
     ["rentals", "rental"],
   ]) {
     app.get("/api/" + path, async (request) => {
+      if (kind === "product") {
+        const result = await searchProducts(db, request.query);
+        return { ...result, items: result.items.map(presentListing) };
+      }
       const {
         q = "",
         limit = 100,
