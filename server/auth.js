@@ -59,6 +59,20 @@ export async function authRoutes(app, { db, env, sendReset }) {
     const user = await sessionUser(request);
     return { user: user ? publicUser(user) : null, csrf: user?.csrf || null };
   });
+  app.patch("/api/auth/profile", { preHandler: app.authenticate }, async request => {
+    const data = z.object({
+      name: z.string().trim().min(1).max(150),
+      phone: z.string().trim().regex(/^\+?[0-9 ()-]{7,25}$/),
+      address: z.string().trim().max(500).default(""),
+      storeName: z.string().trim().max(150).optional(),
+    }).parse(request.body);
+    if (request.account.role === "seller" && !data.storeName) fail(400, "VALIDATION_FAILED");
+    const user = (await db.query(
+      "UPDATE users SET name=$1,phone=$2,address=$3,store_name=CASE WHEN role='seller' THEN $4 ELSE store_name END WHERE id=$5 RETURNING *",
+      [data.name,data.phone,data.address,data.storeName || "",request.account.id],
+    )).rows[0];
+    return { user: publicUser(user) };
+  });
   app.post("/api/auth/seller", { preHandler: app.authenticate }, async request => {
     const {storeName}=z.object({storeName:z.string().trim().min(1).max(150)}).parse(request.body);
     const user=(await db.query("UPDATE users SET role='seller',store_name=CASE WHEN role='seller' THEN store_name ELSE $1 END WHERE id=$2 RETURNING *",[storeName,request.account.id])).rows[0];

@@ -34,8 +34,8 @@ test("URL filters validate prices and pagination never duplicates products", () 
   assert.deepEqual(paginateCatalog([], 8), { page: 1, pages: 1, products: [] });
 });
 
-test("Catalog renders all languages, pagination, URL filters and saved favorites", async () => {
-  const server = await createServer({ server: { middlewareMode: true }, appType: "custom" });
+test("Server-backed catalog renders localized loading and preserves URL filters", async () => {
+  const server = await createServer({ server: { middlewareMode: true, hmr: false }, optimizeDeps: { noDiscovery: true, include: [] }, appType: "custom" });
   const stored = globalThis.localStorage;
   try {
     const load = async (path) => (await server.ssrLoadModule(`/src/${path}`)).default;
@@ -48,15 +48,16 @@ test("Catalog renders all languages, pagination, URL filters and saved favorites
     };
     for (const language of ["ru", "uz", "en"]) {
       const html = render("/catalog", language);
-      assert.equal((html.match(/<article\b/g) || []).length, 6);
-      assert.match(html, /aria-current="page"/);
+      assert.equal((html.match(/<article\b/g) || []).length, 0);
+      assert.match(html, /role="status"/);
       assert.match(html, /aria-pressed="true"/);
       if (language !== "ru") assert.doesNotMatch(html, /[А-Яа-яЁё]/);
-      assert.equal((render("/catalog?page=2", language).match(/<article\b/g) || []).length, 3);
+      assert.equal((render("/catalog?page=2", language).match(/<article\b/g) || []).length, 0);
     }
     const selected = render("/catalog?q=insulation&max=150000", "en");
-    assert.match(selected, /Insulation/);
-    assert.equal((selected.match(/<article\b/g) || []).length, 1);
+    assert.match(selected, /value="insulation"/);
+    assert.match(selected, /value="150000"/);
+    assert.equal((selected.match(/<article\b/g) || []).length, 0);
     assert.equal((render("/catalog?max=1", "en").match(/<article\b/g) || []).length, 0);
   } finally {
     if (stored === undefined) delete globalThis.localStorage;

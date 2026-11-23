@@ -94,6 +94,8 @@ const router = createBrowserRouter([
         path: "seller",
         element: <LayoutSeller />,
         children: [
+          { path: "overview", element: page(() => import("./pages/Seller/OverviewPage.jsx")) },
+          { path: "profile", element: page(() => import("./pages/Seller/ProfilePage.jsx")) },
           {
             path: "rentals",
             element: page(() => import("./pages/Seller/RentalsPage.jsx")),

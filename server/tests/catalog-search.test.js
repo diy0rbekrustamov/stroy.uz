@@ -15,10 +15,12 @@ test("API catalog: server filters, totals, sorting, URL parameters and facets", 
   await migrate(db);
   const app = await buildApp({ db, env: { APP_ORIGIN: "http://127.0.0.1:5173" } });
   try {
+    const sellerId = "10000000-0000-4000-8000-000000000001";
+    await db.query("INSERT INTO users(id,email,name,password_hash,role,store_name) VALUES($1,'catalog@example.test','Catalog seller','test-only','seller','Catalog store')",[sellerId]);
     for (const item of demo) {
       await db.query(
-        "INSERT INTO listings(id,kind,data,price,stock,published) VALUES($1,'product',$2,$3,$4,true)",
-        [item.id, JSON.stringify({ name: item.name, categoryId: item.categoryId, category: item.category, brand: item.brand }), item.price, item.stock],
+        "INSERT INTO listings(id,kind,data,price,stock,published,seller_id) VALUES($1,'product',$2,$3,$4,true,$5)",
+        [item.id, JSON.stringify({ name: item.name, categoryId: item.categoryId, category: item.category, brand: item.brand }), item.price, item.stock, sellerId],
       );
     }
     const get = async (query) => {

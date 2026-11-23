@@ -35,4 +35,5 @@ export const publicUser = (user) => ({
   phone: user.phone,
   role: user.role,
   storeName: user.store_name,
+  address: user.address || "",
 });

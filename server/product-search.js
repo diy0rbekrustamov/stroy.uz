@@ -28,7 +28,7 @@ export async function searchProducts(db, rawQuery) {
     parameters.push(value);
     return `$${parameters.length}`;
   };
-  const where = ["kind='product'", "published=true"];
+  const where = ["kind='product'", "published=true", "seller_id IS NOT NULL", "COALESCE(data->>'demo','false')<>'true'"];
   if (query.q) {
     // Treat '%' and '_' as literal characters in search terms.
     const pattern = `%${query.q.replace(/[\\%_]/g, (c) => `\\${c}`)}%`;
@@ -46,7 +46,7 @@ export async function searchProducts(db, rawQuery) {
   const page = query.offset === undefined ? Math.min(query.page, pages) : Math.floor(query.offset / query.limit) + 1;
   const offset = query.offset ?? (page - 1) * query.limit;
   const items = (await db.query(
-    `SELECT * FROM listings ${filter} ORDER BY ${orderBy[query.sort]} LIMIT ${bind(query.limit)} OFFSET ${bind(offset)}`,
+    `SELECT listings.*, (SELECT store_name FROM users WHERE id=listings.seller_id) AS seller_name FROM listings ${filter} ORDER BY ${orderBy[query.sort]} LIMIT ${bind(query.limit)} OFFSET ${bind(offset)}`,
     parameters,
   )).rows;
   return { items, total, page, pages, pageSize: query.limit };
@@ -54,9 +54,9 @@ export async function searchProducts(db, rawQuery) {
 
 export async function productFacets(db) {
   const [categories, brands, maxPrice] = await Promise.all([
-    db.query("SELECT data->>'categoryId' AS id, COUNT(*)::integer AS count FROM listings WHERE kind='product' AND published=true AND COALESCE(data->>'categoryId','')<>'' GROUP BY data->>'categoryId'"),
-    db.query("SELECT DISTINCT data->>'brand' AS brand FROM listings WHERE kind='product' AND published=true AND COALESCE(data->>'brand','')<>'' ORDER BY brand"),
-    db.query("SELECT COALESCE(MAX(price),0) AS max FROM listings WHERE kind='product' AND published=true"),
+    db.query("SELECT data->>'categoryId' AS id, COUNT(*)::integer AS count FROM listings WHERE kind='product' AND published=true AND seller_id IS NOT NULL AND COALESCE(data->>'demo','false')<>'true' AND COALESCE(data->>'categoryId','')<>'' GROUP BY data->>'categoryId'"),
+    db.query("SELECT DISTINCT data->>'brand' AS brand FROM listings WHERE kind='product' AND published=true AND seller_id IS NOT NULL AND COALESCE(data->>'demo','false')<>'true' AND COALESCE(data->>'brand','')<>'' ORDER BY brand"),
+    db.query("SELECT COALESCE(MAX(price),0) AS max FROM listings WHERE kind='product' AND published=true AND seller_id IS NOT NULL AND COALESCE(data->>'demo','false')<>'true'"),
   ]);
   return {
     categories: Object.fromEntries(categories.rows.map((row) => [row.id, Number(row.count)])),

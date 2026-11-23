@@ -12,14 +12,14 @@ export default function ApiListings({ kind }) {
     [filter, setFilter] = useState("all"),
     [editing, setEditing] = useState(null),
     [message, setMessage] = useState(""),
-    [busy, setBusy] = useState(false);
+    [busy, setBusy] = useState(false), [loading,setLoading]=useState(true), [revision,setRevision]=useState(0);
   const reload = () =>
     api("/seller/" + kind).then((data) => setItems(data.items));
   useEffect(() => {
-    api("/seller/" + kind)
-      .then((data) => setItems(data.items))
-      .catch((error) => setMessage(error.message));
-  }, [kind]);
+    let active=true; setLoading(true); setMessage("");
+    api("/seller/" + kind).then(data=>{if(active)setItems(data.items);}).catch(e=>{if(active)setMessage(e.message);}).finally(()=>{if(active)setLoading(false);});
+    return ()=>{active=false;};
+  }, [kind,revision]);
   const save = async (item, changes) => {
     if (busy) return;
     setBusy(true);
@@ -72,6 +72,7 @@ export default function ApiListings({ kind }) {
               : "Добавить услугу",
         )}
       </Button>
+      <div className="workspace-stats">{[[items.length,"Всего"],[items.filter(i=>i.published).length,"Опубликованы"],[items.filter(i=>!i.published).length,"Черновики"]].map(([count,label])=><div className="workspace-stat" key={label}><strong>{loading?"—":count}</strong><span>{t(label)}</span></div>)}</div>
       <div className="auth-form">
         <label className="auth-field">
           {t("Поиск")}
@@ -92,8 +93,8 @@ export default function ApiListings({ kind }) {
           </select>
         </label>
       </div>
-      <p role="status">{t(message)}</p>
-      {!filtered.length && <p>{t("Пока пусто")}</p>}
+      <Button variant="secondary" disabled={loading||busy} onClick={()=>setRevision(n=>n+1)}>{t("Обновить")}</Button><p role="status">{t(loading ? "Загрузка…" : message)}</p>
+      {!loading && !message && !filtered.length && <p>{t("Пока пусто")}</p>}
       {filtered.map((item) => (
         <article className="auth-info" key={item.id} style={{ marginTop: 16 }}>
           <h2>{t(item.name)}</h2>

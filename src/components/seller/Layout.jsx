@@ -5,6 +5,7 @@ import { useSession } from "../../api/useSession.js";
 import { useLanguage } from "../../i18n/useLanguage.js";
 import Button from "../ui/Button.jsx";
 import SellerAccess from "./SellerAccess.jsx";
+import "../account/workspace.css";
 
 function Layout() {
   const { user, loading, error } = useSession(),
@@ -26,7 +27,7 @@ function Layout() {
       <div className="min-h-screen bg-[#F6F7F9] font-sans">
         <div className="p-4 md:p-6 max-w-[1400px] mx-auto flex flex-col md:flex-row gap-4 md:gap-6 items-start">
           <SellerSidebar />
-          <Outlet />
+          <div className="seller-workspace"><Outlet /></div>
         </div>
       </div>
     </>

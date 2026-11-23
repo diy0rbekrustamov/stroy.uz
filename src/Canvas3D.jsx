@@ -1,3 +1,4 @@
+import { useLanguage } from "./i18n/useLanguage.js";
 import React, { useEffect, useRef, useState } from 'react'
 import './assembly.css'
 
@@ -38,6 +39,7 @@ const MATERIALS = [
 const pct = (value, total) => `${(value / total) * 100}%`
 
 export default function Canvas3D({ mode = 0 }) {
+  const {t}=useLanguage();
   const sceneRef = useRef(null)
   const [replayKey, setReplayKey] = useState(0)
   const reducedMotion = useRef(false)
@@ -92,7 +94,7 @@ export default function Canvas3D({ mode = 0 }) {
 
   return (
     <div className="webgl-wrap assembly-wrap" onPointerMove={onMove} onPointerLeave={onLeave}>
-      <div className="assembly-scene" ref={sceneRef} aria-label="Фотореалистичная композиция строительных материалов, которая собирается из отдельных элементов">
+      <div className="assembly-scene" ref={sceneRef} aria-label={t("Фотореалистичная композиция строительных материалов, которая собирается из отдельных элементов")}>
         <div key={replayKey} className="assembly-pieces">
           {MATERIALS.map((material) => (
             <img
@@ -124,12 +126,12 @@ export default function Canvas3D({ mode = 0 }) {
       <div className="webgl-orbit orbit-2" />
       <div className="model-crosshair crosshair-top">+</div>
       <div className="model-crosshair crosshair-bottom">+</div>
-      <div className="model-tag model-tag-concrete"><i /> БЕТОН <span>01/05</span></div>
-      <div className="model-tag model-tag-brick"><i /> КЕРАМИКА <span>02/05</span></div>
-      <div className="model-tag model-tag-steel"><i /> СТАЛЬ <span>03/05</span></div>
+      <div className="model-tag model-tag-concrete"><i /> {t("БЕТОН")} <span>01/05</span></div>
+      <div className="model-tag model-tag-brick"><i /> {t("КЕРАМИКА")} <span>02/05</span></div>
+      <div className="model-tag model-tag-steel"><i /> {t("СТАЛЬ")} <span>03/05</span></div>
       <div className="model-coords">3D MATERIAL SYSTEM / ASSEMBLY <span>↗</span></div>
-      <button className="assembly-replay" type="button" onClick={replay} title="Повторить сборку конструкции" aria-label="Повторить сборку конструкции">
-        <span aria-hidden="true">↻</span> ПОВТОРИТЬ СБОРКУ
+      <button className="assembly-replay" type="button" onClick={replay} title={t("Повторить сборку конструкции")} aria-label={t("Повторить сборку конструкции")}>
+        <span aria-hidden="true">↻</span> {t("ПОВТОРИТЬ СБОРКУ")}
       </button>
     </div>
   )

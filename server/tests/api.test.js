@@ -58,6 +58,17 @@ test("PostgreSQL API: sessions, permissions, inventory transactions, orders and 
     const buyer = await register("buyer", "buyer@example.test");
     const other = await register("seller", "other@example.test");
     assert.ok(seller.cookie);
+    const profile = {name:"Updated buyer",phone:"+998901112233",address:"Bukhara, test address",role:"seller",email:"changed@example.test"};
+    assert.equal((await invoke("PATCH","/api/auth/profile",profile)).status,401);
+    assert.equal((await invoke("PATCH","/api/auth/profile",profile,{cookie:buyer.cookie,csrf:"invalid"})).status,403);
+    const updated = await invoke("PATCH","/api/auth/profile",profile,buyer);
+    assert.equal(updated.status,200);
+    assert.equal(updated.body.user.address,profile.address);
+    assert.equal(updated.body.user.role,"buyer");
+    assert.equal(updated.body.user.email,"buyer@example.test");
+    assert.equal((await invoke("GET","/api/auth/me",null,seller)).body.user.name,"Test");
+    assert.equal((await invoke("PATCH","/api/auth/profile",{...profile,phone:"invalid"},buyer)).status,400);
+    assert.equal((await invoke("PATCH","/api/auth/profile",{...profile,storeName:""},seller)).status,400);
     assert.match(seller.cookie, /stroy_session=/);
     assert.equal(
       (await invoke("GET", "/api/auth/me", null, buyer)).body.user.email,

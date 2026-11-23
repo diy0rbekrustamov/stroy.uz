@@ -1,3 +1,4 @@
+import { catalogProducts } from "../data/catalogData.js";
 import { useEffect, useState } from "react";
 import placeholder from "../assets/optimized/placeholder.webp";
 import { api } from "./client.js";

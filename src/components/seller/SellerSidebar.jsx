@@ -7,10 +7,12 @@ export default function LayoutSeller() {
   const { user } = useSession();
 
   const menu = [
+    { label: "Обзор магазина", path: "/seller/overview" },
     { label: "Товары", path: "/seller", end: true }, // index uchun end:true
     { label: "Услуги", path: "/seller/services" },
     { label: "Аренда техники", path: "/seller/rentals" },
     { label: "Заказы", path: "/seller/orders" },
+    { label: "Профиль и адрес", path: "/seller/profile" },
   ];
 
   return (

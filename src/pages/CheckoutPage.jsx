@@ -40,7 +40,7 @@ export default function CheckoutPage() {
       <div className="delivery-card">
         <DeliveryLocationPicker point={point} onChange={setPoint}/>
         <div className="delivery-fields">
-          <label>{t("Город и адрес объекта *")}<input name="address" required minLength={3} maxLength={300} autoComplete="street-address" placeholder={t("Город, улица, номер дома")}/></label>
+          <label>{t("Город и адрес объекта *")}<input name="address" defaultValue={user.address || ""} required minLength={3} maxLength={300} autoComplete="street-address" placeholder={t("Город, улица, номер дома")}/></label>
           <label>{t("Телефон *")}<input name="phone" type="tel" required autoComplete="tel" defaultValue={user.phone} placeholder="+998 XX XXX XX XX"/></label>
           <label>{t("Комментарий для водителя")}<textarea name="note" maxLength={500} placeholder={t("Ориентир, ворота, подъезд или ограничения для грузовика")}/></label>
         </div>
