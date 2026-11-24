@@ -330,3 +330,18 @@
 @media (prefers-reduced-motion: reduce) {
   .market-filter-category, .market-filter-choice-arrow, .market-stock-toggle, .market-stock-toggle i, .market-filters-premium .market-filter-actions .market-apply { transition: none; }
 }
+
+/* Accessible search and filter controls, including narrow mobile layouts. */
+.market-catalog-search:focus-within { outline: 2px solid #bb7614; outline-offset: 2px; }
+.market-filter-category:has(input:focus-visible) { outline: 2px solid #bb7614; outline-offset: 2px; }
+.market-filter-head p, .market-stock-copy small { color: #647180; }
+@media (max-width: 767px) {
+  .market-catalog-search input,
+  .market-price-controls input,
+  .market-filter-section select { font-size: 16px; min-height: 44px; }
+  .market-filter-category { min-height: 44px; font-size: 13px; }
+  .market-filters-premium .market-reset { min-height: 44px; font-size: 13px; }
+  .market-price-presets { flex-wrap: wrap; }
+  .market-price-presets button { min-height: 44px; }
+  .market-catalog-search button { min-height: 44px; }
+}

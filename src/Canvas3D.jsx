@@ -64,7 +64,7 @@ export default function Canvas3D({ mode = 0 }) {
 
   const onMove = (e) => {
     const scene = sceneRef.current
-    if (!scene) return
+    if (!scene || reducedMotion.current || e.pointerType === "touch") return
     const rect = e.currentTarget.getBoundingClientRect()
     const x = Math.max(-1, Math.min(1, ((e.clientX - rect.left) / rect.width - 0.5) * 2))
     const y = Math.max(-1, Math.min(1, ((e.clientY - rect.top) / rect.height - 0.5) * 2))
@@ -94,7 +94,7 @@ export default function Canvas3D({ mode = 0 }) {
 
   return (
     <div className="webgl-wrap assembly-wrap" onPointerMove={onMove} onPointerLeave={onLeave}>
-      <div className="assembly-scene" ref={sceneRef} aria-label={t("Фотореалистичная композиция строительных материалов, которая собирается из отдельных элементов")}>
+      <div className="assembly-scene" ref={sceneRef} role="img" aria-label={t("Фотореалистичная композиция строительных материалов, которая собирается из отдельных элементов")}>
         <div key={replayKey} className="assembly-pieces">
           {MATERIALS.map((material) => (
             <img

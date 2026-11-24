@@ -973,7 +973,20 @@ STROY UZ / ДОСТАВКА|STROY UZ / DELIVERY
 Пространство, в котором хочется жить|A space to call home
 РЕМОНТ И ОТДЕЛКА|RENOVATION AND FINISHING
 Инструмент для точной работы|Tools for precise work
-ОСНАЩЕНИЕ ОБЪЕКТОВ|SITE EQUIPMENT`;
+ОСНАЩЕНИЕ ОБЪЕКТОВ|SITE EQUIPMENT
+Список|List
+Карточки|Cards
+тов.|items
+Укажите адрес доставки и контактные данные|Enter your delivery address and contact details
+Контактные данные|Contact details
+Информация для оформления доставки|Delivery details
+Введите город и полный адрес|Enter your city and full address
+Укажите точный адрес строительного объекта|Enter the exact construction site address
+Для связи по поводу вашего заказа|So we can contact you about your order
+Информация о доставке и оплате|Delivery and payment information
+Количество|Quantity
+Вернуться в корзину|Back to cart
+`;
 
 export const en = Object.fromEntries(
   entries

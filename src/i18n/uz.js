@@ -973,7 +973,20 @@ STROY UZ / ДОСТАВКА|STROY UZ / YETKAZIB BERISH
 Пространство, в котором хочется жить|Yashashni istaydigan makon
 РЕМОНТ И ОТДЕЛКА|TA’MIR VA PARDOZ
 Инструмент для точной работы|Aniq ish uchun asboblar
-ОСНАЩЕНИЕ ОБЪЕКТОВ|OBYEKTLARNI JIHOZLASH`;
+ОСНАЩЕНИЕ ОБЪЕКТОВ|OBYEKTLARNI JIHOZLASH
+Список|Ro‘yxat
+Карточки|Kartochkalar
+тов.|ta
+Укажите адрес доставки и контактные данные|Yetkazib berish manzili va aloqa ma’lumotlarini kiriting
+Контактные данные|Aloqa ma’lumotlari
+Информация для оформления доставки|Yetkazib berish ma’lumotlari
+Введите город и полный адрес|Shahar va to‘liq manzilni kiriting
+Укажите точный адрес строительного объекта|Qurilish obyektining aniq manzilini kiriting
+Для связи по поводу вашего заказа|Buyurtmangiz bo‘yicha bog‘lanish uchun
+Информация о доставке и оплате|Yetkazib berish va to‘lov haqida
+Количество|Miqdor
+Вернуться в корзину|Savatga qaytish
+`;
 
 export const uz = Object.fromEntries(
   entries

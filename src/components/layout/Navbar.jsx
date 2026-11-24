@@ -110,7 +110,7 @@ export default function Navbar({
           <button
             type="button"
             onClick={handleFavorites}
-            className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[30px] border-0 cursor-pointer font-inherit"
+            className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[44px] max-[767px]:min-h-[44px] border-0 cursor-pointer font-inherit"
           >
             <Icon name="heart" />
             <span className="max-[767px]:text-[0px]">
@@ -121,7 +121,7 @@ export default function Navbar({
           <button
             type="button"
             onClick={() => navigate(user ? "/account" : "/login")}
-            className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[30px] border-0 cursor-pointer font-inherit"
+            className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[44px] max-[767px]:min-h-[44px] border-0 cursor-pointer font-inherit"
           >
             <Icon name="user" />
             <span className="max-[767px]:text-[0px]">{t(user ? "Личный кабинет" : "Войти")}</span>
@@ -129,7 +129,7 @@ export default function Navbar({
           <button
             type="button"
             onClick={handleCart}
-            className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[30px] border-0 cursor-pointer font-inherit"
+            className="flex flex-col items-center gap-1 bg-transparent text-[12px] p-1 min-w-[56px] max-[767px]:min-w-[44px] max-[767px]:min-h-[44px] border-0 cursor-pointer font-inherit"
           >
             <Icon name="cart" />
             <span className="max-[767px]:text-[0px]">
@@ -142,6 +142,7 @@ export default function Navbar({
           className="hidden max-[767px]:flex bg-transparent p-2 border-0 cursor-pointer"
           type="button"
           aria-label={t("Меню")}
+          aria-controls="home-navigation"
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen(!menuOpen)}
         >

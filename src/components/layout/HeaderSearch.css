@@ -30,3 +30,12 @@
   .header-search__clear { flex-basis: 30px; width: 30px; }
 }
 @media (prefers-reduced-motion: reduce) { .header-search, .header-search__submit { transition: none; } }
+
+/* Touch targets and readable navigation on compact screens. */
+@media (max-width: 767px) {
+  .header-search__clear { flex-basis: 44px; width: 44px; height: 44px; }
+  .header-search__submit { min-height: 44px; }
+  #home-navigation a { min-height: 44px; display: flex; align-items: center; }
+  #home-navigation a:focus-visible { outline: 2px solid #bb7614; outline-offset: 2px; }
+  #top button[aria-controls="home-navigation"] { min-width: 44px; min-height: 44px; }
+}

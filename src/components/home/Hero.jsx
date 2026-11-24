@@ -1,6 +1,6 @@
 import { useLanguage } from "../../i18n/useLanguage.js";
 import Button from "../ui/Button.jsx";
-import hero from "../../assets/optimized/hero-clean.webp";
+import Canvas3D from "../../Canvas3D.jsx";
 import Icon from "./Icon.jsx";
 
 export default function Hero() {
@@ -39,13 +39,7 @@ export default function Hero() {
           </p>
         </div>
         <div className="home-hero-art">
-          <img
-            src={hero}
-            alt={t("Композиция из бетона, кирпича, металла и дерева")}
-            fetchPriority="high"
-            width="728"
-            height="720"
-          />
+          <Canvas3D />
         </div>
       </section>
       <div className="home-ticker" aria-hidden="true">

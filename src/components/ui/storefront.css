@@ -129,7 +129,12 @@
   position: absolute;
   left: 8px;
   top: 8px;
-  max-width: calc(100% - 56px);
+  max-width: calc(100% - 60px);
+  padding: 3px 5px;
+  border-radius: 4px;
+  background: #fffffff0;
+  color: #394857;
+  overflow-wrap: anywhere;
   font-size: 9px;
   line-height: 1.4;
   pointer-events: none;
@@ -140,8 +145,8 @@
   top: 2px;
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border: 0;
   border-radius: 50%;
   background: #ffffffd9;
@@ -161,7 +166,7 @@
 .ui-product-card .ui-product-card__category {
   margin: 14px 0 7px;
   font-size: 11px;
-  color: #788694;
+  color: #647180;
 }
 .ui-product-card .ui-product-card__name {
   margin: 0;
@@ -176,7 +181,7 @@
   margin: 7px 0 16px;
   font-size: 11px;
   min-height: 16px;
-  color: #788694;
+  color: #647180;
   overflow-wrap: anywhere;
 }
 .ui-product-card__price {
@@ -187,7 +192,7 @@
   display: block;
   min-height: 16px;
   font-size: 11px;
-  color: #788694;
+  color: #647180;
 }
 .ui-product-card__price > div {
   display: flex;
@@ -196,12 +201,14 @@
   flex-wrap: wrap;
 }
 .ui-product-card__price strong {
+  overflow-wrap: anywhere;
+  max-width: 100%;
   font-size: 23px;
   line-height: 1.2;
 }
 .ui-product-card__price span {
   font-size: 11px;
-  color: #788694;
+  color: #647180;
 }
 .ui-product-card__actions {
   display: flex;
@@ -226,11 +233,11 @@
   flex-shrink: 0;
 }
 .ui-product-card__stock[data-available="false"] {
-  color: #788694;
+  color: #647180;
 }
 .ui-product-card__actions .ui-button {
-  padding: 8px 12px;
-  min-height: 40px;
+  padding: 10px 12px;
+  min-height: 44px;
   font-size: 11px;
   font-weight: 600;
   line-height: 1.35;
@@ -377,4 +384,16 @@
 }
 @media (max-width: 359px) {
  .shop-shell .storefront-header-main > a:first-child > span { display: none; }
+}
+
+/* Keep the purchase area consistent when card content varies. */
+.ui-product-card__price { min-height: 54px; display: flex; flex-direction: column; justify-content: flex-end; }
+.ui-product-card__actions { min-height: 44px; }
+.ui-product-card__actions .ui-button:disabled { cursor: not-allowed; }
+@media (max-width: 767px) {
+  .ui-product-card__actions { align-items: stretch; }
+  .ui-product-card__stock { min-height: 20px; font-size: 11px; }
+  .ui-product-card__actions .ui-button { font-size: 12px; }
+  .ui-product-card .ui-product-card__category,
+  .ui-product-card .ui-product-card__details { font-size: 11px; }
 }
